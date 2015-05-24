@@ -1,0 +1,84 @@
+# See how far we get in getting perltidy to do the *only* right thing: my way
+
+--noblanks-before-comments
+--block-brace-tightness=0
+--brace-tightness=2
+--brace-vertical-tightness=2
+--closing-token-indentation=3
+--continuation-indentation=4
+--entab-leading-whitespace=8
+#--noindent-block-comments
+--indent-closing-brace
+--indent-columns=4
+# try with and without this:
+#--line-up-parentheses
+--maximum-line-length=80
+--opening-brace-always-on-right
+--opening-hash-brace-right
+--opening-paren-right
+--opening-square-bracket-right
+--opening-sub-brace-on-new-line
+--nooutdent-long-comments
+--nooutdent-long-quotes
+--nooutdent-long-lines
+--paren-tightness=2
+--paren-vertical-tightness=2
+--nospace-for-semicolon
+--space-function-paren
+--space-keyword-paren
+--square-bracket-tightness=2
+--square-bracket-vertical-tightness=2
+--stack-closing-hash-brace
+--stack-closing-paren
+--stack-closing-square-bracket
+--stack-opening-hash-brace
+--stack-opening-paren
+--stack-opening-square-bracket
+--static-block-comment-prefix="^#"
+--static-side-comments
+# try with and without some or all of these
+#--want-break-after=". : || && and or"
+
+# c	comment		Green4 / italic	# foo
+-hcc=008b00	-hic
+# cm	comma		,
+-hccm=000000
+# co	colon		:
+-hcco=000000
+# h	here-doc-target			<<FOO
+-hch=cd5555	-hbh
+# hh	here-doc-text			foo foo foo
+-hchh=cd5555	-hihh
+# i	identifier	Gray15		$foo
+-hci=262626
+# j	label		Blue4 / bold	FOO:
+-hcj=00008b	-hbj
+# k	keyword		Black / bold	map
+-hck=000000	-hbk
+# m	subroutine	Red4		foo (1)
+-hcm=260000
+# mm	method		Red4		$obj->foo (1)
+#hcmm=8b0000
+# n	numeric		Blue4		42
+-hcn=0000b8
+# p	paren
+-hcp=260026
+# pd	pod-text
+-hcpd=228b22	-hipd
+# pu	punctuation
+-hcpu=000000
+# qq	quote		Yellow4		"foo"
+-hcq=8b8b00
+# q	quote		Orange3		'foo'
+#hcqq=8b8b00
+#hcq=cd8500
+# r	regexp		Red3		$x =~ m/foo/;
+# rs	regsub		Red1		$x =~ s/bar/foo/;
+# s	structure (parens and braces)	if (rexexp) {
+-hcs=260026
+# sc	semicolon			;
+-hcsc=000000
+# v	v-string
+-hcv=b452cd
+# w	bareword	Red4		foo => 1
+-hcw=260000
