@@ -29,6 +29,13 @@ valgrind
 Module::CPANTS::Analyse
 cpants_lint.pl
 
+# Clean dist
+
+MANIFEST and MANIFEST.skip are complete
+
+    - make dist
+    - make distclean
+
 # Code style consistency
 
 Perl::Tidy
@@ -71,12 +78,16 @@ Date::Calc
  - between different versions of perl
  - between different versions of the module
 
+# License
+
+# README / README.md
+
+# Test coverage
+
+Devel::Cover
+
 # Downriver
 
 scripts/used-by.pl
 
 preferably with the previous version *and* with the version to be released
-
-# License
-
-# README / README.md
