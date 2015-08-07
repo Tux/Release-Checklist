@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my $VERSION = "1.00-20100607";
+my $VERSION = "1.01-20150807";
 
 sub usage
 {
@@ -31,8 +31,8 @@ use File::Find;
 my @files = @ARGV;
 @files or find (sub {
     $File::Find::dir =~ m/\b blib /x and return;
-    m{\.pm$}    and push @files, $File::Find::name;
-    m{^Change}i and push @files, $File::Find::name;
+    m{\.(pm|md)$} and push @files, $File::Find::name;
+    m{^Change}i   and push @files, $File::Find::name;
     }, glob "*");
 s{^\./}{} for @files;
 @files = sort @files;
