@@ -1,0 +1,112 @@
+# Global options
+
+# pager	= less
+color	= 1
+verbose	= %f#%l.%c:\t[%s - %p]\t%m\t:%r\n
+
+# Enabled policies with changed default(s)
+
+[Compatibility::PerlMinimumVersionAndWhy]
+above_version = 5.008008
+skip_checks = _perl5_5010_operators _Pulp__5010_operators__fix
+
+[ControlStructures::ProhibitPostfixControls]
+allow = for
+
+[Documentation::RequirePodSections]
+lib_sections	= NAME | SYNOPSIS | DESCRIPTION | SEE ALSO | AUTHOR | COPYRIGHT AND LICENSE
+script_sections	= NAME | SYNOPSIS | DESCRIPTION | SEE ALSO | AUTHOR | COPYRIGHT AND LICENSE
+
+[ErrorHandling::RequireCarping]
+allow_in_main_unless_in_subroutine = 1
+
+[InputOutput::RequireCheckedSyscalls]
+exclude_functions = close print say
+
+[Tics::ProhibitLongLines]
+base_max = 81
+hard_max = 133
+pct_allowed = 4
+
+[Variables::RequireLocalizedPunctuationVars]
+allow = @ARGV %ENV %SIG
+
+[ValuesAndExpressions::RequireNumberSeparators]
+min_value = 100000
+
+# All disabled policies
+
+[-Bangs::ProhibitBitwiseOperators]
+[-Bangs::ProhibitCommentedOutCode]
+[-Bangs::ProhibitFlagComments]
+[-Bangs::ProhibitNumberedNames]
+[-Bangs::ProhibitRefProtoOrProto]
+[-Bangs::ProhibitVagueNames]
+[-BuiltinFunctions::ProhibitComplexMappings]
+[-BuiltinFunctions::ProhibitReverseSortBlock]
+[-BuiltinFunctions::RequireBlockGrep]
+[-ClassHierarchies::ProhibitExplicitISA]
+[-CodeLayout::ProhibitHardTabs]
+[-CodeLayout::ProhibitHashBarewords]
+[-CodeLayout::ProhibitParensWithBuiltins]
+[-CodeLayout::RequireTidyCode]
+[-CodeLayout::RequireUseUTF8]
+[-Compatibility::ProhibitThreeArgumentOpen]
+[-ControlStructures::ProhibitCascadingIfElse]
+[-ControlStructures::ProhibitDeepNests]
+[-ControlStructures::ProhibitUnlessBlocks]
+[-Documentation::PodSpelling]
+[-Documentation::RequirePodAtEnd]
+[-Documentation::RequirePodLinksIncludeText]
+[-Documentation::RequirePODUseEncodingUTF8]
+#-Dynamic::ValidateAgainstSymbolTable]
+[-Editor::RequireEmacsFileVariables]
+[-ErrorHandling::RequireUseOfExceptions]
+[-Freenode::EmptyReturn]
+[-Freenode::Wantarray]
+[-Freenode::WhileDiamondDefaultAssignment]
+[-InputOutput::ProhibitBacktickOperators]
+[-InputOutput::ProhibitInteractiveTest]
+[-InputOutput::ProhibitOneArgSelect]
+[-InputOutput::RequireBracedFileHandleWithPrint]
+[-InputOutput::RequireBriefOpen]
+[-InputOutput::RequireCheckedClose]
+[-Lax::ProhibitComplexMappings::LinesNotStatements]
+[-Lax::ProhibitEmptyQuotes::ExceptAsFallback]
+[-Lax::ProhibitStringyEval::ExceptForRequire]
+[-Miscellanea::ProhibitFormats]
+[-Miscellanea::ProhibitTies]
+[-Miscellanea::RequireRcsKeywords]
+[-Modules::ProhibitAutomaticExportation]
+[-Modules::ProhibitExcessMainComplexity]
+[-Modules::ProhibitModuleShebang]
+[-Modules::RequireExplicitInclusion]
+[-Modules::RequirePerlVersion]
+[-NamingConventions::Capitalization]
+[-NamingConventions::ProhibitMixedCaseSubs]
+[-NamingConventions::ProhibitMixedCaseVars]
+[-References::ProhibitDoubleSigils]
+[-RegularExpressions::ProhibitComplexRegexes]
+[-RegularExpressions::ProhibitEnumeratedClasses]
+[-RegularExpressions::ProhibitEscapedMetacharacters]
+[-RegularExpressions::RequireDotMatchAnything]
+[-RegularExpressions::RequireExtendedFormatting]
+[-RegularExpressions::RequireLineBoundaryMatching]
+[-Subroutines::ProhibitCallsToUndeclaredSubs]
+[-Subroutines::ProhibitCallsToUnexportedSubs]
+[-Subroutines::ProhibitExcessComplexity]
+[-Subroutines::RequireArgUnpacking]
+[-Subroutines::RequireFinalReturn]
+[-TestingAndDebugging::ProhibitNoWarnings]
+[-ValuesAndExpressions::ProhibitAccessOfPrivateData]
+[-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-ValuesAndExpressions::ProhibitFiletest_f]
+[-ValuesAndExpressions::ProhibitInterpolationOfLiterals]
+[-ValuesAndExpressions::ProhibitLeadingZeros]
+[-ValuesAndExpressions::ProhibitMagicNumbers]
+[-ValuesAndExpressions::ProhibitMixedBooleanOperators]
+[-ValuesAndExpressions::ProhibitNoisyQuotes]
+[-ValuesAndExpressions::RequireConstantOnLeftSideOfEquality]
+[-ValuesAndExpressions::RequireInterpolationOfMetachars]
+[-Variables::ProhibitPunctuationVars]
+[-Variables::RequireInitializationForLocalVars]
