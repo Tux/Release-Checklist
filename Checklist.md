@@ -38,6 +38,8 @@ MANIFEST and MANIFEST.skip are complete
 
 # Code style consistency
 
+Add a CONTRIBUTING.md or similar file to guide others to consistency
+
 Perl::Tidy
 Perl::Critic	+ plugins, lot of choices
 Test::Perl::Critic
