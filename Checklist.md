@@ -53,8 +53,9 @@ a minimal supported perl version that ends up in META.json and META.yml
 Do not guess. It is easy to check with
 [Test::MinimumVersion](https://metacpan.org/pod/Test::MinimumVersion) and/or
 [Test::MinimumVersion::Fast](https://metacpan.org/pod/Test::MinimumVersion::Fast).
-[Perl::MinimumVersion](https://metacpan.org/release/Perl-MinimumVersion) comes
-with the perlver tool:
+[Perl::MinimumVersion](https://metacpan.org/release/Perl-MinimumVersion) comes with
+the [perlver](https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver)
+tool:
 ``` shell
 $ perlver --blame test.pl
 
@@ -103,6 +104,17 @@ of that to prevent unhappy users.
 [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
 [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
 
+``` sh
+ $ perl Makefile.PL
+ $ make test
+ $ make dist
+ $ cpants_lint.pl Foo-Bar-0.01.tar.gz
+ Checked dist: Foo-Bar-0.01.tar.gz
+ Score: 144.44% (26/18)
+ Congratulations for building a 'perfect' distribution!
+ $
+```
+
 # Clean dist
 
 Some problems only surface when you do a make clean or make distclean.
@@ -113,8 +125,10 @@ keep passing.
 
 MANIFEST and MANIFEST.skip are complete
 
-    - make dist
-    - make distclean
+``` sh
+ $ make dist
+ $ make distclean
+```
 
 # Code style consistency
 
@@ -122,13 +136,16 @@ Add a [CONTRIBUTING.md](./CONTRIBUTING.md) or similar file to guide others to
 consistency that will match [*your* style](http://tux.nl/style.html) (or, in
 case of joint effort, the style as agreed upon by the developers).
 
+There are helper modules to enforce a style (given a configuration) or to try
+to help contributors to come up with a path/change than matches the project's
+style and layout. Again: consistency helps. A lot.
+
 [Perl::Tidy](https://metacpan.org/pod/Perl::Tidy)
 [Perl::Critic](https://metacpan.org/pod/Perl::Critic) + [plugins](https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&search_type=modules), lot of choices
 [Test::Perl::Critic](https://metacpan.org/pod/Test::Perl::Critic)
 [Test::Perl::Critic::Policy](https://metacpan.org/pod/Test::Perl::Critic::Policy)
 
-[.perltidy](./.perltidyrc) and
-[.perlcritic](./.perlcriticrc).
+[.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
 
 # Spelling
 
@@ -136,7 +153,7 @@ Not every developer is of native English tongue. And even if, they
 also make (spelling) mistakes. There are enough tools available to
 prevent public display of misspellings and typoes. Use them.
 
-scripts/pod-spell-check
+[pod-spell-check](scripts/pod-spell-check)
 
 [Pod::Aspell](https://metacpan.org/pod/Pod::Aspell)
 [Pod::Escapes](https://metacpan.org/pod/Pod::Escapes)
@@ -152,7 +169,8 @@ scripts/pod-spell-check
 
 Make sure your meta-data matches the expected requirements. That can be achived
 by using a generator that produces conform the most recent specifications or by
-using tools to check handcrafted META-files against the current standards:
+using tools to check handcrafted META-files against the
+[current standards](http://module-build.sourceforge.net/META-spec-v1.4.html):
 
 [CPAN::Meta::Converter](https://metacpan.org/pod/CPAN::Meta::Converter)
 [CPAN::Meta::Validator](https://metacpan.org/pod/CPAN::Meta::Validator)
@@ -163,8 +181,8 @@ using tools to check handcrafted META-files against the current standards:
 
 # Changelog
 
-Make sure your ChechLog or Changes file is up-todate. Your release procedure
-might check the most recent mentioned date in that
+Make sure your [ChangeLog](./ChangeLog) or Changes file is up-todate. Your
+release procedure might check the most recent mentioned date in that
 
 [Date::Calc](https://metacpan.org/pod/Date::Calc)
 
@@ -185,7 +203,7 @@ installed.
 
 # README / README.md
 
-Add a file the states in short the purpose of your distribution.
+Add a [file](./README.md) the states in short the purpose of your distribution.
 
 # Test coverage
 
