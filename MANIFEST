@@ -1,0 +1,11 @@
+ChangeLog
+Checklist.md
+CONTRIBUTING.md
+README.md
+LICENSE
+Makefile.PL
+.perlcriticrc
+.perltidyrc
+.releaserc
+scripts/pod-spell-check
+scripts/used-by.pl

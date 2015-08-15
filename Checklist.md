@@ -123,7 +123,7 @@ to add those to the MANIFEST, your distribution will be incomplete and
 is likely to fail on other systems, whereas your tests locally still
 keep passing.
 
-MANIFEST and MANIFEST.skip are complete
+[MANIFEST](./MANIFEST) and [MANIFEST.skip](MANIFEST.skip) are complete
 
 ``` sh
  $ make dist
