@@ -45,6 +45,20 @@ if possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&searc
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
+# Test coverage
+
+Do not just test what you think would be used. There *will* be users that try
+to bend the rules and invent ways for your module to be useful that you would
+never think of.
+
+If every line of your code is tested, not only do you prevent unexpected
+breakage, but you also make sure that most corner cases are tested. Besides
+that, it will probably confront your with questions like "What can I possibly
+do to get into this part of my code?". Which may cause optimisations and other
+fun.
+
+[Devel::Cover](https://metacpan.org/pod/Devel::Cover)
+
 # Minimal perl support
 
 Your Makefile.PL (or whatever build system you use) will have to state
@@ -81,6 +95,12 @@ better.
 [Module::Release](https://metacpan.org/pod/Module::Release)
 
 [.releaserc](./.releaserc)
+
+Repeat this on as many architectures as you can (i586, x64, IA64, PA-RISC,
+Sparc, PowerPC, …)
+
+Repeat this on as many Operating Systems as you can (Linux, NetBSD, OSX,
+HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 
 # XS
 
@@ -204,20 +224,6 @@ installed.
 # README / README.md
 
 Add a [file](./README.md) the states in short the purpose of your distribution.
-
-# Test coverage
-
-Do not just test what you think would be used. There *will* be users that try
-to bend the rules and invent ways for your module to be useful that you would
-never think of.
-
-If every line of your code is tested, not only do you prevent unexpected
-breakage, but you also make sure that most corner cases are tested. Besides
-that, it will probably confront your with questions like "What can I possibly
-do to get into this part of my code?". Which may cause optimisations and other
-fun.
-
-[Devel::Cover](https://metacpan.org/pod/Devel::Cover)
 
 # Downriver
 
