@@ -121,6 +121,7 @@ Some see [CPANTS](http://cpants.perl.org/) as a game, but many of the tests
 it puts on your release have a reason. Before you upload, you can check most
 of that to prevent unhappy users.
 
+[Test::Kwalitee](https://metacpan.org/pod/Test::Kwalitee)
 [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
 [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
 
