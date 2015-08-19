@@ -248,6 +248,10 @@ installed.
 
 Add a [file](./README.md) the states in short the purpose of your distribution.
 
+Make sure your SYNOPSIS section in the pod makes sense
+
+[Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
+
 # Downriver
 
 You have had reasons to make the changes leading up to a new distribution. If
