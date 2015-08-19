@@ -169,6 +169,7 @@ style and layout. Again: consistency helps. A lot.
 [Perl::Critic](https://metacpan.org/pod/Perl::Critic) + [plugins](https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&search_type=modules), lot of choices
 [Test::Perl::Critic](https://metacpan.org/pod/Test::Perl::Critic)
 [Test::Perl::Critic::Policy](https://metacpan.org/pod/Test::Perl::Critic::Policy)
+[Test::TrailingSpace](https://metacpan.org/pod/Test::TrailingSpace)
 
 [.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
 
