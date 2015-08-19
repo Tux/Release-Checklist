@@ -152,6 +152,9 @@ keep passing.
  $ make distclean
 ```
 
+[Test::Manifest](https://metacpan.org/pod/Test::Manifest)
+[Test::DistManifest](https://metacpan.org/pod/Test::DistManifest)
+
 # Code style consistency
 
 Add a [CONTRIBUTING.md](./CONTRIBUTING.md) or similar file to guide others to
