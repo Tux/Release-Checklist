@@ -216,6 +216,10 @@ moon or versions that include quotes or spaces. Keep it simple and clear.
 
 [Test::Version](https://metacpan.org/pod/Test::Version)
 
+Make sure it is a versioning system that increments
+
+[Test::GreaterVersion](https://metacpan.org/pod/Test::GreaterVersion)
+
 # Changelog
 
 Make sure your [ChangeLog](./ChangeLog) or Changes file is up-todate. Your
