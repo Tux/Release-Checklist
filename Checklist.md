@@ -58,6 +58,7 @@ do to get into this part of my code?". Which may cause optimisations and other
 fun.
 
 [Devel::Cover](https://metacpan.org/pod/Devel::Cover)
+[Test::TestCoverage](https://metacpan.org/pod/Test::TestCoverage)
 
 # Minimal perl support
 
