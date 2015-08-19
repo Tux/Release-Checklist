@@ -190,7 +190,8 @@ prevent public display of misspellings and typoes. Use them.
 Make sure your meta-data matches the expected requirements. That can be achived
 by using a generator that produces conform the most recent specifications or by
 using tools to check handcrafted META-files against the
-[current standards](http://module-build.sourceforge.net/META-spec-v1.4.html):
+[META spec 1.4 (2008)](http://module-build.sourceforge.net/META-spec-v1.4.html) or
+[META spec 2.0 (2011)](http://module-build.sourceforge.net/META-spec-v2.0.html):
 
 [CPAN::Meta::Converter](https://metacpan.org/pod/CPAN::Meta::Converter)
 [CPAN::Meta::Validator](https://metacpan.org/pod/CPAN::Meta::Validator)
