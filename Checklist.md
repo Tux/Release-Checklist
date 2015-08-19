@@ -214,6 +214,7 @@ Make sure your [ChangeLog](./ChangeLog) or Changes file is up-todate. Your
 release procedure might check the most recent mentioned date in that
 
 [Date::Calc](https://metacpan.org/pod/Date::Calc)
+[Test::CPAN::Changes](https://metacpan.org/pod/Test::CPAN::Changes)
 
 # Performance
 
