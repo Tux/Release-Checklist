@@ -200,6 +200,14 @@ using tools to check handcrafted META-files against the
 [Test::CPAN::Meta::YAML::Version](https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version)
 [YAML::Syck](https://metacpan.org/pod/YAML::Syck)
 
+# Versions
+
+Use a sane versioning system that the rest of the world might understand.
+Do not use the MD5 of the current date and time related to the phase of the
+moon or versions that include quotes or spaces. Keep it simple and clear.
+
+[Test::Version](https://metacpan.org/pod/Test::Version)
+
 # Changelog
 
 Make sure your [ChangeLog](./ChangeLog) or Changes file is up-todate. Your
