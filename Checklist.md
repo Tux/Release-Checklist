@@ -222,13 +222,14 @@ Check if your release matches previous performance
 
  - between different versions of perl
  - between different versions of the module
+ - between different versions of dependencies
 
 # License
 
 Make a clear statement about your license. (or choose a default, but at least
 state it).
 
-Some target areas require a licence inm order to allow a CPAN module to be
+Some target areas require a licence in order to allow a CPAN module to be
 installed.
 
 # README / README.md
@@ -240,7 +241,7 @@ Add a [file](./README.md) the states in short the purpose of your distribution.
 You have had reasons to make the changes leading up to a new distribution. If
 you really care about the users of your module, you should check if your new
 release would break any of the CPAN modules that (indirectly) depend on your
-module by testing with your previous r3elease and your upcoming release and see
+module by testing with your previous release and your upcoming release and see
 if the new release would cause the other module to break.
 
 [used_by.pl](scripts/used-by.pl) will check the depending modules with the
