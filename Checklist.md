@@ -22,6 +22,8 @@ targeted systems and add a chance to break.
 There is no problem with you using those in your own (non-CPAN)
 scripts and modules, but please do not add needless dependencies.
 
+[Test::Prereq](https://metacpan.org/pod/Test::Prereq)
+
 # Test
 
 Test, test and test. The more you test, the lower the chance you
