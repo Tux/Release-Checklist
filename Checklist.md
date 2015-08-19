@@ -198,6 +198,8 @@ using tools to check handcrafted META-files against the
 [CPAN::Meta::Validator](https://metacpan.org/pod/CPAN::Meta::Validator)
 [JSON::PP](https://metacpan.org/pod/JSON::PP)
 [Parse::CPAN::Meta](https://metacpan.org/pod/Parse::CPAN::Meta)
+[Test::CPAN::Meta::JSON](https://metacpan.org/pod/Test::CPAN::Meta::JSON)
+[Test::CPAN::Meta::YAML](https://metacpan.org/pod/Test::CPAN::Meta::YAML)
 [Test::CPAN::Meta::YAML::Version](https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version)
 [YAML::Syck](https://metacpan.org/pod/YAML::Syck)
 
