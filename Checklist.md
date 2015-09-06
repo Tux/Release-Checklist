@@ -47,6 +47,58 @@ if possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&searc
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
+If adding tests after a bug-fix, add at least two tests: one that tests
+that the required (fixed) behavior now passes and that the invalid bahavior
+fails.
+
+# Documentation
+
+Make sure that you have a clear SYNOPSIS section. This section should show
+the most important code as simple and clear as possible. If you have 3500
+methods in your class, do not list all of the there. Just show how to create
+the object and show the 4 methods that a beginner would use.
+
+Make sure your documentation is complete and all your methods and/or
+functions are documented. If you have private functions, mentions that in the
+documentation, so users can read that they might disappear without warning.
+
+Make sure your pod is correct and can also be parsed by the pod-modules in
+the lowest version of perl you support (or mention that you need at least
+version whatever to read the pod as intended).
+
+[Test::Pod](https://metacpan.org/pod/Test::Pod)
+[Test::Pod::Coverage](https://metacpan.org/pod/Test::Pod::Coverage)
+
+# Spelling
+
+Not every developer is of native English tongue. And even if, they
+also make (spelling) mistakes. There are enough tools available to
+prevent public display of misspellings and typoes. Use them.
+
+It is a good plan to have someone else proofread your documentation.
+If you can, ask three readers: one who knows about what the module is
+about, one who can be seen as an end-user of this modules without any
+knowledge about the internals, and last someone who has no clue about
+programming.  You might be surprised of what they will find in the
+documentation as weird, unclear, or even plain wrong.
+
+[pod-spell-check](scripts/pod-spell-check)
+
+[Pod::Aspell](https://metacpan.org/pod/Pod::Aspell)
+[Pod::Escapes](https://metacpan.org/pod/Pod::Escapes)
+[Pod::Parser](https://metacpan.org/pod/Pod::Parser)
+[Pod::Spell](https://metacpan.org/pod/Pod::Spell)
+[Pod::Spell::CommonMistakes](https://metacpan.org/pod/Pod::Spell::CommonMistakes)
+[Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist)
+[Text::Aspell](https://metacpan.org/pod/Text::Aspell)
+[Text::Ispell](https://metacpan.org/pod/Text::Ispell)
+[Text::Wrap](https://metacpan.org/pod/Text::Wrap)
+
+# Examples
+
+Have examples of your code. Preferably both in the EXAMPLES section of the
+pod, as in a folder names examples.
+
 # Test coverage
 
 Do not just test what you think would be used. There *will* be users that try
@@ -95,6 +147,8 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.
 
+ $ perl -wc lib/Foo/Bar.pm
+
 [Module::Release](https://metacpan.org/pod/Module::Release)
 
 [.releaserc](./.releaserc)
@@ -124,6 +178,7 @@ Some see [CPANTS](http://cpants.perl.org/) as a game, but many of the tests
 it puts on your release have a reason. Before you upload, you can check most
 of that to prevent unhappy users.
 
+[Test::Package](....)
 [Test::Kwalitee](https://metacpan.org/pod/Test::Kwalitee)
 [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
 [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
@@ -172,26 +227,9 @@ style and layout. Again: consistency helps. A lot.
 [Test::Perl::Critic](https://metacpan.org/pod/Test::Perl::Critic)
 [Test::Perl::Critic::Policy](https://metacpan.org/pod/Test::Perl::Critic::Policy)
 [Test::TrailingSpace](https://metacpan.org/pod/Test::TrailingSpace)
+[Perl::Lint](https://metacpan.org/pod/Perl::Lint)
 
 [.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
-
-# Spelling
-
-Not every developer is of native English tongue. And even if, they
-also make (spelling) mistakes. There are enough tools available to
-prevent public display of misspellings and typoes. Use them.
-
-[pod-spell-check](scripts/pod-spell-check)
-
-[Pod::Aspell](https://metacpan.org/pod/Pod::Aspell)
-[Pod::Escapes](https://metacpan.org/pod/Pod::Escapes)
-[Pod::Parser](https://metacpan.org/pod/Pod::Parser)
-[Pod::Spell](https://metacpan.org/pod/Pod::Spell)
-[Pod::Spell::CommonMistakes](https://metacpan.org/pod/Pod::Spell::CommonMistakes)
-[Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist)
-[Text::Aspell](https://metacpan.org/pod/Text::Aspell)
-[Text::Ispell](https://metacpan.org/pod/Text::Ispell)
-[Text::Wrap](https://metacpan.org/pod/Text::Wrap)
 
 # META
 
@@ -253,6 +291,7 @@ Add a [file](./README.md) the states in short the purpose of your distribution.
 Make sure your SYNOPSIS section in the pod makes sense
 
 [Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
+[Text::Markdown](https://metacpan.org/pod/Text::Markdown)
 
 # Downriver
 
