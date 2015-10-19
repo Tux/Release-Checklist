@@ -8,7 +8,7 @@ our $VERSION = "1.19 - 2015-10-19";
 sub usage
 {
   my $err = shift and select STDERR;
-  say "usage: $0 [-v] [--git=author] AUTHOR\n";
+  say "usage: $0 [-v] [--git=author] [--travis=id] AUTHOR\n";
   exit $err;
   } # usage
 
@@ -18,6 +18,7 @@ GetOptions (
   "help|?"	=> sub { usage (0); },
   "v|verbose:1"	=> \$opt_v,
   "g|git=s"	=> \my $git_id,
+  "t|travis=s"	=> \my $travis_id,
   ) or usage (1);
 
 my $author = shift or usage (1);
@@ -81,7 +82,8 @@ $opt_v and say "Fetch releases from $author";
 	    }
 	}
     }
-#$git_id  //= lc $author;
+$git_id     //= lc $author;
+$travis_id  //= $git_id;
 
 my $buffer = "";
 open my $html, ">", \$buffer;
@@ -145,7 +147,7 @@ sub modules
             <th class="tci" colspan="2"><a href="https://github.com/$git_id">repo</a></th>
             <th class="rhdr"><a href="http://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
             <th class="center">doc</th>
-            <th class="tci"><a href="https://travis-ci.org/profile/$git_id">TravisCI</a></th>
+            <th class="tci"><a href="https://travis-ci.org/profile/$travis_id">TravisCI</a></th>
             <th class="cpants"><a href="http://cpants.perl.org/author/$author">kwalitee</a></th>
             <th class="rhdr"><a href="http://cpancover.com">cover</a></th>
             <th class="rhdr" colspan="3"><a href="http://www.cpantesters.org/author/$auid1/$author.html">cpantesters</a></th>
@@ -331,7 +333,7 @@ EOH
 	    }
 
 	# Travis CI
-	my $tci = $m->{tci} // "https://travis-ci.org/$git_id/$dist/builds";
+	my $tci = $m->{tci} // "https://travis-ci.org/$travis_id/$dist/builds";
 	my $tci_tag = $tci ?  "*" : "";
 	$tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success and
 	    $tci_tag = $_->content;
