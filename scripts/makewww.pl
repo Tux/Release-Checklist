@@ -392,13 +392,9 @@ EOH
           <tr><td colspan="17"><hr /></td></tr>
           <tr>
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
-            <td colspan="8"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
+            <td colspan="9"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
             <td colspan="3" class="center"><a href="http://matrix.cpantesters.org/?author=$author">matrix</a></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="4"></td>
             </tr>
           </tbody>
         </table>
