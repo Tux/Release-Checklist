@@ -59,8 +59,9 @@ $opt_v and say "Fetch releases from $author";
 	    my $j = $ua->get ("https://api.metacpan.org/source/$ttl/META.json");
 	    if ($j->is_success) {
 		my $meta = decode_json ($j->content);
-		$repo = $meta->{resources}{repository}{web} ||
-			$meta->{resources}{repository}{url} || "-";
+		$repo = $meta->{resources}{repository} || "-";
+		ref $repo eq "HASH" and
+		    $repo = $repo->{web} || $repo->{url} || "-";
 		}
 	    else {
 		$j = $ua->get ("https://api.metacpan.org/source/$ttl/META.yml");
@@ -69,10 +70,11 @@ $opt_v and say "Fetch releases from $author";
 		    $repo = $meta->[0]{resources}{repository} || "-";
 		    }
 		}
-	    if ($repo =~ m{\bgithub\.com\b/([^/]+)}) {
-		$git_id //= $1;
+	    if ($repo =~ m{\bgithub\.com\b}) {
+		$repo =~ s{^git\@github.com:}{https://github.com/};
 		$repo =~ s{^git:}{https:};
 		$repo =~ s{\.git$}{};
+		$repo =~ m{github.com/([^/]+)} and $git_id //= $1;
 		}
 	    $mod{$mod}{git} = $repo;
 	    $opt_v > 2 and say "  $repo";
