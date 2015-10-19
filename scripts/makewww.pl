@@ -28,6 +28,7 @@ my $auid3  = "$auid1/" . substr $author, 0, 2;
 use Data::Peek;
 use LWP;
 use JSON::XS;
+use YAML::Tiny;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
 use Encode qw( encode decode );
@@ -54,20 +55,27 @@ $opt_v and say "Fetch releases from $author";
 	    $opt_v > 1 and say " $mod";
 	    $mod{$mod} = { git => "-" };
 
+	    my $repo = "-";
 	    my $j = $ua->get ("https://api.metacpan.org/source/$ttl/META.json");
 	    if ($j->is_success) {
 		my $meta = decode_json ($j->content);
-		my $repo =
-		    $meta->{resources}{repository}{web} ||
-		    $meta->{resources}{repository}{url} || "-";
-		if ($repo =~ m{\bgithub\.com\b/([^/]+)}) {
-		    $git_id //= $1;
-		    $repo =~ s{^git:}{https:};
-		    $repo =~ s{\.git$}{};
-		    }
-		$mod{$mod}{git} = $repo;
-		$opt_v > 2 and say "  $repo";
+		$repo = $meta->{resources}{repository}{web} ||
+			$meta->{resources}{repository}{url} || "-";
 		}
+	    else {
+		$j = $ua->get ("https://api.metacpan.org/source/$ttl/META.yml");
+		if ($j->is_success) {
+		    my $meta = YAML::Tiny->read_string ($j->content);
+		    $repo = $meta->[0]{resources}{repository} || "-";
+		    }
+		}
+	    if ($repo =~ m{\bgithub\.com\b/([^/]+)}) {
+		$git_id //= $1;
+		$repo =~ s{^git:}{https:};
+		$repo =~ s{\.git$}{};
+		}
+	    $mod{$mod}{git} = $repo;
+	    $opt_v > 2 and say "  $repo";
 	    }
 	}
     }
