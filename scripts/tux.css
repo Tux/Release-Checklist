@@ -1,0 +1,188 @@
+html {
+    height:			100%;
+    }
+body {
+    color:			Black;
+    height:			90%;
+    position:			relative;
+    background:			#e0e0e0;
+    margin-top:			45px;
+    }
+body, p, td {
+    font-size:			14pt;
+    font-family:		"DejaVu Sans", "Nimbus Sans L", Helvetica,
+				"Liberation Sans", sans-serif, sans;
+    }
+pre, code {
+    font-family:		"DejaVu Sans Mono", "Liberation Mono",
+				"Bitstream Vera Sans Mono", Monospace, mono;
+    }
+
+a:link {
+    color:			Blue;
+    }
+a:visited {
+    color:			#006060;
+    }
+a:active {
+    color:			Maroon;
+    }
+h1 {
+    text-align:			center;
+    font-size:			16pt;
+    }
+td, li {
+    color:			Navy;
+    text-align:			left;
+    }
+p, dd {
+    color:			Navy;
+    width:			93%;
+    margin:			auto;
+    text-align:			justify;
+    margin-bottom:		6px;
+    }
+code, pre {
+    color:			#7f0000;
+    background:			#f7f7f7;
+    }
+img {
+    margin:			1px;
+    margin-bottom:		2px;
+    border:			0;
+    }
+.panoramic {
+    position:			relative;
+    float:			none;
+    margin:			auto;
+    margin-bottom:		5px;
+    }
+
+div, table {
+    width:			93%;
+    margin:			auto;
+    margin-bottom:		0;
+    }
+li {
+    margin-bottom:		4px;
+    }
+
+td, div {
+    vertical-align:		top;
+    }
+th {
+    background:			#e0e0e0;
+    text-align:			left;
+    }
+tr.boxed {
+    height:			270px;
+    }
+td.boxed {
+    background:			#f0f0f0;
+    width:			50%;
+    padding:			10px;
+    text-align:			center;
+    border-width:		thick;
+    border-style:		groove;
+    border-color:		Maroon;
+    }
+div.boxed {
+    background:			#f0f0f0;
+    padding:			10px;
+    border-width:		thick;
+    border-style:		groove;
+    border-color:		Maroon;
+    }
+
+.cijfer,.vak,.huiswerk {
+    border-color:		#e0b000;
+    border-width:		medium;
+    border-style:		solid;
+    padding-left:		6px;
+    }
+td.vak {
+    width:			120px;
+    }
+td.cijfer {
+    background:			#ffe500;
+    color:			Black;
+;   width:			41px;
+    font-size:			65%;
+    text-align:			center;
+    vertical-align:		middle;
+    }
+td.huiswerk {
+    background:			#fdfdfd;
+    color:			Black;
+    font-size:			80%;
+    }
+
+.center {
+    text-align:			center;
+    }
+.floatright {
+    clear:			both;
+    float:			right;
+    }
+.header {
+    padding-top:		15px;
+    color:			Green;
+    font-weight:		bold;
+    }
+.footer {
+    font-size:			60%;
+    }
+.dead {
+    font-size:			60%;
+    color:			#c08080;
+    }
+.apps {
+    vertical-align:		top;
+    margin:			5px;
+    padding-right:		10px;
+    width:			50px;
+    }
+
+.version, .released, .rt, .kwt, .cpt, .cvr, .date, .rd {
+    font-family:		"DejaVu Sans Mono", "Liberation Mono",
+				"Bitstream Vera Sans Mono", Monospace, mono;
+    font-size:			80%;
+    }
+.version, .date, .rt {
+    color:			black;
+    vertical-align:		middle;
+    }
+.rhdr, .kwt, .cpants, .rt, .rd, .git, .date, .released, .cpt, .cvr {
+    text-align:			right;
+    padding-right:		7px;
+    }
+.tci {
+    text-align:			center;
+    }
+.none {
+    color:			#000000;
+    }
+.pass, a.pass {
+    color:			#008000;
+    }
+.fail, a.fail {
+    color:			#800000;
+    }
+.na, a.na {
+    color:			#808000;
+    }
+.warn, a.warn {
+    color:			#804000;
+    }
+
+a[data-title]:hover:after {
+    content:			attr(data-title);
+    position:			absolute;
+    background:			white;
+    font-family:		"DejaVu Sans Mono", "Liberation Mono",
+				"Bitstream Vera Sans Mono", Monospace, mono;
+    font-size:			70%;
+    text-align:			left;
+    border:			1px solid;
+    padding:			2px;
+    }
