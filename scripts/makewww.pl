@@ -135,7 +135,7 @@ sub modules
 
   <tr class="boxed">
     <td class="boxed" colspan="2">
-      <p class="header">My modules</p>
+      <p class="header">${author}'s modules</p>
       <table>
         <thead>
           <tr>
