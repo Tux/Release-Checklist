@@ -8,7 +8,7 @@ our $VERSION = "1.19 - 2015-10-19";
 sub usage
 {
   my $err = shift and select STDERR;
-  say "usage: $0 [-v] AUTHOR\n";
+  say "usage: $0 [-v] [--git=author] AUTHOR\n";
   exit $err;
   } # usage
 
@@ -17,6 +17,7 @@ my $opt_v = 0;
 GetOptions (
   "help|?"	=> sub { usage (0); },
   "v|verbose:1"	=> \$opt_v,
+  "g|git=s"	=> \my $git_id,
   ) or usage (1);
 
 my $author = shift or usage (1);
@@ -46,14 +47,31 @@ $opt_v and say "Fetch releases from $author";
     $tree->parse_content (decode ("utf-8", $r->content));
     foreach my $tbl ($tree->look_down (_tag => "table", id => "author_releases")) {
 	for ($tbl->look_down (_tag => "a", class => "ellipsis")) {
+	    my $ttl = $_->attr ("title");
 	    my $mod = $_->attr ("href");
 	       $mod =~ s{^/release/}{} or next;
 	       $mod =~ s/-/::/g;
 	    $opt_v > 1 and say " $mod";
-	    $mod{$mod} = {};
+	    $mod{$mod} = { git => "-" };
+
+	    my $j = $ua->get ("https://api.metacpan.org/source/$ttl/META.json");
+	    if ($j->is_success) {
+		my $meta = decode_json ($j->content);
+		my $repo =
+		    $meta->{resources}{repository}{web} ||
+		    $meta->{resources}{repository}{url} || "-";
+		if ($repo =~ m{\bgithub\.com\b/([^/]+)}) {
+		    $git_id //= $1;
+		    $repo =~ s{^git:}{https:};
+		    $repo =~ s{\.git$}{};
+		    }
+		$mod{$mod}{git} = $repo;
+		$opt_v > 2 and say "  $repo";
+		}
 	    }
 	}
     }
+#$git_id  //= lc $author;
 
 my $buffer = "";
 open my $html, ">", \$buffer;
@@ -114,10 +132,10 @@ sub modules
             <th><a href="http://metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
-            <th class="tci" colspan="2"><a href="https://github.com/Tux">repo</a></th>
+            <th class="tci" colspan="2"><a href="https://github.com/$git_id">repo</a></th>
             <th class="rhdr"><a href="http://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
             <th class="center">doc</th>
-            <th class="tci"><a href="https://travis-ci.org/profile/Tux">TravisCI</a></th>
+            <th class="tci"><a href="https://travis-ci.org/profile/$git_id">TravisCI</a></th>
             <th class="cpants"><a href="http://cpants.perl.org/author/$author">kwalitee</a></th>
             <th class="rhdr"><a href="http://cpancover.com">cover</a></th>
             <th class="rhdr" colspan="3"><a href="http://www.cpantesters.org/author/$auid1/$author.html">cpantesters</a></th>
@@ -182,7 +200,7 @@ EOH
 	     }
 
 	# GIT repo and last commit
-	my $git = $m->{git} // "https://github.com/Tux/$dist",
+	my $git = $m->{git}; # // "https://github.com/$git_id/$dist",
 	my $git_tag = {
 	    text   => "git",
 	    dtitle => "",
@@ -303,7 +321,7 @@ EOH
 	    }
 
 	# Travis CI
-	my $tci = $m->{tci} // "https://travis-ci.org/Tux/$dist/builds";
+	my $tci = $m->{tci} // "https://travis-ci.org/$git_id/$dist/builds";
 	my $tci_tag = $tci ?  "*" : "";
 	$tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success and
 	    $tci_tag = $_->content;
