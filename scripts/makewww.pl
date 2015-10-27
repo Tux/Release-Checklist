@@ -457,9 +457,10 @@ sub header {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <title>$author Perl QA page</title>
-  <meta name="Generator"     content="makewww.pl" />
-  <meta name="Author"        content="H.Merijn Brand" />
-  <meta name="Description"   content="Perl" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="Generator"          content="makewww.pl" />
+  <meta name="Author"             content="H.Merijn Brand" />
+  <meta name="Description"        content="Perl" />
 
   <link rel="stylesheet" type="text/css"  href="tux.css" />
   </head>
