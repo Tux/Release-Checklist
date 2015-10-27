@@ -86,12 +86,12 @@ $git_id     //= lc $author;
 $travis_id  //= $git_id;
 
 my $buffer = "";
-open my $html, ">", \$buffer;
+open my $html, ">:encoding(utf-8)", \$buffer;
 header ();
 modules ();
 footer ();
 close $html;
-open  $html, ">:encoding(utf-8)", "$author.html";
+open  $html, ">", "$author.html";
 print $html $buffer;
 close $html;
 
