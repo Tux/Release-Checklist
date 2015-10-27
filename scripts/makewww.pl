@@ -151,12 +151,12 @@ sub modules {
     print $html <<"EOH";
 
   <tr class="boxed">
-    <td class="boxed" colspan="2">
+    <td class="boxed">
       <p class="header">${author}'s modules</p>
       <table>
         <thead>
           <tr>
-            <th width="17%"><a href="http://metacpan.org/author/$author">Distribution</a></th>
+            <th><a href="http://metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="2"><a href="https://github.com/$git_id">repo</a></th>
@@ -370,10 +370,18 @@ EOH
 	$time{release} += t_used;
 
 	# Travis CI
-	my $tci = $m->{tci} // "https://travis-ci.org/$travis_id/$dist/builds";
-	my $tci_tag = $tci ?  "*" : "";
-	$tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success and
-	    $tci_tag = $_->content;
+	my $tci       = $m->{tci} // "https://travis-ci.org/$travis_id/$dist/builds";
+	my $tci_tag   = $tci ?  "*" : "";
+	my $tci_class = [ "tci" ];
+	if ($tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success) {
+	    my %bs = map { $_ => 1 } ($_->content =~ m{<text[^>]+>([^<]+)</text>}g);
+	    delete $bs{build};
+	    $tci_tag = join "/" => sort keys %bs;
+	    push @$tci_class,
+		$bs{passing} ? "pass" :
+		$bs{failing} ? "fail" :
+		$bs{error}   ? "warn" : "na";
+	    }
 	$time{travis} += t_used;
 
 	# ChangeLog
@@ -416,7 +424,7 @@ EOH
 	dta ($issue_class,   $issues_tag,             $issues);
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "http://metacpan.org/module/$mod");
-	dta (["tci"       ], $tci_tag,                $tci);
+	dta ($tci_class,     $tci_tag,                $tci);
 	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.perl.org/dist/overview/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
 	dta (["cpt","pass"], $data->{tests}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
@@ -434,7 +442,7 @@ EOH
 
     print $html <<"EOH";
 
-          <tr><td colspan="17"><hr /></td></tr>
+          <tr><td colspan="17"><hr></td></tr>
           <tr>
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
             <td colspan="9"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
@@ -452,17 +460,16 @@ EOH
 
 sub header {
     print $html <<"EOH";
-<?xml version="1.0" encoding="utf-8"?>  
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">       
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
 <head>
-  <title>$author Perl QA page</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="Generator"          content="makewww.pl" />
-  <meta name="Author"             content="H.Merijn Brand" />
-  <meta name="Description"        content="Perl" />
+  <meta name="Generator"          content="makewww.pl">
+  <meta name="Author"             content="H.Merijn Brand">
+  <meta name="Description"        content="Perl">
+  <title>$author Perl QA page</title>
 
-  <link rel="stylesheet" type="text/css"  href="tux.css" />
+  <link rel="stylesheet" type="text/css"  href="tux.css">
   </head>
 <body>
 
@@ -514,10 +521,6 @@ sub footer {
   </table>
 
 <table>
-  <colgroup>
-    <col width="33%" />
-    <col width="33%" />
-    </colgroup>
   <tr>
     <td class="footer">&nbsp;</td>
     <td class="footer" style="text-align:center">

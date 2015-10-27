@@ -117,6 +117,12 @@ td.huiswerk {
     font-size:			80%;
     }
 
+.w17 {
+    width:			17%;
+    }
+.w33 {
+    width:			33%;
+    }
 .center {
     text-align:			center;
     }
@@ -131,6 +137,7 @@ td.huiswerk {
     }
 .footer {
     font-size:			60%;
+    width:			33%;
     }
 .dead {
     font-size:			60%;
