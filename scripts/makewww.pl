@@ -3,23 +3,24 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.20 - 2015-10-20";
+our $VERSION = "1.21 - 2015-10-27";
 
 sub usage
 {
-  my $err = shift and select STDERR;
-  say "usage: $0 [-v] [--git=author] [--travis=id] AUTHOR\n";
-  exit $err;
-  } # usage
+    my $err = shift and select STDERR;
+    say "usage: $0 [-v] [--git=author] [--travis=id] AUTHOR\n";
+    exit $err;
+    } # usage
 
 use Getopt::Long qw(:config bundling);
 my $opt_v = 0;
 GetOptions (
-  "help|?"	=> sub { usage (0); },
-  "v|verbose:1"	=> \$opt_v,
-  "g|git=s"	=> \my $git_id,
-  "t|travis=s"	=> \my $travis_id,
-  ) or usage (1);
+    "help|?"		=> sub { usage (0); },
+    "v|verbose:1"	=> \$opt_v,
+      "time!"		=> \my $opt_t,
+    "g|git=s"		=> \my $git_id,
+    "t|travis=s"	=> \my $travis_id,
+    ) or usage (1);
 
 my $author = shift or usage (1);
    $author = uc $author;
@@ -34,6 +35,7 @@ use LWP::UserAgent;
 use HTML::TreeBuilder;
 use Encode qw( encode decode );
 use Date::Calc qw( Parse_Date Date_to_Time );
+use Time::HiRes qw( gettimeofday tv_interval );
 
 use MetaCPAN::Client;
 use CPAN::Testers::WWW::Reports::Query::AJAX;
@@ -95,8 +97,7 @@ open  $html, ">", "$author.html";
 print $html $buffer;
 close $html;
 
-sub href
-{
+sub href {
     my ($txt, $ref, $ttl, $dtl) = (@_, "", "", "");
     if (ref $txt eq "HASH") {
 	$ttl = $txt->{title};
@@ -111,8 +112,7 @@ sub href
     $ref ? qq{<a href="$ref"$ttl>$txt</a>} : $txt // "-";
     } # href
 
-sub dta
-{
+sub dta {
     my ($tag, %attr, @arg) = ("td");
     for (@_) {
 	if (ref $_ eq "ARRAY") {
@@ -131,8 +131,23 @@ sub dta
     say $html "            <$tag>$link$info</td>";
     } # dta
 
-sub modules
-{
+my $t0;
+my %time;
+sub t_used {
+    my $now = [ gettimeofday ];
+    my $d = tv_interval ($t0, $now);
+    $t0 = $now;
+    return $d;
+    } # t_used
+
+sub show_times {
+    say STDERR "--- cumulative times used";
+    foreach my $t (sort keys %time) {
+	printf STDERR "%-11s : %7.3f\n", $t, $time{$t};
+	}
+    } # show_times
+
+sub modules {
     print $html <<"EOH";
 
   <tr class="boxed">
@@ -166,18 +181,25 @@ EOH
     $_ = $ua->get ("http://cpancover.com/latest/cpancover.json") and $_->is_success and
 	$coverage = decode_json ($_->content);
 
+    my $do_dr = 1; # Count downriver. Disable if it takes too long
+
     foreach my $mod (sort keys %mod) {
 
 	$opt_v and say $mod;
 
 	my $m    = $mod{$mod}; $m->{skip} and next;
 	my $dist = $mod =~ s/::/-/gr;
+
+	$t0 = [ gettimeofday ];
+
 	my $data = eval { $mcpan->module ($mod)->{data} } || {};
 	if ($m->{data}) {
 	    $data->{$_} = $m->{data}{$_} for keys %{$m->{data}};
 	    }
+	$time{init} += t_used;
 
 	$data->{fav} = $mcpan->favorite ({ distribution => $dist })->{total} || "-";
+	$time{favorite} += t_used;
 
 	my $rating = "";
 	$data->{rating} = { text => "-" };
@@ -191,6 +213,7 @@ EOH
 		    };
 		}
 	    }
+	$time{rating} += t_used;
 
 	$data->{version} //= "*";
 
@@ -210,6 +233,7 @@ EOH
 				    : $data->{kwc} >=  80 ? "na"
 				    : $data->{kwc} >=  60 ? "warn" : "fail";
 	     }
+	$time{kwalitee} += t_used;
 
 	# GIT repo and last commit
 	my $git = $m->{git}; # // "https://github.com/$git_id/$dist",
@@ -238,6 +262,7 @@ EOH
 		last;
 		}
 	    }
+	$time{git} += t_used;
 
 	# CPANTESTER results
 	!defined $data->{tests} and
@@ -245,6 +270,7 @@ EOH
 	      ($_ = CPAN::Testers::WWW::Reports::Query::AJAX->new (dist => $dist))
 		? [ $_->pass, $_->na, $_->fail, $_->unknown ]
 		: [ "", "", "", "" ];
+	$time{cpantesters} += t_used;
 
 	# RT tickets
 	my $rt = $m->{rt} // "http://rt.cpan.org/NoAuth/Bugs.html?Dist=$dist";
@@ -260,6 +286,7 @@ EOH
 		$rt_tag = scalar keys %id;
 		}
 	    }
+	$time{rt} += t_used;
 
 	# Github issues
 	my $issues;
@@ -287,21 +314,29 @@ EOH
 		    }
 		}
 	    }
+	$time{github} += t_used;
 	unless ($rt_tag =~ m/^[-0-9]?$/) {
 	    $rt_tag =
 		(($_ = $ua->get ("https://api.metacpan.org/distribution/$dist")) &&
 		  $_->is_success && decode_json ($_->content)->{bugs}{active}) || "*";
 	    }
+	$time{rt_tag} += t_used;
 
 	# Downriver deps
-	my $rd = $data->{rd} // do {
+	my $rd = $data->{rd} // ($do_dr ? do {
 	    $_ = $ua->get ("http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	    my $tree = HTML::TreeBuilder->new;
 	    $tree->parse_content ($_ && $_->is_success ? $_->content : "");
 	    my $x = 0;
 	    $x++ for $tree->look_down (_tag => "li");
 	    $x || "-";
+	    } : "\x{2241}");
+	$time{downriver} += do {
+	    my $tdr = t_used;
+	    $tdr > 30 and $do_dr = 0;	# On FAIL this take 180+ seconds
+	    $tdr;
 	    };
+
 	my $cos       = "-";
 	my $cos_class = [ "rd" ];
 	{   $_ = $ua->get ("http://deps.cpantesters.org/?module=$mod&perl=5.22.0&os=any+OS");
@@ -318,6 +353,7 @@ EOH
 		    }
 		}
 	    }
+	$time{success} += t_used;
 
 	# Release date
 	my $rel_date = ($data->{date} // " ") =~ s/T.*//r;
@@ -331,16 +367,19 @@ EOH
 		$span <=  365 ? "warn" : # orange, <=  1 year
 				"fail" ; # red
 	    }
+	$time{release} += t_used;
 
 	# Travis CI
 	my $tci = $m->{tci} // "https://travis-ci.org/$travis_id/$dist/builds";
 	my $tci_tag = $tci ?  "*" : "";
 	$tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success and
 	    $tci_tag = $_->content;
+	$time{travis} += t_used;
 
 	# ChangeLog
 	$m->{cpan} //= "http://metacpan.org/release/$dist";
 	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://metacpan.org/changes/distribution/$dist" : "";
+	$time{changelog} += t_used;
 
 	# Coverage
 	# http://cpancover.com/latest//Text-CSV_XS-1.18/index.html
@@ -348,7 +387,7 @@ EOH
 	    branch	=> "-",
 	    condition	=> "-",
 	    pod		=> "-",
-	    statement	=> "-",
+	    statement	=> "\x{237d}", # SHOULDERED OPEN BOX (uncovered)
 	    subroutine	=> "-",
 	    total	=> "-",
 	    };
@@ -361,11 +400,13 @@ EOH
 	    (sprintf "%-10s: %6s", $_, $data->{cover}{$_}) =~ s/ /\&nbsp;/gr;
 	    } sort keys %{$data->{cover}};
 	my $cvrt = { text => $data->{cover}{statement}, dtitle => $cvrl };
-	my $cvrc = $data->{cover}{total} eq "-"   ? "none"
-	         : $data->{cover}{total} eq "n/a" ? "none"
-		 : $data->{cover}{total} >= 90    ? "pass"
-		 : $data->{cover}{total} >= 70    ? "na"
-		 : $data->{cover}{total} >= 50    ? "warn" : "fail";
+	my $cvrc = $data->{cover}{total} eq "-"        ? "none"
+	         : $data->{cover}{total} eq "\x{237d}" ? "none"
+	         : $data->{cover}{total} eq "n/a"      ? "none"
+		 : $data->{cover}{total} >= 90         ? "pass"
+		 : $data->{cover}{total} >= 70         ? "na"
+		 : $data->{cover}{total} >= 50         ? "warn" : "fail";
+	$time{coverage} += t_used;
 
 	say $html qq{          <tr>};
 	dta (                { text => $dist, title => $data->{abstract} // $mod }, $m->{cpan});
@@ -387,6 +428,8 @@ EOH
 					$data->{fav} eq "-" ? undef : "https://metacpan.org/release/$dist/plussers");
 	dta (["kwt"       ], $data->{rating},         $rating);
 	say $html qq{            </tr>};
+
+	$opt_t && $opt_v and show_times;
 	}
 
     print $html <<"EOH";
@@ -403,10 +446,11 @@ EOH
       </td>
     </tr>
 EOH
+
+    $opt_t && !$opt_v and show_times;
     } # modules
 
-sub header
-{
+sub header {
     print $html <<"EOH";
 <?xml version="1.0" encoding="utf-8"?>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">       
@@ -425,8 +469,7 @@ sub header
 EOH
     } # header
 
-sub footer
-{
+sub footer {
     my @d = localtime;
     my $stamp = sprintf "%02d-%02d-%04d", $d[3], $d[4] + 1, $d[5] + 1900;
     print $html <<"EOH";
