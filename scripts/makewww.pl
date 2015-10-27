@@ -141,7 +141,7 @@ sub modules
       <table>
         <thead>
           <tr>
-            <th><a href="http://metacpan.org/author/$author">Distribution</a></th>
+            <th width="17%"><a href="http://metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="2"><a href="https://github.com/$git_id">repo</a></th>
