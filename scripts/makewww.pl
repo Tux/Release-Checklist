@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.19 - 2015-10-19";
+our $VERSION = "1.20 - 2015-10-20";
 
 sub usage
 {
@@ -91,7 +91,7 @@ header ();
 modules ();
 footer ();
 close $html;
-open  $html, ">:encoding(utf-8)", "myperl.html";
+open  $html, ">:encoding(utf-8)", "$author.html";
 print $html $buffer;
 close $html;
 
@@ -412,7 +412,7 @@ sub header
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">       
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>My Perl QA page</title>
+  <title>$author Perl QA page</title>
   <meta name="Generator"     content="makewww.pl" />
   <meta name="Author"        content="H.Merijn Brand" />
   <meta name="Description"   content="Perl" />
