@@ -56,21 +56,21 @@ $opt_v and say "Fetch releases from $author";
 	       $mod =~ s{^/release/}{} or next;
 	       $mod =~ s/-/::/g;
 	    $opt_v > 1 and say " $mod";
-	    $mod{$mod} = { git => "-" };
+	    $mod{$mod} = { git => "" };
 
-	    my $repo = "-";
+	    my $repo = "";
 	    my $j = $ua->get ("https://api.metacpan.org/source/$ttl/META.json");
 	    if ($j->is_success) {
 		my $meta = decode_json ($j->content);
-		$repo = $meta->{resources}{repository} || "-";
+		$repo = $meta->{resources}{repository} || "";
 		ref $repo eq "HASH" and
-		    $repo = $repo->{web} || $repo->{url} || "-";
+		    $repo = $repo->{web} || $repo->{url} || "";
 		}
 	    else {
 		$j = $ua->get ("https://api.metacpan.org/source/$ttl/META.yml");
 		if ($j->is_success) {
 		    my $meta = YAML::Tiny->read_string ($j->content);
-		    $repo = $meta->[0]{resources}{repository} || "-";
+		    $repo = $meta->[0]{resources}{repository} || "";
 		    }
 		}
 	    if ($repo =~ m{\bgithub\.com\b}) {
@@ -109,7 +109,7 @@ sub href {
     $txt //= "";
     $ttl and $ttl  =      qq{ title="$ttl"};
     $dtl and $ttl .= qq{ data-title="$dtl"};
-    $ref ? qq{<a href="$ref"$ttl>$txt</a>} : $txt // "-";
+    $ref && $ref ne "-" ? qq{<a href="$ref"$ttl>$txt</a>} : $txt // "-";
     } # href
 
 sub dta {
@@ -262,6 +262,7 @@ EOH
 		last;
 		}
 	    }
+	$git eq "" && !$git_tag->{dtitle} and $git_tag = "-";
 	$time{git} += t_used;
 
 	# CPANTESTER results
@@ -290,7 +291,7 @@ EOH
 
 	# Github issues
 	my $issues;
-	my $issues_tag  = "-";
+	my $issues_tag  = $git ? "-" : "";
 	my $issue_class = [ "date" ];
 	if ($git =~ m/\b github.com \b/x) {
 	    my $il = "$git/issues";
@@ -370,7 +371,7 @@ EOH
 	$time{release} += t_used;
 
 	# Travis CI
-	my $tci       = $m->{tci} // "https://travis-ci.org/$travis_id/$dist/builds";
+	my $tci       = $m->{tci} // ($git ? "https://travis-ci.org/$travis_id/$dist/builds" : "");
 	my $tci_tag   = $tci ?  "*" : "";
 	my $tci_class = [ "tci" ];
 	if ($tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success) {
@@ -425,11 +426,11 @@ EOH
 	dta (                { text => $dist, title => $data->{abstract} // $mod }, $m->{cpan});
 	dta (["version"   ], $data->{version},        $cll);
 	dta ($rel_clss,      $rel_date);
-	dta ($git_clss,      $git_tag,                $git);
+	dta ($git_clss,      $git_tag || "-",         $git);
 	dta ($issue_class,   $issues_tag,             $issues);
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "http://metacpan.org/module/$mod");
-	dta ($tci_class,     $tci_tag,                $tci);
+	dta ($tci_class,     $tci_tag || "-",         $tci);
 	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.perl.org/dist/overview/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
 	dta (["cpt","pass"], $data->{tests}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
