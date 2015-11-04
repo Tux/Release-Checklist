@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.21 - 2015-10-27";
+our $VERSION = "1.22 - 2015-11-04";
 
 sub usage
 {
@@ -124,7 +124,7 @@ sub dta {
 	}
     my $info = @arg > 2 ? join " ", "", splice @arg, 2 : "";
     my $link = href (@arg);
-    if ($tag =~ m{class=".*\b(pass|na|warn|fail)[ "]}) {
+    if ($tag =~ m{class=".*\b(pass|na|warn|fail|gray)[ "]}) {
 	my $c = $1;
 	$link =~ s{<a \K}{class="$c" };
 	}
@@ -333,7 +333,7 @@ EOH
 	    } : "\x{2241}");
 	$time{downriver} += do {
 	    my $tdr = t_used;
-	    $tdr > 30 and $do_dr = 0;	# On FAIL this take 180+ seconds
+	    $tdr > 120 and $do_dr = 0;	# On FAIL this takes 180+ seconds
 	    $tdr;
 	    };
 
@@ -383,6 +383,11 @@ EOH
 		$bs{error}   ? "warn" : "na";
 	    }
 	$time{travis} += t_used;
+	if ($tci_tag =~ m{^(?:unknown|\*|)$} && $git =~ m{\b github\.com \b}x) {
+	    $tci       = "$git/settings/hooks/new?service=travis";
+	    $tci_tag   = "add";
+	    $tci_class = [ "tci", "gray" ];
+	    }
 
 	# ChangeLog
 	$m->{cpan} //= "http://metacpan.org/release/$dist";
