@@ -3,10 +3,9 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.22 - 2015-11-04";
+our $VERSION = "1.23 - 2015-12-05";
 
-sub usage
-{
+sub usage {
     my $err = shift and select STDERR;
     say "usage: $0 [-v] [--git=author] [--travis=id] AUTHOR\n";
     exit $err;
@@ -159,7 +158,7 @@ sub modules {
             <th><a href="http://metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
-            <th class="tci" colspan="2"><a href="https://github.com/$git_id">repo</a></th>
+            <th class="tci" colspan="4"><a href="https://github.com/$git_id">repo</a></th>
             <th class="rhdr"><a href="http://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
             <th class="center">doc</th>
             <th class="tci"><a href="https://travis-ci.org/profile/$travis_id">TravisCI</a></th>
@@ -293,6 +292,10 @@ EOH
 	my $issues;
 	my $issues_tag  = $git ? "-" : "";
 	my $issue_class = [ "date" ];
+	my %pr = (
+	    "open"	=> [ "-", undef ],
+	    "closed"	=> [ "-", undef ],
+	    );
 	if ($git =~ m/\b github.com \b/x) {
 	    my $il = "$git/issues";
 	    $_ = $ua->get ($il);
@@ -313,6 +316,15 @@ EOH
 			$1 < 10 ? "na"   :
 			$1 < 25 ? "warn" : "fail");
 		    }
+		}
+
+	    $tree = HTML::TreeBuilder->new;
+	    $_ = $ua->get ("$git/pulls");
+	    $tree->parse_content ($_ && $_->is_success ? decode ("utf-8", $_->content) : "");
+	    foreach my $a ($tree->look_down (_tag => "a", href => qr{/issues\?q=is%3A})) {
+		my $t = lc $a->as_text;
+		$t =~ m/^\s* ([0-9]+) \s+ ( open | closed ) \s*$/x or next;
+		$pr{$2} = [ $1 + 0, "$git/pulls?q=is%3Apr+is%3A$2" ];
 		}
 	    }
 	$time{github} += t_used;
@@ -428,6 +440,8 @@ EOH
 	dta ($rel_clss,      $rel_date);
 	dta ($git_clss,      $git_tag || "-",         $git);
 	dta ($issue_class,   $issues_tag,             $issues);
+	dta ($issue_class,   $pr{"open"}[0],          $pr{"open"}[1]);
+	dta ($issue_class,   $pr{"closed"}[0],        $pr{"closed"}[1]);
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "http://metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
@@ -448,10 +462,10 @@ EOH
 
     print $html <<"EOH";
 
-          <tr><td colspan="17"><hr></td></tr>
+          <tr><td colspan="19"><hr></td></tr>
           <tr>
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
-            <td colspan="9"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
+            <td colspan="11"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
             <td colspan="3" class="center"><a href="http://matrix.cpantesters.org/?author=$author">matrix</a></td>
             <td colspan="4"></td>
             </tr>
