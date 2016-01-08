@@ -39,6 +39,7 @@ use Time::HiRes qw( gettimeofday tv_interval );
 use MetaCPAN::Client;
 use CPAN::Testers::WWW::Reports::Query::AJAX;
 
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 my $ua = LWP::UserAgent->new;
 $ua->agent ("Opera/30");
 
@@ -274,7 +275,7 @@ EOH
 	$time{cpantesters} += t_used;
 
 	# RT tickets
-	my $rt = $m->{rt} // "http://rt.cpan.org/NoAuth/Bugs.html?Dist=$dist";
+	my $rt = $m->{rt} // "http://rt.cpan.org/Public/Dist/Display.html?Name=$dist";
 	#                    "https://rt.cpan.org/Dist/Display.html?Name=$dist";
 	my $rt_tag = "*";
 	if ($rt =~ m{/rt.cpan.org/}) {
