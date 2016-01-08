@@ -182,6 +182,7 @@ EOH
 
     my $do_dr = 1; # Count downriver. Disable if it takes too long
 
+    my $eo = 0;
     foreach my $mod (sort keys %mod) {
 
 	$opt_v and say $mod;
@@ -434,7 +435,8 @@ EOH
 		 : $data->{cover}{total} >= 50         ? "warn" : "fail";
 	$time{coverage} += t_used;
 
-	say $html qq{          <tr>};
+	my $trc = $eo++ % 2 ? q{ class="other"} : "";
+	say $html qq{          <tr$trc>};
 	dta (                { text => $dist, title => $data->{abstract} // $mod }, $m->{cpan});
 	dta (["version"   ], $data->{version},        $cll);
 	dta ($rel_clss,      $rel_date);

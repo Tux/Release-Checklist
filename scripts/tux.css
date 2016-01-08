@@ -184,6 +184,9 @@ td.huiswerk {
 .gray, a.gray {
     color:			#808080;
     }
+.other {
+    background:			#fcfcfc;
+    }
 
 a[data-title]:hover:after {
     content:			attr(data-title);
