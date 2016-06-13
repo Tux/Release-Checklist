@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.23 - 2015-12-05";
+our $VERSION = "1.24 - 2016-06-13";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -179,7 +179,7 @@ EOH
 
     my $coverage = {};
     $_ = $ua->get ("http://cpancover.com/latest/cpancover.json") and $_->is_success and
-	$coverage = decode_json ($_->content);
+	$coverage = eval { decode_json ($_->content) } // {};
 
     my $do_dr = 1; # Count downriver. Disable if it takes too long
 
