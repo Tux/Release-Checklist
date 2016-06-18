@@ -57,8 +57,8 @@ $opt_v and say "Fetch releases from $author";
 	$mod{$mod} = { git => "" };
 
 	my $repo = "";
-	if (my $rrr = $rr->{resources}{repository}) {
-	    ref $rrr eq "HASH" and $repo = $rrr->{web} || $rrr->{url} || "";
+	if (my $rrr = $rr->{data}{resources}{repository}) {
+	    $repo = $rrr->{web} || $rrr->{url} || "";
 	    }
 
 	if ($repo =~ m{\bgithub\.com\b}) {
@@ -67,10 +67,12 @@ $opt_v and say "Fetch releases from $author";
 	    $repo =~ s{\.git$}{};
 	    $repo =~ m{github.com/([^/]+)} and $git_id //= $1;
 	    }
-	$mod{$mod}{git} = $repo;
-	$opt_v > 2 and say "  $repo";
+	$mod{$mod} = {
+	    git  => $repo,
+	    data => $rr->{data} // {},
+	    };
 
-	$mod{$mod}{data} = $rr->{data} // {};
+	$opt_v > 2 and say "  $repo";
 	}
     }
 
