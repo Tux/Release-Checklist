@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.24 - 2016-06-13";
+our $VERSION = "1.25 - 2016-06-18";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -26,10 +26,10 @@ my $author = shift or usage (1);
 my $auid1  = substr $author, 0, 1;
 my $auid3  = "$auid1/" . substr $author, 0, 2;
 
-use Data::Peek;
 use LWP;
 use JSON::XS;
 use YAML::Tiny;
+use Data::Peek;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
 use Encode qw( encode decode );
@@ -39,51 +39,41 @@ use Time::HiRes qw( gettimeofday tv_interval );
 use MetaCPAN::Client;
 use CPAN::Testers::WWW::Reports::Query::AJAX;
 
+my $mcpan   = MetaCPAN::Client->new ();
+my $mauthor = $mcpan->author ($author);
+
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 my $ua = LWP::UserAgent->new;
 $ua->agent ("Opera/30");
 
 my %mod;
-$opt_v and say "Fetch releases from $author";
-{   my $r = $ua->get ("https://metacpan.org/author/$author");
-    $r->is_success or die "Cannot fetch release list for $author\n";
-    my $tree = HTML::TreeBuilder->new;
-    $tree->parse_content (decode ("utf-8", $r->content));
-    foreach my $tbl ($tree->look_down (_tag => "table", id => "author_releases")) {
-	for ($tbl->look_down (_tag => "a", class => "ellipsis")) {
-	    my $ttl = $_->attr ("title");
-	    my $mod = $_->attr ("href");
-	       $mod =~ s{^/release/}{} or next;
-	       $mod =~ s/-/::/g;
-	    $opt_v > 1 and say " $mod";
-	    $mod{$mod} = { git => "" };
 
-	    my $repo = "";
-	    my $j = $ua->get ("https://api.metacpan.org/source/$ttl/META.json");
-	    if ($j->is_success) {
-		my $meta = decode_json ($j->content);
-		$repo = $meta->{resources}{repository} || "";
-		ref $repo eq "HASH" and
-		    $repo = $repo->{web} || $repo->{url} || "";
-		}
-	    else {
-		$j = $ua->get ("https://api.metacpan.org/source/$ttl/META.yml");
-		if ($j->is_success) {
-		    my $meta = YAML::Tiny->read_string ($j->content);
-		    $repo = $meta->[0]{resources}{repository} || "";
-		    }
-		}
-	    if ($repo =~ m{\bgithub\.com\b}) {
-		$repo =~ s{^git\@github.com:}{https://github.com/};
-		$repo =~ s{^git:}{https:};
-		$repo =~ s{\.git$}{};
-		$repo =~ m{github.com/([^/]+)} and $git_id //= $1;
-		}
-	    $mod{$mod}{git} = $repo;
-	    $opt_v > 2 and say "  $repo";
+$opt_v and say "Fetch releases from $author";
+{   my $ar = $mauthor->releases;
+    while (my $rr = $ar->next) {
+	my $mod = $rr->distribution =~ s{-}{::}gr; # Yeah, not 100% correct
+
+	$opt_v > 1 and say " $mod";
+	$mod{$mod} = { git => "" };
+
+	my $repo = "";
+	if (my $rrr = $rr->{resources}{repository}) {
+	    ref $rrr eq "HASH" and $repo = $rrr->{web} || $rrr->{url} || "";
 	    }
+
+	if ($repo =~ m{\bgithub\.com\b}) {
+	    $repo =~ s{^git\@github.com:}{https://github.com/};
+	    $repo =~ s{^git:}{https:};
+	    $repo =~ s{\.git$}{};
+	    $repo =~ m{github.com/([^/]+)} and $git_id //= $1;
+	    }
+	$mod{$mod}{git} = $repo;
+	$opt_v > 2 and say "  $repo";
+
+	$mod{$mod}{data} = $rr->{data} // {};
 	}
     }
+
 $git_id     //= lc $author;
 $travis_id  //= $git_id;
 
@@ -142,9 +132,7 @@ sub t_used {
 
 sub show_times {
     say STDERR "--- cumulative times used";
-    foreach my $t (sort keys %time) {
-	printf STDERR "%-11s : %7.3f\n", $t, $time{$t};
-	}
+    printf STDERR "%-11s : %7.3f\n", $_, $time{$_} for sort keys %time;
     } # show_times
 
 sub modules {
@@ -156,7 +144,7 @@ sub modules {
       <table>
         <thead>
           <tr>
-            <th><a href="http://metacpan.org/author/$author">Distribution</a></th>
+            <th><a href="https://metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="4"><a href="https://github.com/$git_id">repo</a></th>
@@ -175,11 +163,10 @@ sub modules {
         <tbody>
 EOH
 
-    my $mcpan = MetaCPAN::Client->new ();
-
     my $coverage = {};
-    $_ = $ua->get ("http://cpancover.com/latest/cpancover.json") and $_->is_success and
-	$coverage = eval { decode_json ($_->content) } // {};
+    my $r;
+    $r = $ua->get ("http://cpancover.com/latest/cpancover.json") and $r->is_success and
+	$coverage = eval { decode_json ($r->content) } // {};
 
     my $do_dr = 1; # Count downriver. Disable if it takes too long
 
@@ -193,6 +180,7 @@ EOH
 
 	$t0 = [ gettimeofday ];
 
+	$opt_v > 1 and warn " Base CPAN data\n";
 	my $data = eval { $mcpan->module ($mod)->{data} } || {};
 	if ($m->{data}) {
 	    $data->{$_} = $m->{data}{$_} for keys %{$m->{data}};
@@ -205,8 +193,9 @@ EOH
 	my $rating = "";
 	$data->{rating} = { text => "-" };
 	if (my $rs = $mcpan->rating ({ distribution => $dist })->scroller) {
+	    $opt_v > 1 and warn " Fetch rating\n";
 	    my $n = $rs->total;
-	    if (my $r = $rs->next) {
+	    if ($r = $rs->next) {
 		$rating = "http://cpanratings.perl.org/d/$dist";
 		$data->{rating} = {
 		    text   => $r->{_source}{rating},
@@ -221,8 +210,9 @@ EOH
 	# Kwalitee
 	my $kwtc = "none";
 	unless (defined $data->{kwalitee}) {
-	    ($_ = $ua->get ("http://cpants.cpanauthors.org/dist/$dist")) &&
-	     $_->is_success && $_->content =~ m{
+	    $opt_v > 1 and warn " Fetch kwalitee\n";
+	    ($r = $ua->get ("http://cpants.cpanauthors.org/dist/$dist")) &&
+	     $r->is_success && $r->content =~ m{
 		<dt> [\s\r\n]*  Kwalitee          [\s\r\n]* </dt> [\s\r\n]*
 		<dd> [\s\r\n]* ([0-9.]+)          [\s\r\n]* </dd> [\s\r\n]*
 		<dt> [\s\r\n]*  Core \s* Kwalitee [\s\r\n]* </dt> [\s\r\n]*
@@ -244,9 +234,10 @@ EOH
 	    };
 	my $git_clss = [ "git" ];
 	if ($git =~ m/\b github.com \b/x) {
-	    $_ = $ua->get ("$git/commits/master");
+	    $opt_v > 1 and warn " Fetch github master commits\n";
+	    $r = $ua->get ("$git/commits/master");
 	    my $tree = HTML::TreeBuilder->new;
-	    $tree->parse_content ($_ && $_->is_success ? decode ("utf-8", $_->content) : "");
+	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
 	    # Get most recent commit date
 	    for ($tree->look_down (_tag => "div", class => "commit-group-title")) {
 		# Commits on Apr 24, 2015
@@ -267,25 +258,36 @@ EOH
 	$time{git} += t_used;
 
 	# CPANTESTER results
-	!defined $data->{tests} and
-	    $data->{tests} =
-	      ($_ = CPAN::Testers::WWW::Reports::Query::AJAX->new (dist => $dist))
-		? [ $_->pass, $_->na, $_->fail, $_->unknown ]
+	$opt_v > 1 and warn " Fetch cpantesters\n";
+	!defined $data->{cptst} and
+	    $data->{cptst} =
+	      ($r = CPAN::Testers::WWW::Reports::Query::AJAX->new (dist => $dist))
+		? [ $r->pass, $r->na, $r->fail, $r->unknown ]
 		: [ "", "", "", "" ];
+	$opt_v > 7 and warn "  (@{$data->{cptst}})\n";
 	$time{cpantesters} += t_used;
 
 	# RT tickets
 	my $rt = $m->{rt} // "http://rt.cpan.org/Public/Dist/Display.html?Name=$dist";
-	#                    "https://rt.cpan.org/Dist/Display.html?Name=$dist";
+	# http://rt.cpan.org/NoAuth/Bugs.html?Dist=$dist"; - does not work anymore
+	# https://rt.cpan.org/Dist/Display.html?Name=$dist";
+	# https://rt.cpan.org/Dist/Display.html?Queue=DBD%3A%3ACSV
 	my $rt_tag = "*";
 	if ($rt =~ m{/rt.cpan.org/}) {
-	    if ($_ = $ua->get ($rt) and $_->is_success) {
+	    $opt_v > 1 and warn " Fetching RT ticket list\n";
+	    $opt_v > 2 and warn "  $rt\n";
+	    if ($r = $ua->get ($rt) and $r->is_success) {
 		my $tree = HTML::TreeBuilder->new;
-		$tree->parse_content (decode ("utf-8", $_->content));
+		$tree->parse_content (decode ("utf-8", $r->content));
+		#$opt_v > 8 and warn $tree->as_HTML (undef, "  ", {});
 		my %id;
 		$id{$_->attr ("href")}++ for
 		    $tree->look_down (_tag => "a", href => qr{^/Ticket/Display.html\?id=[0-9]+$});
+		$opt_v > 8 and DDumper \%id;
 		$rt_tag = scalar keys %id;
+		}
+	    else {
+		warn $r->status_line;
 		}
 	    }
 	$time{rt} += t_used;
@@ -299,13 +301,14 @@ EOH
 	    "closed"	=> [ "-", undef ],
 	    );
 	if ($git =~ m/\b github.com \b/x) {
+	    $opt_v > 1 and warn " Fetch github issues\n";
 	    my $il = "$git/issues";
-	    $_ = $ua->get ($il);
+	    $r = $ua->get ($il);
 	    my $tree = HTML::TreeBuilder->new;
-	    if ($_ && $_->is_success) {
+	    if ($r && $r->is_success) {
 		$issues     = $il;
 		$issues_tag = "0";
-		$tree->parse_content (decode ("utf-8", $_->content));
+		$tree->parse_content (decode ("utf-8", $r->content));
 		# Get most recent commit date
 		my $ib = $il =~ s{^https?://github.com}{}r;
 		$rt_tag eq "*" and $rt_tag = 0;
@@ -321,8 +324,8 @@ EOH
 		}
 
 	    $tree = HTML::TreeBuilder->new;
-	    $_ = $ua->get ("$git/pulls");
-	    $tree->parse_content ($_ && $_->is_success ? decode ("utf-8", $_->content) : "");
+	    $r = $ua->get ("$git/pulls");
+	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
 	    foreach my $a ($tree->look_down (_tag => "a", href => qr{/issues\?q=is%3A})) {
 		my $t = lc $a->as_text;
 		$t =~ m/^\s* ([0-9]+) \s+ ( open | closed ) \s*$/x or next;
@@ -330,18 +333,15 @@ EOH
 		}
 	    }
 	$time{github} += t_used;
-	unless ($rt_tag =~ m/^[-0-9]?$/) {
-	    $rt_tag =
-		(($_ = $ua->get ("https://api.metacpan.org/distribution/$dist")) &&
-		  $_->is_success && decode_json ($_->content)->{bugs}{active}) || "*";
-	    }
+	$rt_tag =~ m/^[-0-9]?$/ or
+	    $rt_tag = $mcpan->distribution ($dist)->bugs->{active} || "*";
 	$time{rt_tag} += t_used;
 
 	# Downriver deps
 	my $rd = $data->{rd} // ($do_dr ? do {
-	    $_ = $ua->get ("http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
+	    $r = $ua->get ("http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	    my $tree = HTML::TreeBuilder->new;
-	    $tree->parse_content ($_ && $_->is_success ? $_->content : "");
+	    $tree->parse_content ($r && $r->is_success ? $r->content : "");
 	    my $x = 0;
 	    $x++ for $tree->look_down (_tag => "li");
 	    $x || "-";
@@ -354,9 +354,9 @@ EOH
 
 	my $cos       = "-";
 	my $cos_class = [ "rd" ];
-	{   $_ = $ua->get ("http://deps.cpantesters.org/?module=$mod&perl=5.22.0&os=any+OS");
+	{   $r = $ua->get ("http://deps.cpantesters.org/?module=$mod&perl=5.22.0&os=any+OS");
 	    my $tree = HTML::TreeBuilder->new;
-	    $tree->parse_content ($_ && $_->is_success ? $_->content : "");
+	    $tree->parse_content ($r && $r->is_success ? $r->content : "");
 	    foreach my $tr ($tree->look_down (_tag => "tr", class => "results_chances")) {
 		my @td = $tr->look_down (_tag => "td");
 		if (@td && $td[-1]->as_text =~ m/\b([0-9]+)\s*%/) {
@@ -388,8 +388,8 @@ EOH
 	my $tci       = $m->{tci} // ($git ? "https://travis-ci.org/$travis_id/$dist/builds" : "");
 	my $tci_tag   = $tci ?  "*" : "";
 	my $tci_class = [ "tci" ];
-	if ($tci =~ m/travis-ci/ and $_ = $ua->get ($tci =~ s{/builds$}{.svg}r) and $_->is_success) {
-	    my %bs = map { $_ => 1 } ($_->content =~ m{<text[^>]+>([^<]+)</text>}g);
+	if ($tci =~ m/travis-ci/ and $r = $ua->get ($tci =~ s{/builds$}{.svg}r) and $r->is_success) {
+	    my %bs = map { $_ => 1 } ($r->content =~ m{<text[^>]+>([^<]+)</text>}g);
 	    delete $bs{build};
 	    $tci_tag = join "/" => sort keys %bs;
 	    push @$tci_class,
@@ -405,7 +405,7 @@ EOH
 	    }
 
 	# ChangeLog
-	$m->{cpan} //= "http://metacpan.org/release/$dist";
+	$m->{cpan} //= "https://metacpan.org/release/$dist";
 	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://metacpan.org/changes/distribution/$dist" : "";
 	$time{changelog} += t_used;
 
@@ -415,7 +415,7 @@ EOH
 	    branch	=> "-",
 	    condition	=> "-",
 	    pod		=> "-",
-	    statement	=> "\x{237d}", # SHOULDERED OPEN BOX (uncovered)
+	    statement	=> "&x#237d;", # SHOULDERED OPEN BOX (uncovered)
 	    subroutine	=> "-",
 	    total	=> "-",
 	    };
@@ -429,7 +429,7 @@ EOH
 	    } sort keys %{$data->{cover}};
 	my $cvrt = { text => $data->{cover}{statement}, dtitle => $cvrl };
 	my $cvrc = $data->{cover}{total} eq "-"        ? "none"
-	         : $data->{cover}{total} eq "\x{237d}" ? "none"
+	         : $data->{cover}{total} eq "&x#237d;" ? "none"
 	         : $data->{cover}{total} eq "n/a"      ? "none"
 		 : $data->{cover}{total} >= 90         ? "pass"
 		 : $data->{cover}{total} >= 70         ? "na"
@@ -446,13 +446,13 @@ EOH
 	dta ($issue_class,   $pr{"open"}[0],          $pr{"open"}[1]);
 	dta ($issue_class,   $pr{"closed"}[0],        $pr{"closed"}[1]);
 	dta (["rt"        ], $rt_tag,                 $rt);
-	dta (["center"    ], "doc",                   $m->{doc}    // "http://metacpan.org/module/$mod");
+	dta (["center"    ], "doc",                   $m->{doc}    // "https://metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
 	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.perl.org/dist/overview/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
-	dta (["cpt","pass"], $data->{tests}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
-	dta (["cpt","na"  ], $data->{tests}[1] // "");
-	dta (["cpt","fail"], $data->{tests}[2] // "", $m->{ctm}    // "http://matrix.cpantesters.org/?dist=$dist");
+	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
+	dta (["cpt","na"  ], $data->{cptst}[1] // "");
+	dta (["cpt","fail"], $data->{cptst}[2] // "", $m->{ctm}    // "http://matrix.cpantesters.org/?dist=$dist");
 	dta ($cos_class,     $cos,                                    "http://deps.cpantesters.org/?module=$mod&amp;perl=5.22.0&amp;os=Any+OS");
 	dta (["rd"        ], $rd,                     $m->{rd}     // "http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	dta (["kwt"       ], $data->{fav},
@@ -483,7 +483,7 @@ EOH
 
 sub header {
     print $html <<"EOH";
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -515,7 +515,7 @@ sub footer {
 	  <td><a href="http://www.perl.org">perl.org</a></td>
 	  </tr>
         <tr>
-	  <td><a href="http://metacpan.org">CPAN</a></td>
+	  <td><a href="https://metacpan.org">CPAN</a></td>
 	  <td><a href="http://backpan.perl.org">BackPAN</a></td>
 	  </tr>
         <tr>
