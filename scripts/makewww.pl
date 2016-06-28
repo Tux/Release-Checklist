@@ -417,7 +417,7 @@ EOH
 	    branch	=> "-",
 	    condition	=> "-",
 	    pod		=> "-",
-	    statement	=> "&x#237d;", # SHOULDERED OPEN BOX (uncovered)
+	    statement	=> "&#x237d;", # SHOULDERED OPEN BOX (uncovered)
 	    subroutine	=> "-",
 	    total	=> "-",
 	    };
@@ -431,7 +431,7 @@ EOH
 	    } sort keys %{$data->{cover}};
 	my $cvrt = { text => $data->{cover}{statement}, dtitle => $cvrl };
 	my $cvrc = $data->{cover}{total} eq "-"        ? "none"
-	         : $data->{cover}{total} eq "&x#237d;" ? "none"
+	         : $data->{cover}{total} eq "&#x237d;" ? "none"
 	         : $data->{cover}{total} eq "n/a"      ? "none"
 		 : $data->{cover}{total} >= 90         ? "pass"
 		 : $data->{cover}{total} >= 70         ? "na"
