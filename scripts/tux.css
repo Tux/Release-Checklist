@@ -42,6 +42,14 @@ p, dd {
     text-align:			justify;
     margin-bottom:		6px;
     }
+dt {
+    margin-left:		20px;
+    font-weight:		bold;
+    }
+dd {
+    margin-top:			10px;
+    margin-bottom:		20px;
+    }
 code, pre {
     color:			#7f0000;
     background:			#f7f7f7;
@@ -117,14 +125,11 @@ td.huiswerk {
     font-size:			80%;
     }
 
-.w17 {
-    width:			17%;
-    }
-.w33 {
-    width:			33%;
-    }
 .center {
     text-align:			center;
+    }
+.right {
+    text-align:			right;
     }
 .floatright {
     clear:			both;

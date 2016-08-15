@@ -39,7 +39,7 @@ use Time::HiRes qw( gettimeofday tv_interval );
 use MetaCPAN::Client;
 use CPAN::Testers::WWW::Reports::Query::AJAX;
 
-my $mcpan   = MetaCPAN::Client->new ();
+my $mcpan   = MetaCPAN::Client->new (domain => "fastapi.metacpan.org", version => "v1");
 my $mauthor = $mcpan->author ($author);
 
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
@@ -54,7 +54,6 @@ $opt_v and say "Fetch releases from $author";
 	my $mod = $rr->distribution =~ s{-}{::}gr; # Yeah, not 100% correct
 
 	$opt_v > 1 and say " $mod";
-	$mod{$mod} = { git => "" };
 
 	my $repo = "";
 	if (my $rrr = $rr->{data}{resources}{repository}) {
