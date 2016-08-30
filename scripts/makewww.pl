@@ -32,8 +32,9 @@ use YAML::Tiny;
 use Data::Peek;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
-use Encode qw( encode decode );
-use Date::Calc qw( Parse_Date Date_to_Time );
+use List::Util  qw( sum0 );
+use Encode      qw( encode decode );
+use Date::Calc  qw( Parse_Date Date_to_Time );
 use Time::HiRes qw( gettimeofday tv_interval );
 
 use MetaCPAN::Client;
@@ -280,7 +281,7 @@ EOH
 	    $opt_v > 1 and warn " Fetching RT ticket list\n";
 	    $opt_v > 2 and warn "  $rt\n";
 	    if ($mcpd and $r = $mcpd->bugs and ($r->{type} // "") eq "rt") {
-		$rt_tag = $r->{open} || 0 + $r->{new} || 0;
+		$rt_tag = sum0 map { $r->{$_} || 0 } qw( open new );
 		# Possibly use a popup to show active, closed, new, open,
 		# patched, rejected, resolved, stalled
 		}
