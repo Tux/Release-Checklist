@@ -279,7 +279,12 @@ EOH
 	if ($rt =~ m{/rt.cpan.org/}) {
 	    $opt_v > 1 and warn " Fetching RT ticket list\n";
 	    $opt_v > 2 and warn "  $rt\n";
-	    if ($r = $ua->get ($rt) and $r->is_success) {
+	    if ($mcpd and $r = $mcpd->bugs and ($r->{type} // "") eq "rt") {
+		$rt_tag = $r->{open} || 0 + $r->{new} || 0;
+		# Possibly use a popup to show active, closed, new, open,
+		# patched, rejected, resolved, stalled
+		}
+	    elsif ($r = $ua->get ($rt) and $r->is_success) {
 		my $tree = HTML::TreeBuilder->new;
 		$tree->parse_content (decode ("utf-8", $r->content));
 		#$opt_v > 8 and warn $tree->as_HTML (undef, "  ", {});
