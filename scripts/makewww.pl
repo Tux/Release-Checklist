@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.25 - 2016-06-18";
+our $VERSION = "1.26 - 2016-08-30";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -145,7 +145,7 @@ sub modules {
       <table>
         <thead>
           <tr>
-            <th><a href="https://metacpan.org/author/$author">Distribution</a></th>
+            <th><a href="https://v1.metacpan.org/author/$author">Distribution</a></th>
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="4"><a href="https://github.com/$git_id">repo</a></th>
@@ -207,6 +207,8 @@ EOH
 	$time{rating} += t_used;
 
 	$data->{version} //= "*";
+
+	my $mcpd = eval { $mcpan->distribution ($dist) };
 
 	# Kwalitee
 	my $kwtc = "none";
@@ -335,18 +337,20 @@ EOH
 	    }
 	$time{github} += t_used;
 	$rt_tag =~ m/^[-0-9]?$/ or
-	    $rt_tag = $mcpan->distribution ($dist)->bugs->{active} || "*";
+	    $rt_tag = ($mcpd ? $mcpd->bugs->{active} : "") || "*";
 	$time{rt_tag} += t_used;
 
 	# Downriver deps
-	my $rd = $data->{rd} // ($do_dr ? do {
+	my $rd = $mcpd ? $mcpd->river->{total} : undef;
+	$rd //= $data->{rd} // ($do_dr ? do {
 	    $r = $ua->get ("http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	    my $tree = HTML::TreeBuilder->new;
 	    $tree->parse_content ($r && $r->is_success ? $r->content : "");
 	    my $x = 0;
 	    $x++ for $tree->look_down (_tag => "li");
-	    $x || "-";
+	    $x;
 	    } : "\x{2241}");
+	$rd ||= "-";
 	$time{downriver} += do {
 	    my $tdr = t_used;
 	    $tdr > 120 and $do_dr = 0;	# On FAIL this takes 180+ seconds
@@ -406,8 +410,8 @@ EOH
 	    }
 
 	# ChangeLog
-	$m->{cpan} //= "https://metacpan.org/release/$dist";
-	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://metacpan.org/changes/distribution/$dist" : "";
+	$m->{cpan} //= "https://v1.metacpan.org/release/$dist";
+	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://v1.metacpan.org/changes/distribution/$dist" : "";
 	$time{changelog} += t_used;
 
 	# Coverage
@@ -447,7 +451,7 @@ EOH
 	dta ($issue_class,   $pr{"open"}[0],          $pr{"open"}[1]);
 	dta ($issue_class,   $pr{"closed"}[0],        $pr{"closed"}[1]);
 	dta (["rt"        ], $rt_tag,                 $rt);
-	dta (["center"    ], "doc",                   $m->{doc}    // "https://metacpan.org/module/$mod");
+	dta (["center"    ], "doc",                   $m->{doc}    // "https://v1.metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
 	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.perl.org/dist/overview/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
@@ -457,7 +461,7 @@ EOH
 	dta ($cos_class,     $cos,                                    "http://deps.cpantesters.org/?module=$mod&amp;perl=5.22.0&amp;os=Any+OS");
 	dta (["rd"        ], $rd,                     $m->{rd}     // "http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	dta (["kwt"       ], $data->{fav},
-					$data->{fav} eq "-" ? undef : "https://metacpan.org/release/$dist/plussers");
+					$data->{fav} eq "-" ? undef : "https://v1.metacpan.org/release/$dist/plussers");
 	dta (["kwt"       ], $data->{rating},         $rating);
 	say $html qq{            </tr>};
 
@@ -516,7 +520,7 @@ sub footer {
 	  <td><a href="http://www.perl.org">perl.org</a></td>
 	  </tr>
         <tr>
-	  <td><a href="https://metacpan.org">CPAN</a></td>
+	  <td><a href="https://v1.metacpan.org">CPAN</a></td>
 	  <td><a href="http://backpan.perl.org">BackPAN</a></td>
 	  </tr>
         <tr>
