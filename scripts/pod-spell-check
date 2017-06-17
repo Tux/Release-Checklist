@@ -1,12 +1,11 @@
 #!/usr/bin/env perl
 
-use strict;
+use 5.12.0;
 use warnings;
 
-my $VERSION = "1.01-20150807";
+my $VERSION = "1.02-20170617";
 
-sub usage
-{
+sub usage {
     my $err = shift and select STDERR;
     print "usage: $0 [--no-common] [--aspell] [--ispell]\n";
     exit $err;
@@ -37,6 +36,9 @@ my @files = @ARGV;
 s{^\./}{} for @files;
 @files = sort @files;
 
+binmode STDERR, ":encoding(utf-8)";
+binmode STDOUT, ":encoding(utf-8)";
+
 subtest "CommonMistakes" => sub {
     eval "use Pod::Spell::CommonMistakes qw( check_pod )";
     $@ and plan skip_all => "Pod::Spell::CommonMistakes not available";
@@ -62,7 +64,7 @@ subtest "Spell-check with aspell" => sub {
     $@ and
 	plan skip_all => "Text::Aspell not available";
 
-    if (!$opt_l && open my $af, "<", ".aspell.local.pws") {
+    if (!$opt_l && open my $af, "<:encoding(utf-8)", ".aspell.local.pws") {
 	scalar <$af> =~ m/ (\w+) / and $opt_l = $1;
 	close $af;
 	}
@@ -71,7 +73,7 @@ subtest "Spell-check with aspell" => sub {
     $opt_l and $speller->set_option ("lang", $opt_l);
 
     foreach my $sf (".aspell.local.pws", glob "$ENV{HOME}/.aspell.*.pws") {
-	open my $af, "<", $sf or next;
+	open my $af, "<:encoding(utf-8)", $sf or next;
 	while (<$af>) {
 	    if ($. == 1) {
 		m/\s+(\w\w[-_]\w\w)\s+[0-9]+\s*$/ and
@@ -155,6 +157,7 @@ package Pod::Aspell;
 
 use strict;
 use warnings;
+use Encode "decode";
 
 use Pod::Parser ();
 use parent "Pod::Parser";
@@ -168,8 +171,7 @@ use integer;
 use locale;    # so our uc/lc works right
 use Carp;
 
-sub new
-{
+sub new {
     my $x = shift;
     my $new = $x->SUPER::new (@_);
     $new->{spell_stopwords} = {};
@@ -178,8 +180,7 @@ sub new
     return $new;
     } # new
 
-sub output_handle
-{
+sub output_handle {
     my ($self, $arg) = @_;
     if ($arg) {
 	my $oh;
@@ -194,13 +195,22 @@ sub output_handle
     return $self->{oh} || $self->SUPER::output_handle ();
     } # output_handle
 
-sub parse_from_file
-{
+sub parse_from_file {
     my ($self, $fn) = @_;
 
     my $str = "";
     $self->output_handle (\$str);
-    $self->SUPER::parse_from_file ($fn);
+    open my $fh, "<", $fn or die "$fn: $!\n";
+    my $dta = do { local $/; <$fh>; };
+    close $fh;
+    eval {
+	my $utf = decode ("utf-8", $dta, 0);
+	$utf and $dta = $utf;
+	};
+    {	no warnings "utf8";
+	open $fh, "<", \$dta;
+	$self->SUPER::parse_from_filehandle ($fh);
+	}
 
     my %words;
     $words{$_}++ for $str =~ m/(\w+)/g;
@@ -209,8 +219,7 @@ sub parse_from_file
 
 sub verbatim { return ""; }    # totally ignore verbatim sections
 
-sub _get_stopwords_from
-{
+sub _get_stopwords_from {
     my $stopwords = $_[0]{spell_stopwords};
 
     my $word;
@@ -226,8 +235,7 @@ sub _get_stopwords_from
     return;
     } # _get_stopwords_from
 
-sub textblock
-{
+sub textblock {
     my ($self, $paragraph) = @_;
     if (@{$self->{region}}) {
 	my $last = $self->{region}[-1];
@@ -247,8 +255,7 @@ sub textblock
     return;
     } # textblock
 
-sub command
-{
+sub command {
     my $self    = shift;
     my $command = shift;
     $command eq "pod" and return;
@@ -286,8 +293,7 @@ sub command
     return;
     } # command
 
-sub interior_sequence
-{
+sub interior_sequence {
     my $self    = shift;
     my $command = shift;
 
@@ -331,8 +337,7 @@ sub interior_sequence
     carp "Unknown sequence $command<$_>";
     } # interior_sequence
 
-sub _treat_words
-{
+sub _treat_words {
     my $p = shift;
     # Count the things in $_[0]
 
