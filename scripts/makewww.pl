@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.27 - 2016-09-19";
+our $VERSION = "1.28 - 2018-01-01";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -40,12 +40,17 @@ use Time::HiRes qw( gettimeofday tv_interval );
 use MetaCPAN::Client;
 use CPAN::Testers::WWW::Reports::Query::AJAX;
 
-my $mcpan   = MetaCPAN::Client->new (domain => "fastapi.metacpan.org", version => "v1");
+my $mcpan   = MetaCPAN::Client->new ();
 my $mauthor = $mcpan->author ($author);
 
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 my $ua = LWP::UserAgent->new;
 $ua->agent ("Opera/30");
+
+# A dist    is https://metacpan.org/release/$dist_name
+# A release is https://metacpan.org/release/$author/$release
+# A module  is https://metacpan.org/pod/$module
+#           or https://metacpan.org/pod/release/$author/$release/$file_path
 
 my %mod;
 
@@ -159,6 +164,7 @@ sub modules {
             <th class="rhdr"><span style="color: green">&#x2714;</span><span style="color: red">&#x2718;</span></th>
             <th class="rhdr"><a href="http://deps.cpantesters.org">&#x219d;</a></th>
             <th class="rhdr" style="color: red">&#x2665;</th>
+            <th class="rhdr" style="color: black">&#x2605;</th>
             </tr>
           </thead>
         <tbody>
@@ -190,6 +196,21 @@ EOH
 
 	$data->{fav} = $mcpan->favorite ({ distribution => $dist })->{total} || "-";
 	$time{favorite} += t_used;
+
+	my $rating = "";
+	$data->{rating} = { text => "-" };
+	if (my $rs = $mcpan->rating ({ distribution => $dist })->scroller) {
+	    $opt_v > 1 and warn " Fetch rating\n";
+	    my $n = $rs->total;
+	    if ($r = $rs->next) {
+		$rating = "http://cpanratings.perl.org/d/$dist";
+		$data->{rating} = {
+		    text   => $r->{_source}{rating},
+		    dtitle => "$n votes",
+		    };
+		}
+	    }
+	$time{rating} += t_used;
 
 	$data->{version} //= "*";
 
@@ -443,7 +464,7 @@ EOH
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "https://v1.metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
-	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.perl.org/dist/overview/$dist");
+	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.cpanauthors.org/dist/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
 	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
 	dta (["cpt","na"  ], $data->{cptst}[1] // "");
@@ -452,6 +473,7 @@ EOH
 	dta (["rd"        ], $rd,                     $m->{rd}     // "http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	dta (["kwt"       ], $data->{fav},
 					$data->{fav} eq "-" ? undef : "https://v1.metacpan.org/release/$dist/plussers");
+	dta (["kwt"       ], $data->{rating},         $rating);
 	say $html qq{            </tr>};
 
 	$opt_t && $opt_v and show_times;
@@ -464,7 +486,7 @@ EOH
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
             <td colspan="11"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
             <td colspan="3" class="center"><a href="http://matrix.cpantesters.org/?author=$author">matrix</a></td>
-            <td colspan="3"></td>
+            <td colspan="4"></td>
             </tr>
           </tbody>
         </table>
