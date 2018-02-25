@@ -159,6 +159,30 @@ Sparc, PowerPC, …)
 Repeat this on as many Operating Systems as you can (Linux, NetBSD, OSX,
 HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 
+Testing against a -Duselongdouble compiled perl will surface bad tests,
+e.g. tests that match against NVs like 2.1:
+``` perl
+ use Test::More;
+ my $i = 21000000000000001;
+ $i /= 10e15;
+ is ($i, 2.1);
+ done_testing;
+```
+With -Uuselongdouble:
+```
+ ok 1
+ 1..1
+```
+with -Duselongdouble
+```
+ not ok 1
+ #   Failed test at -e line 1.
+ #          got: '2.1000000000000001'
+ #     expected: '2.1'
+ 1..1
+ # Looks like you failed 1 test of 1.
+```
+
 # XS
 
 If you use XS, make sure you (try to) support the widest range of perl
