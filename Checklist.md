@@ -47,6 +47,11 @@ if possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&searc
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
+If you are still using any additional Test:: module, do not mix your own
+code with the functionality from a/the module. Be consistent: use all or
+use nothing. That is: if the module you (now) use comes with features you
+had scripted yourself before using that module, replace them too.
+
 If adding tests after a bug-fix, add at least two tests: one that tests
 that the required (fixed) behavior now passes and that the invalid bahavior
 fails.
@@ -98,6 +103,10 @@ documentation as weird, unclear, or even plain wrong.
 
 Have examples of your code. Preferably both in the EXAMPLES section of the
 pod, as in a folder names examples.
+
+It is good practice to use your example code/scripts in your documentation
+too, as that gives you a two-way check (additional to your tests). Even
+better if the test scripts can be used as examples.
 
 # Test coverage
 
