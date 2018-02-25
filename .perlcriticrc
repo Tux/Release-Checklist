@@ -16,6 +16,7 @@ allow = for
 [Documentation::RequirePodSections]
 lib_sections	= NAME | SYNOPSIS | DESCRIPTION | SEE ALSO | AUTHOR | COPYRIGHT AND LICENSE
 script_sections	= NAME | SYNOPSIS | DESCRIPTION | SEE ALSO | AUTHOR | COPYRIGHT AND LICENSE
+#source = book
 
 [ErrorHandling::RequireCarping]
 allow_in_main_unless_in_subroutine = 1
@@ -29,7 +30,7 @@ hard_max = 133
 pct_allowed = 4
 
 [Variables::RequireLocalizedPunctuationVars]
-allow = @ARGV %ENV %SIG
+allow = @ARGV %ENV %SIG $|
 
 [ValuesAndExpressions::RequireNumberSeparators]
 min_value = 100000
@@ -44,6 +45,8 @@ min_value = 100000
 [-Bangs::ProhibitVagueNames]
 [-BuiltinFunctions::ProhibitComplexMappings]
 [-BuiltinFunctions::ProhibitReverseSortBlock]
+# Too many false positives for boolean grep
+[-BuiltinFunctions::ProhibitVoidGrep]
 [-BuiltinFunctions::RequireBlockGrep]
 [-ClassHierarchies::ProhibitExplicitISA]
 [-CodeLayout::ProhibitHardTabs]
@@ -73,6 +76,7 @@ min_value = 100000
 [-InputOutput::RequireCheckedClose]
 [-Lax::ProhibitComplexMappings::LinesNotStatements]
 [-Lax::ProhibitEmptyQuotes::ExceptAsFallback]
+[-Lax::RequireConstantOnLeftSideOfEquality::ExceptEq]
 [-Lax::ProhibitStringyEval::ExceptForRequire]
 [-Miscellanea::ProhibitFormats]
 [-Miscellanea::ProhibitTies]
@@ -100,6 +104,7 @@ min_value = 100000
 [-TestingAndDebugging::ProhibitNoWarnings]
 [-ValuesAndExpressions::ProhibitAccessOfPrivateData]
 [-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-ValuesAndExpressions::ProhibitEscapedCharacters]
 [-ValuesAndExpressions::ProhibitFiletest_f]
 [-ValuesAndExpressions::ProhibitInterpolationOfLiterals]
 [-ValuesAndExpressions::ProhibitLeadingZeros]
