@@ -53,7 +53,7 @@ use nothing. That is: if the module you (now) use comes with features you
 had scripted yourself before using that module, replace them too.
 
 If adding tests after a bug-fix, add at least two tests: one that tests
-that the required (fixed) behavior now passes and that the invalid bahavior
+that the required (fixed) behavior now passes and that the invalid behavior
 fails.
 
 # Documentation
@@ -117,7 +117,7 @@ never think of.
 If every line of your code is tested, not only do you prevent unexpected
 breakage, but you also make sure that most corner cases are tested. Besides
 that, it will probably confront your with questions like "What can I possibly
-do to get into this part of my code?". Which may cause optimisations and other
+do to get into this part of my code?". Which may cause optimizations and other
 fun.
 
 [Devel::Cover](https://metacpan.org/pod/Devel::Cover)
@@ -266,7 +266,7 @@ style and layout. Again: consistency helps. A lot.
 
 # META
 
-Make sure your meta-data matches the expected requirements. That can be achived
+Make sure your meta-data matches the expected requirements. That can be achieved
 by using a generator that produces conform the most recent specifications or by
 using tools to check handcrafted META-files against the
 [META spec 1.4 (2008)](http://module-build.sourceforge.net/META-spec-v1.4.html) or
@@ -295,7 +295,7 @@ Make sure it is a versioning system that increments
 
 # Changelog
 
-Make sure your [ChangeLog](./ChangeLog) or Changes file is up-todate. Your
+Make sure your [ChangeLog](./ChangeLog) or Changes file is up-to-date. Your
 release procedure might check the most recent mentioned date in that
 
 [Date::Calc](https://metacpan.org/pod/Date::Calc)
@@ -314,7 +314,7 @@ Check if your release matches previous performance
 Make a clear statement about your license. (or choose a default, but at least
 state it).
 
-Some target areas require a licence in order to allow a CPAN module to be
+Some target areas require a license in order to allow a CPAN module to be
 installed.
 
 # README / README.md

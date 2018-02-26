@@ -3,7 +3,7 @@
 use 5.12.0;
 use warnings;
 
-my $VERSION = "1.02-20170617";
+my $VERSION = "1.03-20180226";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -30,8 +30,8 @@ use File::Find;
 my @files = @ARGV;
 @files or find (sub {
     $File::Find::dir =~ m/\b blib /x and return;
-    m{\.(pm|md)$} and push @files, $File::Find::name;
-    m{^Change}i   and push @files, $File::Find::name;
+    m{\.(pm|pod)6?$} and push @files, $File::Find::name;
+    m{^Change}i      and push @files, $File::Find::name;
     }, glob "*");
 s{^\./}{} for @files;
 @files = sort @files;

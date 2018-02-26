@@ -6,6 +6,8 @@ inc/
 Build
 !Build/
 Build.bat
+Checklist.html
+Checklist.pod
 .last_cover_stats
 /Makefile
 /Makefile.old
@@ -18,5 +20,4 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
-Checklist.html
 scripts/myperl.html
