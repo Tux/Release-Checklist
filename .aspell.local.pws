@@ -1,4 +1,4 @@
-personal_ws-1.1 en 21
+personal_ws-1.1 en 22
 AIX
 CPANTS
 distclean
@@ -19,4 +19,5 @@ Sparc
 typoes
 Uuselongdouble
 valgrind
+versioning
 yml
