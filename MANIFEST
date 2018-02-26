@@ -1,5 +1,7 @@
 ChangeLog
 Checklist.md
+Checklist.pod
+Checklist.html
 CONTRIBUTING.md
 README.md
 LICENSE
@@ -9,3 +11,5 @@ Makefile.PL
 .releaserc
 scripts/pod-spell-check
 scripts/used-by.pl
+scripts/makewww.pl
+scripts/tux.css
