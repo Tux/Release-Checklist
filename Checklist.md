@@ -56,6 +56,18 @@ If adding tests after a bug-fix, add at least two tests: one that tests
 that the required (fixed) behavior now passes and that the invalid behavior
 fails.
 
+Check to see if your tests support running in parallel
+``` sh
+ $ prove -vwb -j8
+```
+
+If you have [Test2::Harness](https://metacpan.org/pod/Test2::Harness) installed,
+also test with yath
+``` sh
+ $ yath
+ $ yath -j8
+```
+
 # Documentation
 
 Make sure that you have a clear SYNOPSIS section. This section should show
