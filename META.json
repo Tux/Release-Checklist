@@ -11,7 +11,7 @@
   "provides"       : {
     "Release::Checklist" : {
       "file"                         : "Checklist.pm",
-      "version"                      : "0.05"
+      "version"                      : "0.07"
       }
     },
   "prereqs"        : {
@@ -47,14 +47,14 @@
         "Pod::Parser"                : "1.63",
         "Pod::Spell"                 : "1.20",
         "Pod::Spell::CommonMistakes" : "1.002",
-        "Test2::Harness"             : "0.001063",
+        "Test2::Harness"             : "0.001064",
         "Test::CPAN::Changes"        : "0.400002",
         "Test::CPAN::Meta::YAML"     : "0.25",
         "Test::Kwalitee"             : "1.27",
         "Test::Manifest"             : "2.02",
         "Test::MinimumVersion"       : "0.101082",
         "Test::MinimumVersion::Fast" : "0.04",
-        "Test::More"                 : "1.302133",
+        "Test::More"                 : "1.302135",
         "Test::Perl::Critic"         : "1.04",
         "Test::Perl::Critic::Policy" : "1.130",
         "Test::Pod"                  : "1.51",
@@ -67,5 +67,5 @@
       }
     },
   "release_status" : "stable",
-  "version"        : "0.05"
+  "version"        : "0.07"
   }

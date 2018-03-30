@@ -5,7 +5,7 @@
 require 5.006;
 use strict;
 
-our $VERSION = "0.05";
+our $VERSION = "0.07";
 
 use ExtUtils::MakeMaker;
 
@@ -55,7 +55,7 @@ tgzdist:
 	jsn2yml < META.json > META.yml
 	ln -s . Release-Checklist-$VERSION
 	sed "s,^,Release-Checklist-$VERSION/," MANIFEST >Mx
-	tar -czv -T Mx -f Release-Checklist-$VERSION.tgz
+	tar --format=ustar -czv -T Mx -f Release-Checklist-$VERSION.tgz
 	rm -f Mx Release-Checklist-$VERSION
 	cpants_lint.pl Release-Checklist-$VERSION.tgz
 EOPA
