@@ -5,7 +5,7 @@
 require 5.006;
 use strict;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 use ExtUtils::MakeMaker;
 
@@ -32,6 +32,8 @@ VERSION = $VERSION
 
 .PHONY:	test doc
 
+all::		Checklist.pm
+
 doc:		Checklist.html Checklist.pod
 
 Checklist.html:	Checklist.md
@@ -40,7 +42,7 @@ Checklist.html:	Checklist.md
 Checklist.pod:	Checklist.md
 	perl md2pod.pl
 
-Checklist.pm:	Checklist.pod
+Checklist.pm:	doc
 	perl pod2pm.pl
 
 test::		doc
@@ -50,6 +52,7 @@ test::		doc
 tgzdist:
 	perl check-versions.pl
 	perl -pi -e'm/"version"/ and s{"[0-9]\.[.0-9]+"}{"$VERSION"}' META.json
+	jsn2yml < META.json > META.yml
 	tar -czv -T MANIFEST -f Release-Checklist-$VERSION.tgz
 	cpants_lint.pl Release-Checklist-$VERSION.tgz
 EOPA

@@ -1,0 +1,10 @@
+\.git
+\.gitignore
+Makefile
+MANIFEST.SKIP
+sandbox
+sandbox/genMETA.pm
+scripts/myperl.html
+test.pl
+\.tar\.gz
+\.tgz

@@ -15,13 +15,15 @@ $d[9] && $m[9] && $m[9] >= $d[9] and exit 0;
 my $V;
 open my $mh, "<", "Makefile.PL"  or die "No Makefile.PL\n";
 while (<$mh>) {
-    m/VERSION \s*=\s* "?(\S+)"? \s* ;? $/x or next;
+    m/VERSION \s*=\s* "?(\S+?)"? \s* ;? $/x or next;
     $V = $1;
     last;
     }
 close $mh;
 
 $V or die "Cannot extract version from Makefile.PL\n";
+
+print "Writing Checklist.pm version $V\n";
 
 open my $fh, ">", "Checklist.pm" or die "Cannot create pm: $!\n";
 print $fh <<"EOPM";
