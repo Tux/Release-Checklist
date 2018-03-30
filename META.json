@@ -11,7 +11,7 @@
   "provides"       : {
     "Release::Checklist" : {
       "file"                         : "Checklist.pm",
-      "version"                      : "0.04"
+      "version"                      : "0.05"
       }
     },
   "prereqs"        : {
@@ -67,5 +67,5 @@
       }
     },
   "release_status" : "stable",
-  "version"        : "0.04"
+  "version"        : "0.05"
   }

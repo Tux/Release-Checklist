@@ -1,3 +1,9 @@
+0.05	30 Mar 2018 - H.Merijn Brand
+    * Indexer (of course) needs a single directory
+
+0.04	30 Mar 2018 - H.Merijn Brand
+    * Make distclean
+
 0.03	30 Mar 2018 - H.Merijn Brand
     * PAUSE needs a pm or provides in META
     * Make a real Makefile.PL (for install etc)
