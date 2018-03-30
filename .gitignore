@@ -19,5 +19,7 @@ nytprof.out
 /pm_to_blib
 *.o
 *.bs
+*.tar.gz
+*.tgz
 /_eumm/
 scripts/myperl.html

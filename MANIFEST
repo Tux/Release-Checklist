@@ -6,6 +6,8 @@ CONTRIBUTING.md
 README.md
 LICENSE
 Makefile.PL
+MANIFEST
+META.json
 .perlcriticrc
 .perltidyrc
 .releaserc
@@ -13,3 +15,4 @@ scripts/pod-spell-check
 scripts/used-by.pl
 scripts/makewww.pl
 scripts/tux.css
+t/01-hello.t

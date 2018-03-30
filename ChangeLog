@@ -1,4 +1,4 @@
-0.02	28 Mar 2018 - H.Merijn Brand
+0.02	30 Mar 2018 - H.Merijn Brand
     * It's 2016
     * Small changes to dashboard script
     * It's 2017
@@ -9,6 +9,8 @@
     * Add pm6 & pod6 for spellcheck
     * Update used-by.pl
     * Add reference to Test2::Harness
+    * Mention CPANTESTERS and version deps
+    * Update to a real valid dist
 
 0.01	18 Aug 2015 - H.Merijn Brand
     * First release

@@ -1,3 +1,7 @@
+# NAME
+
+Release::Checklist - A QA checklist for CPAN releases
+
 # Dependencies
 
 Only use default pragma's
@@ -134,6 +138,20 @@ fun.
 
 [Devel::Cover](https://metacpan.org/pod/Devel::Cover)
 [Test::TestCoverage](https://metacpan.org/pod/Test::TestCoverage)
+
+# Version coverage
+
+This is a hard one. If your release/dist requires specific versions of other
+modules, try to create an environment where you test your distribution against
+the required version *and* a version that does not meet the minimum version.
+
+If your module requires Foo::Bar-0.123 because it supports correct UTF-8
+encoding/decoding, and you wrote a test for that, your release is apt to fail
+in an environment where Foo::Bar-0.023 is installed.
+
+This gets really hard to set up if your release has different code for versions
+of perl and for versions of required modules, but it pays off eventually. Note
+that monitoring [CPANTESTERS](http://www.cpantesters.org) can be a huge help.
 
 # Minimal perl support
 
@@ -348,3 +366,10 @@ if the new release would cause the other module to break.
 
 [used_by.pl](scripts/used-by.pl) will check the depending modules with the
 upcoming version.
+
+# LICENSE
+
+Copyright (C) 2015-2018 H.Merijn Brand.  All rights reserved.
+
+This library is free software;  you can redistribute and/or modify it under
+the same terms as Perl itself.
