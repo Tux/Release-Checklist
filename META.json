@@ -1,0 +1,71 @@
+{ "abstract"       : "A QA checklist for CPAN releases",
+  "author"         : [ "H.Merijn Brand <h.m.brand@xs4all.nl>" ],
+  "dynamic_config" : 0,
+  "generated_by"   : "The author",
+  "license"        : [ "perl_5" ],
+  "meta-spec"      : {
+    "url"                : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+    "version"            : 2
+    },
+  "name"           : "Release-Checklist",
+  "provides"       : {
+    "Release::Checklist" : {
+      "file"                         : "Checklist.pm",
+      "version"                      : "0.03"
+      }
+    },
+  "prereqs"        : {
+    "build"        : {
+      "requires"   : {
+        "ExtUtils::MakeMaker"        : "0"
+        }
+      },
+    "configure"    : {
+      "requires"   : {
+        "ExtUtils::MakeMaker"        : "0"
+        }
+      },
+    "runtime"      : {
+      "requires"   : {
+        "perl"                       : "5.006",
+        "Test::More"                 : "0.88"
+        },
+      "recommends" : {
+        "perl"                       : "5.026002",
+        "CPAN::Meta::Converter"      : "2.150010",
+        "CPAN::Meta::Validator"      : "2.150010",
+        "Devel::Cover"               : "1.29",
+        "Devel::PPPort"              : "3.36",
+        "JSON::PP"                   : "2.97001",
+        "Module::CPANTS::Analyse"    : "0.96",
+        "Module::Release"            : "2.125",
+        "Parse::CPAN::Meta"          : "2.150010",
+        "Perl::Critic"               : "1.130",
+        "Perl::MinimumVersion"       : "1.38",
+        "Perl::Tidy"                 : "20180220",
+        "Pod::Escapes"               : "1.07",
+        "Pod::Parser"                : "1.63",
+        "Pod::Spell"                 : "1.20",
+        "Pod::Spell::CommonMistakes" : "1.002",
+        "Test2::Harness"             : "0.001063",
+        "Test::CPAN::Changes"        : "0.400002",
+        "Test::CPAN::Meta::YAML"     : "0.25",
+        "Test::Kwalitee"             : "1.27",
+        "Test::Manifest"             : "2.02",
+        "Test::MinimumVersion"       : "0.101082",
+        "Test::MinimumVersion::Fast" : "0.04",
+        "Test::More"                 : "1.302133",
+        "Test::Perl::Critic"         : "1.04",
+        "Test::Perl::Critic::Policy" : "1.130",
+        "Test::Pod"                  : "1.51",
+        "Test::Pod::Coverage"        : "1.10",
+        "Test::Version"              : "2.07",
+        "Text::Aspell"               : "0.09",
+        "Text::Ispell"               : "0.04",
+        "Text::Markdown"             : "1.000031"
+        }
+      }
+    },
+  "release_status" : "stable",
+  "version"        : "0.03"
+  }

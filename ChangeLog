@@ -1,3 +1,7 @@
+0.03	30 Mar 2018 - H.Merijn Brand
+    * PAUSE needs a pm or provides in META
+    * Make a real Makefile.PL (for install etc)
+
 0.02	30 Mar 2018 - H.Merijn Brand
     * It's 2016
     * Small changes to dashboard script
