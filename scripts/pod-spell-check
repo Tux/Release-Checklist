@@ -162,7 +162,6 @@ use Encode "decode";
 use Pod::Parser ();
 use parent "Pod::Parser";
 
-use Pod::Wordlist ();
 use Pod::Escapes  ("e2char");
 use Text::Wrap    ("wrap");
 $Text::Wrap::huge = "overflow";
@@ -171,14 +170,17 @@ use integer;
 use locale;    # so our uc/lc works right
 use Carp;
 
-sub new {
-    my $x = shift;
-    my $new = $x->SUPER::new (@_);
-    $new->{spell_stopwords} = {};
-    @{$new->{spell_stopwords}}{keys %Pod::Wordlist::Wordlist} = ();
-    $new->{region} = [];
-    return $new;
-    } # new
+{   eval { require Pod::Wordlist };
+    $Pod::Wordlist::Wordlist{package} = 1;
+    sub new {
+	my $x = shift;
+	my $new = $x->SUPER::new (@_);
+	$new->{spell_stopwords} = {};
+	@{$new->{spell_stopwords}}{keys %Pod::Wordlist::Wordlist} = ();
+	$new->{region} = [];
+	return $new;
+	} # new
+    }
 
 sub output_handle {
     my ($self, $arg) = @_;
