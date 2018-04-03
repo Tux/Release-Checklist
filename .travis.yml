@@ -1,0 +1,12 @@
+language: perl
+os:
+  - linux
+perl:
+  - "5.26"
+  - "5.24"
+notifications:
+  irc:
+    channels:
+      - "irc.perl.org#csv"
+    on_success: always
+    on_failure: always
