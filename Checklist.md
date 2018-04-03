@@ -190,7 +190,9 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.
 
+``` sh
  $ perl -wc lib/Foo/Bar.pm
+```
 
 [Module::Release](https://metacpan.org/pod/Module::Release)
 
