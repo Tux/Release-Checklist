@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Release Checklist</title>
+  </head>
+<body>
+<h1 id="name">NAME</h1>
+
+<p>Release::Checklist - A QA checklist for CPAN releases</p>
+
+<h1 id="dependencies">Dependencies</h1>
+
+<p>Only use default pragma&#8217;s</p>
+
+<pre><code class="perl"> use 5.22.0;
+ use strict;
+ use feature &quot;say&quot;;
+ use warnings;
+</code></pre>
+
+<p>Do not add useless additional dependencies like
+<a href="https://metacpan.org/pod/sanity">sanity</a>,
+<a href="https://metacpan.org/pod/Modern::Perl">Modern::Perl</a>,
+common::sense, or <a href="https://metacpan.org/pod/nonsense">nonsense</a>.
+However useful they might be in your own working environment and
+force you into behaving well, adding them as a requirement to a
+CPAN module will increase the complexity of the requirements to
+probably no good use, as they are unlikely to be found on all your
+targeted systems and add a chance to break.</p>
+
+<p>There is no problem with you using those in your own (non-CPAN)
+scripts and modules, but please do not add needless dependencies.</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::Prereq">Test::Prereq</a></li>
+</ul>
+
+<h1 id="test">Test</h1>
+
+<p>Test, test and test. The more you test, the lower the chance you
+will break your code with small changes.</p>
+
+<pre><code class="perl"> use strict;
+ use warnings;
+ use Test::More;
+ :
+ done_testing ();
+</code></pre>
+
+<p>Separate your module tests and your author tests</p>
+
+<pre><code>t/
+xt/
+</code></pre>
+
+<p>if possible, do not use <a href="https://metacpan.org/search?q=Test%3A%3A&amp;search_type=modules">Test::*</a>
+modules that you do not actually require, however fancy they may be.
+See the point about dependencies.</p>
+
+<p>If you are still using any additional Test:: module, do not mix your own
+code with the functionality from a/the module. Be consistent: use all or
+use nothing. That is: if the module you (now) use comes with features you
+had scripted yourself before using that module, replace them too.</p>
+
+<p>If adding tests after a bug-fix, add at least two tests: one that tests
+that the required (fixed) behavior now passes and that the invalid behavior
+fails.</p>
+
+<p>Check to see if your tests support running in parallel</p>
+
+<pre><code class="sh"> $ prove -vwb -j8
+</code></pre>
+
+<p>If you have <a href="https://metacpan.org/pod/Test2::Harness">Test2::Harness</a> installed,
+also test with yath</p>
+
+<pre><code class="sh"> $ yath
+ $ yath -j8
+</code></pre>
+
+<h1 id="documentation">Documentation</h1>
+
+<p>Make sure that you have a clear SYNOPSIS section. This section should show
+the most important code as simple and clear as possible. If you have 3500
+methods in your class, do not list all of the there. Just show how to create
+the object and show the 4 methods that a beginner would use.</p>
+
+<p>Make sure your documentation is complete and all your methods and/or
+functions are documented. If you have private functions, mentions that in the
+documentation, so users can read that they might disappear without warning.</p>
+
+<p>Make sure your pod is correct and can also be parsed by the pod-modules in
+the lowest version of perl you support (or mention that you need at least
+version whatever to read the pod as intended).</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::Pod">Test::Pod</a></li>
+<li> <a href="https://metacpan.org/pod/Test::Pod::Coverage">Test::Pod::Coverage</a></li>
+</ul>
+
+<h1 id="spelling">Spelling</h1>
+
+<p>Not every developer is of native English tongue. And even if, they
+also make (spelling) mistakes. There are enough tools available to
+prevent public display of misspellings and typoes. Use them.</p>
+
+<p>It is a good plan to have someone else proofread your documentation.
+If you can, ask three readers: one who knows about what the module is
+about, one who can be seen as an end-user of this modules without any
+knowledge about the internals, and last someone who has no clue about
+programming. You might be surprised of what they will find in the
+documentation as weird, unclear, or even plain wrong.</p>
+
+<ul>
+<li><p> <a href="scripts/pod-spell-check">pod-spell-check</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Aspell">Pod::Aspell</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Escapes">Pod::Escapes</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Parser">Pod::Parser</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Spell">Pod::Spell</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Spell::CommonMistakes">Pod::Spell::CommonMistakes</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Pod::Wordlist">Pod::Wordlist</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Text::Aspell">Text::Aspell</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Text::Ispell">Text::Ispell</a></p></li>
+<li><p> <a href="https://metacpan.org/pod/Text::Wrap">Text::Wrap</a></p></li>
+</ul>
+
+<h1 id="examples">Examples</h1>
+
+<p>Have examples of your code. Preferably both in the EXAMPLES section of the
+pod, as in a folder names examples.</p>
+
+<p>It is good practice to use your example code/scripts in your documentation
+too, as that gives you a two-way check (additional to your tests). Even
+better if the test scripts can be used as examples.</p>
+
+<h1 id="testcoverage">Test coverage</h1>
+
+<p>Do not just test what you think would be used. There <em>will</em> be users that try
+to bend the rules and invent ways for your module to be useful that you would
+never think of.</p>
+
+<p>If every line of your code is tested, not only do you prevent unexpected
+breakage, but you also make sure that most corner cases are tested. Besides
+that, it will probably confront your with questions like &#8220;What can I possibly
+do to get into this part of my code?&#8221;. Which may cause optimizations and other
+fun.</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Devel::Cover">Devel::Cover</a></li>
+<li> <a href="https://metacpan.org/pod/Test::TestCoverage">Test::TestCoverage</a></li>
+</ul>
+
+<h1 id="versioncoverage">Version coverage</h1>
+
+<p>This is a hard one. If your release/dist requires specific versions of other
+modules, try to create an environment where you test your distribution against
+the required version <em>and</em> a version that does not meet the minimum version.</p>
+
+<p>If your module requires Foo::Bar-0.123 because it supports correct UTF-8
+encoding/decoding, and you wrote a test for that, your release is apt to fail
+in an environment where Foo::Bar-0.023 is installed.</p>
+
+<p>This gets really hard to set up if your release has different code for versions
+of perl and for versions of required modules, but it pays off eventually. Note
+that monitoring <a href="http://www.cpantesters.org">CPANTESTERS</a> can be a huge help.</p>
+
+<h1 id="minimalperlsupport">Minimal perl support</h1>
+
+<p>Your Makefile.PL (or whatever build system you use) will have to state
+a minimal supported perl version that ends up in META.json and META.yml</p>
+
+<p>Do not guess. It is easy to check with</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::MinimumVersion">Test::MinimumVersion</a></li>
+<li> <a href="https://metacpan.org/pod/Test::MinimumVersion::Fast">Test::MinimumVersion::Fast</a>.</li>
+<li> <a href="https://metacpan.org/release/Perl-MinimumVersion">Perl::MinimumVersion</a> comes with
+the <a href="https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver">perlver</a>
+tool:</li>
+</ul>
+
+<pre><code class="shell">$ perlver --blame test.pl
+
+ --------------------------------------------------
+ File    : test.pl
+ Line    : 3
+ Char    : 14
+ Rule    : _perl_5010_operators
+ Version : 5.010
+ --------------------------------------------------
+ //
+ --------------------------------------------------
+</code></pre>
+
+<h1 id="multipleperlversions">Multiple perl versions</h1>
+
+<p>If you have multiple perls installed on your system, test your module
+or release with all of them before doing the release. Best would be to
+test with a threaded perl and a non-threaded perl. If you can test with
+a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
+better.</p>
+
+<pre><code class="sh"> $ perl -wc lib/Foo/Bar.pm
+</code></pre>
+
+<ul>
+<li><p> <a href="https://metacpan.org/pod/Module::Release">Module::Release</a></p></li>
+<li><p> <a href="./.releaserc">.releaserc</a></p></li>
+</ul>
+
+<p>Repeat this on as many architectures as you can (i586, x64, IA64, PA-RISC,
+Sparc, PowerPC, …)</p>
+
+<p>Repeat this on as many Operating Systems as you can (Linux, NetBSD, OSX,
+HP-UX, Solaris, Windows, OpenVMS, AIX, …)</p>
+
+<p>Testing against a -Duselongdouble compiled perl will surface bad tests,
+e.g. tests that match against NVs like 2.1:</p>
+
+<pre><code class="perl"> use Test::More;
+ my $i = 21000000000000001;
+ $i /= 10e15;
+ is ($i, 2.1);
+ done_testing;
+</code></pre>
+
+<p>With -Uuselongdouble:</p>
+
+<pre><code> ok 1
+ 1..1
+</code></pre>
+
+<p>with -Duselongdouble</p>
+
+<pre><code> not ok 1
+ #Failed test at -e line 1.
+ #got: '2.1000000000000001'
+ #expected: '2.1'
+ 1..1
+ #Looks like you failed 1 test of 1.
+</code></pre>
+
+<h1 id="xs">XS</h1>
+
+<p>If you use XS, make sure you (try to) support the widest range of perl
+versions.</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Devel::PPPort">Devel::PPPort</a> (most recent version)</li>
+</ul>
+
+<h1 id="leaktests">Leak tests</h1>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::LeakTrace::Script">Test::LeakTrace::Script</a></li>
+<li> <a href="https://metacpan.org/pod/Test::Valgrind">Test::Valgrind</a></li>
+<li> <a href="http://valgrind.org">valgrind</a></li>
+</ul>
+
+<h1 id="releasearchive">Release archive</h1>
+
+<p>Some see <a href="http://cpants.perl.org/">CPANTS</a> as a game, but many of the tests
+it puts on your release have a reason. Before you upload, you can check most
+of that to prevent unhappy users.</p>
+
+<ul>
+<li> <a href="....">Test::Package</a></li>
+<li> <a href="https://metacpan.org/pod/Test::Kwalitee">Test::Kwalitee</a></li>
+<li> <a href="https://metacpan.org/pod/Module::CPANTS::Analyse">Module::CPANTS::Analyse</a></li>
+<li> <a href="https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl">cpants_lint.pl</a></li>
+</ul>
+
+<pre><code class="sh"> $ perl Makefile.PL
+ $ make test
+ $ make dist
+ $ cpants_lint.pl Foo-Bar-0.01.tar.gz
+ Checked dist: Foo-Bar-0.01.tar.gz
+ Score: 144.44% (26/18)
+ Congratulations for building a 'perfect' distribution!
+ $
+</code></pre>
+
+<h1 id="cleandist">Clean dist</h1>
+
+<p>Some problems only surface when you do a make clean or make distclean.
+The develop cycle normally only adds and changes files, and if you forget
+to add those to the MANIFEST, your distribution will be incomplete and
+is likely to fail on other systems, whereas your tests locally still
+keep passing.</p>
+
+<p><a href="./MANIFEST">MANIFEST</a> and <a href="MANIFEST.skip">MANIFEST.skip</a> are complete</p>
+
+<pre><code class="sh"> $ make dist
+ $ make distclean
+</code></pre>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::Manifest">Test::Manifest</a></li>
+<li> <a href="https://metacpan.org/pod/Test::DistManifest">Test::DistManifest</a></li>
+</ul>
+
+<h1 id="codestyleconsistency">Code style consistency</h1>
+
+<p>Add a <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a> or similar file to guide others to
+consistency that will match <a href="http://tux.nl/style.html"><em>your</em> style</a> (or, in
+case of joint effort, the style as agreed upon by the developers).</p>
+
+<p>There are helper modules to enforce a style (given a configuration) or to try
+to help contributors to come up with a path/change than matches the project&#8217;s
+style and layout. Again: consistency helps. A lot.</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Perl::Tidy">Perl::Tidy</a></li>
+<li> <a href="https://metacpan.org/pod/Perl::Critic">Perl::Critic</a> + <a href="https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&amp;search_type=modules">plugins</a>, lot of choices</li>
+<li> <a href="https://metacpan.org/pod/Test::Perl::Critic">Test::Perl::Critic</a></li>
+<li> <a href="https://metacpan.org/pod/Test::Perl::Critic::Policy">Test::Perl::Critic::Policy</a></li>
+<li> <a href="https://metacpan.org/pod/Test::TrailingSpace">Test::TrailingSpace</a></li>
+<li> <a href="https://metacpan.org/pod/Perl::Lint">Perl::Lint</a></li>
+</ul>
+
+<p><a href="./.perltidyrc">.perltidy</a> and <a href="./.perlcriticrc">.perlcritic</a>.</p>
+
+<h1 id="meta">META</h1>
+
+<p>Make sure your meta-data matches the expected requirements. That can be achieved
+by using a generator that produces conform the most recent specifications or by
+using tools to check handcrafted META-files against the
+<a href="http://module-build.sourceforge.net/META-spec-v1.4.html">META spec 1.4 (2008)</a> or
+<a href="http://module-build.sourceforge.net/META-spec-v2.0.html">META spec 2.0 (2011)</a>:</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/CPAN::Meta::Converter">CPAN::Meta::Converter</a></li>
+<li> <a href="https://metacpan.org/pod/CPAN::Meta::Validator">CPAN::Meta::Validator</a></li>
+<li> <a href="https://metacpan.org/pod/JSON::PP">JSON::PP</a></li>
+<li> <a href="https://metacpan.org/pod/Parse::CPAN::Meta">Parse::CPAN::Meta</a></li>
+<li> <a href="https://metacpan.org/pod/Test::CPAN::Meta::JSON">Test::CPAN::Meta::JSON</a></li>
+<li> <a href="https://metacpan.org/pod/Test::CPAN::Meta::YAML">Test::CPAN::Meta::YAML</a></li>
+<li> <a href="https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version">Test::CPAN::Meta::YAML::Version</a></li>
+<li> <a href="https://metacpan.org/pod/YAML::Syck">YAML::Syck</a></li>
+</ul>
+
+<h1 id="versions">Versions</h1>
+
+<p>Use a sane versioning system that the rest of the world might understand.
+Do not use the MD5 of the current date and time related to the phase of the
+moon or versions that include quotes or spaces. Keep it simple and clear.</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::Version">Test::Version</a></li>
+</ul>
+
+<p>Make sure it is a versioning system that increments</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::GreaterVersion">Test::GreaterVersion</a></li>
+</ul>
+
+<h1 id="changelog">Changelog</h1>
+
+<p>Make sure your <a href="./ChangeLog">ChangeLog</a> or Changes file is up-to-date. Your
+release procedure might check the most recent mentioned date in that</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Date::Calc">Date::Calc</a></li>
+<li> <a href="https://metacpan.org/pod/Test::CPAN::Changes">Test::CPAN::Changes</a></li>
+</ul>
+
+<h1 id="performance">Performance</h1>
+
+<p>Check if your release matches previous performance</p>
+
+<ul>
+<li> between different versions of perl</li>
+<li> between different versions of the module</li>
+<li> between different versions of dependencies</li>
+</ul>
+
+<h1 id="license">License</h1>
+
+<p>Make a clear statement about your license. (or choose a default, but at least
+state it).</p>
+
+<p>Some target areas require a license in order to allow a CPAN module to be
+installed.</p>
+
+<h1 id="readmereadme.md">README / README.md</h1>
+
+<p>Add a <a href="./README.md">file</a> the states in short the purpose of your distribution.</p>
+
+<p>Make sure your SYNOPSIS section in the pod makes sense</p>
+
+<ul>
+<li> <a href="https://metacpan.org/pod/Test::Synopsis">Test::Synopsis</a></li>
+<li> <a href="https://metacpan.org/pod/Text::Markdown">Text::Markdown</a></li>
+</ul>
+
+<h1 id="downriver">Downriver</h1>
+
+<p>You have had reasons to make the changes leading up to a new distribution. If
+you really care about the users of your module, you should check if your new
+release would break any of the CPAN modules that (indirectly) depend on your
+module by testing with your previous release and your upcoming release and see
+if the new release would cause the other module to break.</p>
+
+<p><a href="scripts/used-by.pl">used_by.pl</a> will check the depending modules with the
+upcoming version.</p>
+
+<h1 id="license">LICENSE</h1>
+
+<p>Copyright (C) 2015&#8211;2018 H.Merijn Brand. All rights reserved.</p>
+
+<p>This library is free software; you can redistribute and/or modify it under
+the same terms as Perl itself.</p>
+</body></html>

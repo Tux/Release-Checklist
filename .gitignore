@@ -6,8 +6,6 @@ inc/
 Build
 !Build/
 Build.bat
-Checklist.html
-Checklist.pod
 .last_cover_stats
 /Makefile
 /Makefile.old
