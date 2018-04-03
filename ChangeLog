@@ -1,5 +1,9 @@
+0.09	03 Apr 2018 - H.Merijn Brand
+    * More md -> pod fixes
+
 0.08	03 Apr 2018 - H.Merijn Brand
     * Add Travis CI
+    * Some md > POD formatting fixes
 
 0.07	31 Mar 2018 - H.Merijn Brand
     * Add META.resources

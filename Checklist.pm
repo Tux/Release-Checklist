@@ -3,7 +3,7 @@ package Release::Checklist;
 use strict;
 use warnings;
 
-our $VERSION = "0.03";
+our $VERSION = "0.09";
 
 1;
 
@@ -20,7 +20,7 @@ Release::Checklist - A QA checklist for CPAN releases
 
 Only use default pragma's
 
- perl
+ 
   use 5.22.0;
   use strict;
   use feature "say";
@@ -40,7 +40,14 @@ targeted systems and add a chance to break.
 There is no problem with you using those in your own (non-CPAN)
 scripts and modules, but please do not add needless dependencies.
 
+=over
+
+=item -
+
 L<Test::Prereq|https://metacpan.org/pod/Test::Prereq>
+
+
+=back
 
 
 =head1 Test
@@ -48,7 +55,7 @@ L<Test::Prereq|https://metacpan.org/pod/Test::Prereq>
 Test, test and test. The more you test, the lower the chance you
 will break your code with small changes.
 
- perl
+ 
   use strict;
   use warnings;
   use Test::More;
@@ -57,6 +64,7 @@ will break your code with small changes.
 
 
 Separate your module tests and your author tests
+
  
  t/
  xt/
@@ -76,13 +84,15 @@ that the required (fixed) behavior now passes and that the invalid behavior
 fails.
 
 Check to see if your tests support running in parallel
- sh
+
+ 
   $ prove -vwb -j8
 
 
 If you have L<Test2::Harness|https://metacpan.org/pod/Test2::Harness> installed,
 also test with yath
- sh
+
+ 
   $ yath
   $ yath -j8
 
@@ -103,8 +113,19 @@ Make sure your pod is correct and can also be parsed by the pod-modules in
 the lowest version of perl you support (or mention that you need at least
 version whatever to read the pod as intended).
 
+=over
+
+=item -
+
 L<Test::Pod|https://metacpan.org/pod/Test::Pod>
+
+
+=item -
+
 L<Test::Pod::Coverage|https://metacpan.org/pod/Test::Pod::Coverage>
+
+
+=back
 
 
 =head1 Spelling
@@ -120,17 +141,60 @@ knowledge about the internals, and last someone who has no clue about
 programming.  You might be surprised of what they will find in the
 documentation as weird, unclear, or even plain wrong.
 
+=over
+
+=item -
+
 L<pod-spell-check|scripts/pod-spell-check>
 
+
+
+=item -
+
 L<Pod::Aspell|https://metacpan.org/pod/Pod::Aspell>
+
+
+=item -
+
 L<Pod::Escapes|https://metacpan.org/pod/Pod::Escapes>
+
+
+=item -
+
 L<Pod::Parser|https://metacpan.org/pod/Pod::Parser>
+
+
+=item -
+
 L<Pod::Spell|https://metacpan.org/pod/Pod::Spell>
+
+
+=item -
+
 L<Pod::Spell::CommonMistakes|https://metacpan.org/pod/Pod::Spell::CommonMistakes>
+
+
+=item -
+
 L<Pod::Wordlist|https://metacpan.org/pod/Pod::Wordlist>
+
+
+=item -
+
 L<Text::Aspell|https://metacpan.org/pod/Text::Aspell>
+
+
+=item -
+
 L<Text::Ispell|https://metacpan.org/pod/Text::Ispell>
+
+
+=item -
+
 L<Text::Wrap|https://metacpan.org/pod/Text::Wrap>
+
+
+=back
 
 
 =head1 Examples
@@ -155,8 +219,19 @@ that, it will probably confront your with questions like "What can I possibly
 do to get into this part of my code?". Which may cause optimizations and other
 fun.
 
+=over
+
+=item -
+
 L<Devel::Cover|https://metacpan.org/pod/Devel::Cover>
+
+
+=item -
+
 L<Test::TestCoverage|https://metacpan.org/pod/Test::TestCoverage>
+
+
+=back
 
 
 =head1 Version coverage
@@ -180,26 +255,40 @@ Your Makefile.PL (or whatever build system you use) will have to state
 a minimal supported perl version that ends up in META.json and META.yml
 
 Do not guess. It is easy to check with
-L<Test::MinimumVersion|https://metacpan.org/pod/Test::MinimumVersion> and/or
+
+=over
+
+=item -
+
+L<Test::MinimumVersion|https://metacpan.org/pod/Test::MinimumVersion>
+
+
+=item -
+
 L<Test::MinimumVersion::Fast|https://metacpan.org/pod/Test::MinimumVersion::Fast>.
+
+
+=item -
+
 L<Perl::MinimumVersion|https://metacpan.org/release/Perl-MinimumVersion> comes with
-the L<perlver|https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver>
-tool:
-```shell
-$ perlver --blame test.pl
+   the L<perlver|https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver>
+   tool:
 
-================================================================================
- File    : test.pl
- Line    : 3
- Char    : 14
- Rule    : I<perl>5010_operators
- Version : 5.010
 
-================================================================================
- //
+=back
 
-================================================================================
-```
+ 
+  $ perlver --blame test.pl
+  ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+  File    : test.pl
+  Line    : 3
+  Char    : 14
+  Rule    : _perl_5010_operators
+  Version : 5.010
+  ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+  //
+  ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+
 
 
 =head1 Multiple perl versions
@@ -210,11 +299,25 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.
 
- $ perl -wc lib/Foo/Bar.pm
+ 
+  $ perl -wc lib/Foo/Bar.pm
+
+
+=over
+
+=item -
 
 L<Module::Release|https://metacpan.org/pod/Module::Release>
 
+
+
+=item -
+
 L<.releaserc|./.releaserc>
+
+
+
+=back
 
 Repeat this on as many architectures as you can (i586, x64, IA64, PA-RISC,
 Sparc, PowerPC, …)
@@ -224,19 +327,24 @@ HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 
 Testing against a -Duselongdouble compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:
- perl
+
+ 
   use Test::More;
   my $i = 21000000000000001;
   $i /= 10e15;
   is ($i, 2.1);
   done_testing;
 
-With -Uuselongdouble:
+
+With C<-Uuselongdouble>:
+
  
   ok 1
   1..1
 
-with -Duselongdouble
+
+with C<-Duselongdouble>:
+
  
   not ok 1
   #   Failed test at -e line 1.
@@ -252,14 +360,36 @@ with -Duselongdouble
 If you use XS, make sure you (try to) support the widest range of perl
 versions.
 
+=over
+
+=item -
+
 L<Devel::PPPort|https://metacpan.org/pod/Devel::PPPort> (most recent version)
+
+
+=back
 
 
 =head1 Leak tests
 
+=over
+
+=item -
+
 L<Test::LeakTrace::Script|https://metacpan.org/pod/Test::LeakTrace::Script>
+
+
+=item -
+
 L<Test::Valgrind|https://metacpan.org/pod/Test::Valgrind>
+
+
+=item -
+
 L<valgrind|http://valgrind.org>
+
+
+=back
 
 
 =head1 Release archive
@@ -268,12 +398,31 @@ Some see L<CPANTS|http://cpants.perl.org/> as a game, but many of the tests
 it puts on your release have a reason. Before you upload, you can check most
 of that to prevent unhappy users.
 
+=over
+
+=item -
+
 L<Test::Package|....>
+
+
+=item -
+
 L<Test::Kwalitee|https://metacpan.org/pod/Test::Kwalitee>
+
+
+=item -
+
 L<Module::CPANTS::Analyse|https://metacpan.org/pod/Module::CPANTS::Analyse>
+
+
+=item -
+
 L<cpants_lint.pl|https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl>
 
- sh
+
+=back
+
+ 
   $ perl Makefile.PL
   $ make test
   $ make dist
@@ -295,13 +444,24 @@ keep passing.
 
 L<MANIFEST|./MANIFEST> and L<MANIFEST.skip|MANIFEST.skip> are complete
 
- sh
+ 
   $ make dist
   $ make distclean
 
 
+=over
+
+=item -
+
 L<Test::Manifest|https://metacpan.org/pod/Test::Manifest>
+
+
+=item -
+
 L<Test::DistManifest|https://metacpan.org/pod/Test::DistManifest>
+
+
+=back
 
 
 =head1 Code style consistency
@@ -314,12 +474,39 @@ There are helper modules to enforce a style (given a configuration) or to try
 to help contributors to come up with a path/change than matches the project's
 style and layout. Again: consistency helps. A lot.
 
+=over
+
+=item -
+
 L<Perl::Tidy|https://metacpan.org/pod/Perl::Tidy>
+
+
+=item -
+
 L<Perl::Critic|https://metacpan.org/pod/Perl::Critic> + L<plugins|https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&search_type=modules>, lot of choices
+
+
+=item -
+
 L<Test::Perl::Critic|https://metacpan.org/pod/Test::Perl::Critic>
+
+
+=item -
+
 L<Test::Perl::Critic::Policy|https://metacpan.org/pod/Test::Perl::Critic::Policy>
+
+
+=item -
+
 L<Test::TrailingSpace|https://metacpan.org/pod/Test::TrailingSpace>
+
+
+=item -
+
 L<Perl::Lint|https://metacpan.org/pod/Perl::Lint>
+
+
+=back
 
 L<.perltidy|./.perltidyrc> and L<.perlcritic|./.perlcriticrc>.
 
@@ -332,14 +519,49 @@ using tools to check handcrafted META-files against the
 L<META spec 1.4 (2008)|http://module-build.sourceforge.net/META-spec-v1.4.html> or
 L<META spec 2.0 (2011)|http://module-build.sourceforge.net/META-spec-v2.0.html>:
 
+=over
+
+=item -
+
 L<CPAN::Meta::Converter|https://metacpan.org/pod/CPAN::Meta::Converter>
+
+
+=item -
+
 L<CPAN::Meta::Validator|https://metacpan.org/pod/CPAN::Meta::Validator>
+
+
+=item -
+
 L<JSON::PP|https://metacpan.org/pod/JSON::PP>
+
+
+=item -
+
 L<Parse::CPAN::Meta|https://metacpan.org/pod/Parse::CPAN::Meta>
+
+
+=item -
+
 L<Test::CPAN::Meta::JSON|https://metacpan.org/pod/Test::CPAN::Meta::JSON>
+
+
+=item -
+
 L<Test::CPAN::Meta::YAML|https://metacpan.org/pod/Test::CPAN::Meta::YAML>
+
+
+=item -
+
 L<Test::CPAN::Meta::YAML::Version|https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version>
+
+
+=item -
+
 L<YAML::Syck|https://metacpan.org/pod/YAML::Syck>
+
+
+=back
 
 
 =head1 Versions
@@ -348,11 +570,25 @@ Use a sane versioning system that the rest of the world might understand.
 Do not use the MD5 of the current date and time related to the phase of the
 moon or versions that include quotes or spaces. Keep it simple and clear.
 
+=over
+
+=item -
+
 L<Test::Version|https://metacpan.org/pod/Test::Version>
+
+
+=back
 
 Make sure it is a versioning system that increments
 
+=over
+
+=item -
+
 L<Test::GreaterVersion|https://metacpan.org/pod/Test::GreaterVersion>
+
+
+=back
 
 
 =head1 Changelog
@@ -360,8 +596,19 @@ L<Test::GreaterVersion|https://metacpan.org/pod/Test::GreaterVersion>
 Make sure your L<ChangeLog|./ChangeLog> or Changes file is up-to-date. Your
 release procedure might check the most recent mentioned date in that
 
+=over
+
+=item -
+
 L<Date::Calc|https://metacpan.org/pod/Date::Calc>
+
+
+=item -
+
 L<Test::CPAN::Changes|https://metacpan.org/pod/Test::CPAN::Changes>
+
+
+=back
 
 
 =head1 Performance
@@ -403,8 +650,19 @@ Add a L<file|./README.md> the states in short the purpose of your distribution.
 
 Make sure your SYNOPSIS section in the pod makes sense
 
+=over
+
+=item -
+
 L<Test::Synopsis|https://metacpan.org/pod/Test::Synopsis>
+
+
+=item -
+
 L<Text::Markdown|https://metacpan.org/pod/Text::Markdown>
+
+
+=back
 
 
 =head1 Downriver
