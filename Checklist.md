@@ -42,6 +42,7 @@ will break your code with small changes.
 ```
 
 Separate your module tests and your author tests
+
 ```
 t/
 xt/
@@ -61,12 +62,14 @@ that the required (fixed) behavior now passes and that the invalid behavior
 fails.
 
 Check to see if your tests support running in parallel
+
 ``` sh
  $ prove -vwb -j8
 ```
 
 If you have [Test2::Harness](https://metacpan.org/pod/Test2::Harness) installed,
 also test with yath
+
 ``` sh
  $ yath
  $ yath -j8
@@ -164,6 +167,7 @@ Do not guess. It is easy to check with
 [Perl::MinimumVersion](https://metacpan.org/release/Perl-MinimumVersion) comes with
 the [perlver](https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver)
 tool:
+
 ``` shell
 $ perlver --blame test.pl
 
@@ -200,6 +204,7 @@ HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 
 Testing against a -Duselongdouble compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:
+
 ``` perl
  use Test::More;
  my $i = 21000000000000001;
@@ -207,12 +212,16 @@ e.g. tests that match against NVs like 2.1:
  is ($i, 2.1);
  done_testing;
 ```
+
 With -Uuselongdouble:
+
 ```
  ok 1
  1..1
 ```
+
 with -Duselongdouble
+
 ```
  not ok 1
  #   Failed test at -e line 1.
