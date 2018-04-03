@@ -10,7 +10,7 @@ Release::Checklist - A QA checklist for CPAN releases
 
 Only use default pragma's
 
- perl
+ 
   use 5.22.0;
   use strict;
   use feature "say";
@@ -45,7 +45,7 @@ L<Test::Prereq|https://metacpan.org/pod/Test::Prereq>
 Test, test and test. The more you test, the lower the chance you
 will break your code with small changes.
 
- perl
+ 
   use strict;
   use warnings;
   use Test::More;
@@ -75,14 +75,14 @@ fails.
 
 Check to see if your tests support running in parallel
 
- sh
+ 
   $ prove -vwb -j8
 
 
 If you have L<Test2::Harness|https://metacpan.org/pod/Test2::Harness> installed,
 also test with yath
 
- sh
+ 
   $ yath
   $ yath -j8
 
@@ -267,8 +267,8 @@ L<Perl::MinimumVersion|https://metacpan.org/release/Perl-MinimumVersion> comes w
 
 =back
 
-```shell
-$ perlver --blame test.pl
+```
+ $ perlver --blame test.pl
 
 ================================================================================
  File    : test.pl
@@ -292,7 +292,7 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.
 
- sh
+ 
   $ perl -wc lib/Foo/Bar.pm
 
 
@@ -321,7 +321,7 @@ HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 Testing against a -Duselongdouble compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:
 
- perl
+ 
   use Test::More;
   my $i = 21000000000000001;
   $i /= 10e15;
@@ -329,14 +329,14 @@ e.g. tests that match against NVs like 2.1:
   done_testing;
 
 
-With -Uuselongdouble:
+With C<-Uuselongdouble>:
 
  
   ok 1
   1..1
 
 
-with -Duselongdouble
+with C<-Duselongdouble>:
 
  
   not ok 1
@@ -415,7 +415,7 @@ L<cpants_lint.pl|https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpant
 
 =back
 
- sh
+ 
   $ perl Makefile.PL
   $ make test
   $ make dist
@@ -437,7 +437,7 @@ keep passing.
 
 L<MANIFEST|./MANIFEST> and L<MANIFEST.skip|MANIFEST.skip> are complete
 
- sh
+ 
   $ make dist
   $ make distclean
 
