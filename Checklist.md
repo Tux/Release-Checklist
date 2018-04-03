@@ -26,7 +26,7 @@ targeted systems and add a chance to break.
 There is no problem with you using those in your own (non-CPAN)
 scripts and modules, but please do not add needless dependencies.
 
-[Test::Prereq](https://metacpan.org/pod/Test::Prereq)
+ - [Test::Prereq](https://metacpan.org/pod/Test::Prereq)
 
 # Test
 
@@ -90,8 +90,8 @@ Make sure your pod is correct and can also be parsed by the pod-modules in
 the lowest version of perl you support (or mention that you need at least
 version whatever to read the pod as intended).
 
-[Test::Pod](https://metacpan.org/pod/Test::Pod)
-[Test::Pod::Coverage](https://metacpan.org/pod/Test::Pod::Coverage)
+ - [Test::Pod](https://metacpan.org/pod/Test::Pod)
+ - [Test::Pod::Coverage](https://metacpan.org/pod/Test::Pod::Coverage)
 
 # Spelling
 
@@ -106,17 +106,17 @@ knowledge about the internals, and last someone who has no clue about
 programming.  You might be surprised of what they will find in the
 documentation as weird, unclear, or even plain wrong.
 
-[pod-spell-check](scripts/pod-spell-check)
+ - [pod-spell-check](scripts/pod-spell-check)
 
-[Pod::Aspell](https://metacpan.org/pod/Pod::Aspell)
-[Pod::Escapes](https://metacpan.org/pod/Pod::Escapes)
-[Pod::Parser](https://metacpan.org/pod/Pod::Parser)
-[Pod::Spell](https://metacpan.org/pod/Pod::Spell)
-[Pod::Spell::CommonMistakes](https://metacpan.org/pod/Pod::Spell::CommonMistakes)
-[Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist)
-[Text::Aspell](https://metacpan.org/pod/Text::Aspell)
-[Text::Ispell](https://metacpan.org/pod/Text::Ispell)
-[Text::Wrap](https://metacpan.org/pod/Text::Wrap)
+ - [Pod::Aspell](https://metacpan.org/pod/Pod::Aspell)
+ - [Pod::Escapes](https://metacpan.org/pod/Pod::Escapes)
+ - [Pod::Parser](https://metacpan.org/pod/Pod::Parser)
+ - [Pod::Spell](https://metacpan.org/pod/Pod::Spell)
+ - [Pod::Spell::CommonMistakes](https://metacpan.org/pod/Pod::Spell::CommonMistakes)
+ - [Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist)
+ - [Text::Aspell](https://metacpan.org/pod/Text::Aspell)
+ - [Text::Ispell](https://metacpan.org/pod/Text::Ispell)
+ - [Text::Wrap](https://metacpan.org/pod/Text::Wrap)
 
 # Examples
 
@@ -139,8 +139,8 @@ that, it will probably confront your with questions like "What can I possibly
 do to get into this part of my code?". Which may cause optimizations and other
 fun.
 
-[Devel::Cover](https://metacpan.org/pod/Devel::Cover)
-[Test::TestCoverage](https://metacpan.org/pod/Test::TestCoverage)
+ - [Devel::Cover](https://metacpan.org/pod/Devel::Cover)
+ - [Test::TestCoverage](https://metacpan.org/pod/Test::TestCoverage)
 
 # Version coverage
 
@@ -162,11 +162,12 @@ Your Makefile.PL (or whatever build system you use) will have to state
 a minimal supported perl version that ends up in META.json and META.yml
 
 Do not guess. It is easy to check with
-[Test::MinimumVersion](https://metacpan.org/pod/Test::MinimumVersion) and/or
-[Test::MinimumVersion::Fast](https://metacpan.org/pod/Test::MinimumVersion::Fast).
-[Perl::MinimumVersion](https://metacpan.org/release/Perl-MinimumVersion) comes with
-the [perlver](https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver)
-tool:
+
+ - [Test::MinimumVersion](https://metacpan.org/pod/Test::MinimumVersion)
+ - [Test::MinimumVersion::Fast](https://metacpan.org/pod/Test::MinimumVersion::Fast).
+ - [Perl::MinimumVersion](https://metacpan.org/release/Perl-MinimumVersion) comes with
+   the [perlver](https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver)
+   tool:
 
 ``` shell
 $ perlver --blame test.pl
@@ -194,7 +195,7 @@ better.
  $ perl -wc lib/Foo/Bar.pm
 ```
 
-[Module::Release](https://metacpan.org/pod/Module::Release)
+ - [Module::Release](https://metacpan.org/pod/Module::Release)
 
 [.releaserc](./.releaserc)
 
@@ -238,13 +239,13 @@ with -Duselongdouble
 If you use XS, make sure you (try to) support the widest range of perl
 versions.
 
-[Devel::PPPort](https://metacpan.org/pod/Devel::PPPort) (most recent version)
+ - [Devel::PPPort](https://metacpan.org/pod/Devel::PPPort) (most recent version)
 
 # Leak tests
 
-[Test::LeakTrace::Script](https://metacpan.org/pod/Test::LeakTrace::Script)
-[Test::Valgrind](https://metacpan.org/pod/Test::Valgrind)
-[valgrind](http://valgrind.org)
+ - [Test::LeakTrace::Script](https://metacpan.org/pod/Test::LeakTrace::Script)
+ - [Test::Valgrind](https://metacpan.org/pod/Test::Valgrind)
+ - [valgrind](http://valgrind.org)
 
 # Release archive
 
@@ -252,10 +253,10 @@ Some see [CPANTS](http://cpants.perl.org/) as a game, but many of the tests
 it puts on your release have a reason. Before you upload, you can check most
 of that to prevent unhappy users.
 
-[Test::Package](....)
-[Test::Kwalitee](https://metacpan.org/pod/Test::Kwalitee)
-[Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
-[cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
+ - [Test::Package](....)
+ - [Test::Kwalitee](https://metacpan.org/pod/Test::Kwalitee)
+ - [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
+ - [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
 
 ``` sh
  $ perl Makefile.PL
@@ -283,8 +284,8 @@ keep passing.
  $ make distclean
 ```
 
-[Test::Manifest](https://metacpan.org/pod/Test::Manifest)
-[Test::DistManifest](https://metacpan.org/pod/Test::DistManifest)
+ - [Test::Manifest](https://metacpan.org/pod/Test::Manifest)
+ - [Test::DistManifest](https://metacpan.org/pod/Test::DistManifest)
 
 # Code style consistency
 
@@ -296,12 +297,12 @@ There are helper modules to enforce a style (given a configuration) or to try
 to help contributors to come up with a path/change than matches the project's
 style and layout. Again: consistency helps. A lot.
 
-[Perl::Tidy](https://metacpan.org/pod/Perl::Tidy)
-[Perl::Critic](https://metacpan.org/pod/Perl::Critic) + [plugins](https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&search_type=modules), lot of choices
-[Test::Perl::Critic](https://metacpan.org/pod/Test::Perl::Critic)
-[Test::Perl::Critic::Policy](https://metacpan.org/pod/Test::Perl::Critic::Policy)
-[Test::TrailingSpace](https://metacpan.org/pod/Test::TrailingSpace)
-[Perl::Lint](https://metacpan.org/pod/Perl::Lint)
+ - [Perl::Tidy](https://metacpan.org/pod/Perl::Tidy)
+ - [Perl::Critic](https://metacpan.org/pod/Perl::Critic) + [plugins](https://metacpan.org/search?q=Perl%3A%3ACritic%3A%3A&search_type=modules), lot of choices
+ - [Test::Perl::Critic](https://metacpan.org/pod/Test::Perl::Critic)
+ - [Test::Perl::Critic::Policy](https://metacpan.org/pod/Test::Perl::Critic::Policy)
+ - [Test::TrailingSpace](https://metacpan.org/pod/Test::TrailingSpace)
+ - [Perl::Lint](https://metacpan.org/pod/Perl::Lint)
 
 [.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
 
@@ -313,14 +314,14 @@ using tools to check handcrafted META-files against the
 [META spec 1.4 (2008)](http://module-build.sourceforge.net/META-spec-v1.4.html) or
 [META spec 2.0 (2011)](http://module-build.sourceforge.net/META-spec-v2.0.html):
 
-[CPAN::Meta::Converter](https://metacpan.org/pod/CPAN::Meta::Converter)
-[CPAN::Meta::Validator](https://metacpan.org/pod/CPAN::Meta::Validator)
-[JSON::PP](https://metacpan.org/pod/JSON::PP)
-[Parse::CPAN::Meta](https://metacpan.org/pod/Parse::CPAN::Meta)
-[Test::CPAN::Meta::JSON](https://metacpan.org/pod/Test::CPAN::Meta::JSON)
-[Test::CPAN::Meta::YAML](https://metacpan.org/pod/Test::CPAN::Meta::YAML)
-[Test::CPAN::Meta::YAML::Version](https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version)
-[YAML::Syck](https://metacpan.org/pod/YAML::Syck)
+ - [CPAN::Meta::Converter](https://metacpan.org/pod/CPAN::Meta::Converter)
+ - [CPAN::Meta::Validator](https://metacpan.org/pod/CPAN::Meta::Validator)
+ - [JSON::PP](https://metacpan.org/pod/JSON::PP)
+ - [Parse::CPAN::Meta](https://metacpan.org/pod/Parse::CPAN::Meta)
+ - [Test::CPAN::Meta::JSON](https://metacpan.org/pod/Test::CPAN::Meta::JSON)
+ - [Test::CPAN::Meta::YAML](https://metacpan.org/pod/Test::CPAN::Meta::YAML)
+ - [Test::CPAN::Meta::YAML::Version](https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version)
+ - [YAML::Syck](https://metacpan.org/pod/YAML::Syck)
 
 # Versions
 
@@ -328,19 +329,19 @@ Use a sane versioning system that the rest of the world might understand.
 Do not use the MD5 of the current date and time related to the phase of the
 moon or versions that include quotes or spaces. Keep it simple and clear.
 
-[Test::Version](https://metacpan.org/pod/Test::Version)
+ - [Test::Version](https://metacpan.org/pod/Test::Version)
 
 Make sure it is a versioning system that increments
 
-[Test::GreaterVersion](https://metacpan.org/pod/Test::GreaterVersion)
+ - [Test::GreaterVersion](https://metacpan.org/pod/Test::GreaterVersion)
 
 # Changelog
 
 Make sure your [ChangeLog](./ChangeLog) or Changes file is up-to-date. Your
 release procedure might check the most recent mentioned date in that
 
-[Date::Calc](https://metacpan.org/pod/Date::Calc)
-[Test::CPAN::Changes](https://metacpan.org/pod/Test::CPAN::Changes)
+ - [Date::Calc](https://metacpan.org/pod/Date::Calc)
+ - [Test::CPAN::Changes](https://metacpan.org/pod/Test::CPAN::Changes)
 
 # Performance
 
@@ -364,8 +365,8 @@ Add a [file](./README.md) the states in short the purpose of your distribution.
 
 Make sure your SYNOPSIS section in the pod makes sense
 
-[Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
-[Text::Markdown](https://metacpan.org/pod/Text::Markdown)
+ - [Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
+ - [Text::Markdown](https://metacpan.org/pod/Text::Markdown)
 
 # Downriver
 
