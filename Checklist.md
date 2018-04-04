@@ -2,6 +2,16 @@
 
 Release::Checklist - A QA checklist for CPAN releases
 
+What follows is a list of categories or subjects that touch the quality
+- or what an end-user percieves as such - of a distribution end might
+need some attention.
+
+Some of those can be (semi-)automated (in tests), others need action
+from the maintainer. Not all subjects may apply to your project.
+
+Each subject will mention or list modules that might help in improving
+or preserving high standards.
+
 # Dependencies
 
 Only use default pragma's
@@ -13,10 +23,11 @@ Only use default pragma's
  use warnings;
 ```
 
-Do not add useless additional dependencies like
+Please do not add useless additional dependencies like
 [sanity](https://metacpan.org/pod/sanity),
 [Modern::Perl](https://metacpan.org/pod/Modern::Perl),
 common::sense, or [nonsense](https://metacpan.org/pod/nonsense).
+
 However useful they might be in your own working environment and
 force you into behaving well, adding them as a requirement to a
 CPAN module will increase the complexity of the requirements to
@@ -41,7 +52,11 @@ will break your code with small changes.
  done_testing ();
 ```
 
-Separate your module tests and your author tests
+Separate your module tests and your author tests. This will lower
+the number of dependencies. Check your Pod syntax, documentation
+coverage, spelling, and minimum perl version requirements in `xt/`.
+There is no need to check that when the distribution runs its tests
+in user-space.
 
 ```
 t/
@@ -75,16 +90,25 @@ also test with yath
  $ yath -j8
 ```
 
+Add tests cases from issues or tickets to your own tests. Adding references
+to the tickets or issues creates a self-documenting structure, reasoning and
+history.
+
 # Documentation
 
-Make sure that you have a clear SYNOPSIS section. This section should show
-the most important code as simple and clear as possible. If you have 3500
-methods in your class, do not list all of the there. Just show how to create
-the object and show the 4 methods that a beginner would use.
+Make sure that you have a clear, consice, and short SYNOPSIS section. This
+section should show the most important code as simple and clear as possible.
+If you have 3500 methods in your class, do not list all of the there. Just
+show how to create the object and show the 4 methods that a beginner would
+use. Note that the user that reads the manual will appreciate complete,
+correct, and up-to-date documentation per method more than a complete list
+of available methods in the SYNOPSIS.
 
-Make sure your documentation is complete and all your methods and/or
-functions are documented. If you have private functions, mentions that in the
-documentation, so users can read that they might disappear without warning.
+Make sure your documentation covers all your methods and/or functions and
+all edge cases are documented. If you have private functions, mentions that
+in the documentation, so users can read that they might disappear without
+warning. A special section about errors, error messages, and/or exceptions
+is also a very nice thing to have.
 
 Make sure your pod is correct and can also be parsed by the pod-modules in
 the lowest version of perl you support (or mention that you need at least
@@ -114,6 +138,7 @@ documentation as weird, unclear, or even plain wrong.
  - [Pod::Spell](https://metacpan.org/pod/Pod::Spell)
  - [Pod::Spell::CommonMistakes](https://metacpan.org/pod/Pod::Spell::CommonMistakes)
  - [Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist)
+ - [Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
  - [Text::Aspell](https://metacpan.org/pod/Text::Aspell)
  - [Text::Ispell](https://metacpan.org/pod/Text::Ispell)
  - [Text::Wrap](https://metacpan.org/pod/Text::Wrap)
@@ -121,7 +146,7 @@ documentation as weird, unclear, or even plain wrong.
 # Examples
 
 Have examples of your code. Preferably both in the EXAMPLES section of the
-pod, as in a folder names examples.
+pod, as in a folder named `examples`.
 
 It is good practice to use your example code/scripts in your documentation
 too, as that gives you a two-way check (additional to your tests). Even
@@ -156,10 +181,16 @@ This gets really hard to set up if your release has different code for versions
 of perl and for versions of required modules, but it pays off eventually. Note
 that monitoring [CPANTESTERS](http://www.cpantesters.org) can be a huge help.
 
+If your code resides on [GitHub](https://github.com/), you can setup hooks to
+[Travis CI](https://travis-ci.org/). Just compose a [.travis.yml](./.travis.yml)
+and enable the hook. This supports a variety of perl versions and an environment
+where you can install modules for just the tests you need.
+
 # Minimal perl support
 
-Your Makefile.PL (or whatever build system you use) will have to state
-a minimal supported perl version that ends up in META.json and META.yml
+Your Makefile.PL (or whatever initial file the build system you use requires)
+will have to state a minimal supported perl version that ends up in
+[META.json](./META.json) and [META.yml](./META.yml)
 
 Do not guess. It is easy to check with
 
@@ -184,11 +215,11 @@ Do not guess. It is easy to check with
 
 # Multiple perl versions
 
-If you have multiple perls installed on your system, test your module
-or release with all of them before doing the release. Best would be to
-test with a threaded perl and a non-threaded perl. If you can test with
-a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
-better.
+If you have multiple perls installed on your system, test your module or
+release with all of the versions that you claim to support before doing the
+release. Best would be to test with a threaded perl and a non-threaded perl.
+If you can test with a mixture of `-Duselongdouble` and 32bit/64bit perls,
+that would be even better.
 
 ``` sh
  $ perl -wc lib/Foo/Bar.pm
@@ -204,7 +235,7 @@ Sparc, PowerPC, …)
 Repeat this on as many Operating Systems as you can (Linux, NetBSD, OSX,
 HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 
-Testing against a -Duselongdouble compiled perl will surface bad tests,
+Testing against a `-Duselongdouble` compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:
 
 ``` perl
@@ -215,7 +246,7 @@ e.g. tests that match against NVs like 2.1:
  done_testing;
 ```
 
-With `-Uuselongdouble`:
+with `-Uuselongdouble`:
 
 ``` tap
  ok 1
@@ -233,32 +264,50 @@ with `-Duselongdouble`:
  # Looks like you failed 1 test of 1.
 ```
 
+will show that 2.25 is probably a better choice that 2.1.
+
 # XS
 
 If you use XS, make sure you (try to) support the widest range of perl
-versions.
+versions. As using XS is quite often using more delicate areas of perl
+and perl internals, it is especially important to test for both threaded
+and unthreaded perl and - if supported - on operating systems that have
+different linking procedures than Linux. AIX and Windows are known to
+show deficiencies early.
 
  - [Devel::PPPort](https://metacpan.org/pod/Devel::PPPort) (most recent version)
 
 # Leak tests
 
+Your code allocates memory. Not only for the code itself, but also for all
+data-structures, a stack and other resources (modules you use or require).
+
+Creating circular references or (in XS) variables that do not get freed will
+cause leaks. You might not notice in your tests, but if a long running process
+hits leaks and crashes with out-of-memory after 4 days, that is a problem.
+Tracing memory leaks might be hard, but some help is available
+
  - [Test::LeakTrace::Script](https://metacpan.org/pod/Test::LeakTrace::Script)
  - [Test::Valgrind](https://metacpan.org/pod/Test::Valgrind)
  - [valgrind](http://valgrind.org)
 
-# Release archive
+If you have a perl available with ASAN (Address Sanitizer) enabled, your may
+find corruptions during compilation.
+
+# Release tests
 
 Some see [CPANTS](http://cpants.perl.org/) as a game, but many of the tests
 it puts on your release have a reason. Before you upload, you can check most
 of that to prevent unhappy users.
 
- - [Test::Package](....)
+ - [Test::Package](....) - planned
  - [Test::Kwalitee](https://metacpan.org/pod/Test::Kwalitee)
  - [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
  - [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
 
 ``` sh
  $ perl Makefile.PL
+ $ make
  $ make test
  $ make dist
  $ cpants_lint.pl Foo-Bar-0.01.tar.gz
@@ -270,13 +319,13 @@ of that to prevent unhappy users.
 
 # Clean dist
 
-Some problems only surface when you do a make clean or make distclean.
+Some problems only surface when you do a `make clean` or `make distclean`.
 The develop cycle normally only adds and changes files, and if you forget
 to add those to the MANIFEST, your distribution will be incomplete and
 is likely to fail on other systems, whereas your tests locally still
 keep passing.
 
-[MANIFEST](./MANIFEST) and [MANIFEST.skip](MANIFEST.skip) are complete
+Check [MANIFEST](./MANIFEST) and [MANIFEST.skip](./MANIFEST.skip) are complete.
 
 ``` sh
  $ make dist
@@ -292,7 +341,7 @@ Add a [CONTRIBUTING.md](./CONTRIBUTING.md) or similar file to guide others to
 consistency that will match [*your* style](http://tux.nl/style.html) (or, in
 case of joint effort, the style as agreed upon by the developers).
 
-There are helper modules to enforce a style (given a configuration) or to try
+There are helper modules to enforce a style (given a configuration) or try
 to help contributors to come up with a path/change than matches the project's
 style and layout. Again: consistency helps. A lot.
 
@@ -303,7 +352,8 @@ style and layout. Again: consistency helps. A lot.
  - [Test::TrailingSpace](https://metacpan.org/pod/Test::TrailingSpace)
  - [Perl::Lint](https://metacpan.org/pod/Perl::Lint)
 
-[.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
+ - [.perltidy](./.perltidyrc)
+ - [.perlcritic](./.perlcriticrc)
 
 # META
 
@@ -321,6 +371,26 @@ using tools to check handcrafted META-files against the
  - [Test::CPAN::Meta::YAML](https://metacpan.org/pod/Test::CPAN::Meta::YAML)
  - [Test::CPAN::Meta::YAML::Version](https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version)
  - [YAML::Syck](https://metacpan.org/pod/YAML::Syck)
+
+It is highly appreciated if you declare [resources](https://metacpan.org/pod/CPAN::Meta::Spec#resources),
+like your public repository URL and the preferred way to communicate in your [META.json](./META.json):
+
+```
+  "resources"      : {
+    "x_IRC"        : "irc://irc.perl.org/#toolchain",
+    "repository"   : {
+      "type"       : "git",
+      "url"        : "https://github.com/Tux/Release-Checklist",
+      "web"        : "https://github.com/Tux/Release-Checklist"
+      },
+    "bugtracker"   : {
+      "web"        : "https://github.com/Tux/Release-Checklist/issues"
+      }
+    }
+```
+
+Those are recognized and shown in the top-left section on
+[meta::cpan](https://metacpan.org/pod/Release::Checklist).
 
 # Versions
 
@@ -344,7 +414,7 @@ release procedure might check the most recent mentioned date in that
 
 # Performance
 
-Check if your release matches previous performance
+Check if your release matches previous performance (if appropriate)
 
  - between different versions of perl
  - between different versions of the module
@@ -360,11 +430,12 @@ installed.
 
 # README / README.md
 
-Add a [file](./README.md) the states in short the purpose of your distribution.
+Add a [file](./README.md) that states the purpose of your distribution.
 
-Make sure your SYNOPSIS section in the pod makes sense
+The README should state the purpose, the minimal envirenment to test, build,
+and run and possible license issue. If you there is a need to amend or create
+configuration files or set up databases, that should be mentioned too.
 
- - [Test::Synopsis](https://metacpan.org/pod/Test::Synopsis)
  - [Text::Markdown](https://metacpan.org/pod/Text::Markdown)
 
 # Downriver
@@ -373,10 +444,13 @@ You have had reasons to make the changes leading up to a new distribution. If
 you really care about the users of your module, you should check if your new
 release would break any of the CPAN modules that (indirectly) depend on your
 module by testing with your previous release and your upcoming release and see
-if the new release would cause the other module to break.
+if the new release would cause the other module(s) to break.
 
-[used_by.pl](scripts/used-by.pl) will check the depending modules with the
+[used_by.pl](./scripts/used-by.pl) will check the depending modules with the
 upcoming version.
+
+Of course it is imposible to cover every possible situation here. The DarkPAN
+(uses of your module beyond what is registered on CPAN) is huge.
 
 # LICENSE
 

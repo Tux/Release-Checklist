@@ -4,14 +4,14 @@
   "generated_by"   : "The author",
   "license"        : [ "perl_5" ],
   "meta-spec"      : {
-    "url"                : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+    "url"                : "https://metacpan.org/pod/CPAN::Meta::Spec",
     "version"            : 2
     },
   "name"           : "Release-Checklist",
   "provides"       : {
     "Release::Checklist" : {
       "file"                         : "Checklist.pm",
-      "version"                      : "0.08"
+      "version"                      : "0.09"
       }
     },
   "prereqs"        : {
@@ -74,9 +74,12 @@
       "url"        : "https://github.com/Tux/Release-Checklist",
       "web"        : "https://github.com/Tux/Release-Checklist"
       },
+    "bugtracker"   : {
+      "web"        : "https://github.com/Tux/Release-Checklist/issues"
+      },
     "license"      : [
       "http://dev.perl.org/licenses/"
       ]
     },
-  "version"        : "0.08"
+  "version"        : "0.09"
   }
