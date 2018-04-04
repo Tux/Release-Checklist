@@ -1,5 +1,7 @@
 0.09	04 Apr 2018 - H.Merijn Brand
     * MD -> POD fixes/workarounds
+    * More proza
+    * Mention Travis CI
 
 0.08	03 Apr 2018 - H.Merijn Brand
     * Add Travis CI
