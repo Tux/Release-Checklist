@@ -6,7 +6,7 @@ Release::Checklist - A QA checklist for CPAN releases
 
 Only use default pragma's
 
-```
+``` perl
  use 5.22.0;
  use strict;
  use feature "say";
@@ -33,7 +33,7 @@ scripts and modules, but please do not add needless dependencies.
 Test, test and test. The more you test, the lower the chance you
 will break your code with small changes.
 
-```
+``` perl
  use strict;
  use warnings;
  use Test::More;
@@ -63,14 +63,14 @@ fails.
 
 Check to see if your tests support running in parallel
 
-```
+``` sh
  $ prove -vwb -j8
 ```
 
 If you have [Test2::Harness](https://metacpan.org/pod/Test2::Harness) installed,
 also test with yath
 
-```
+``` sh
  $ yath
  $ yath -j8
 ```
@@ -169,17 +169,17 @@ Do not guess. It is easy to check with
    the [perlver](https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver)
    tool:
 
-```
+``` sh
  $ perlver --blame test.pl
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+ --------------------------------------------------
  File    : test.pl
  Line    : 3
  Char    : 14
  Rule    : _perl_5010_operators
  Version : 5.010
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+ --------------------------------------------------
  //
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+ --------------------------------------------------
 ```
 
 # Multiple perl versions
@@ -190,7 +190,7 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.
 
-```
+``` sh
  $ perl -wc lib/Foo/Bar.pm
 ```
 
@@ -207,7 +207,7 @@ HP-UX, Solaris, Windows, OpenVMS, AIX, …)
 Testing against a -Duselongdouble compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:
 
-```
+``` perl
  use Test::More;
  my $i = 21000000000000001;
  $i /= 10e15;
@@ -217,14 +217,14 @@ e.g. tests that match against NVs like 2.1:
 
 With `-Uuselongdouble`:
 
-```
+``` tap
  ok 1
  1..1
 ```
 
 with `-Duselongdouble`:
 
-```
+``` tap
  not ok 1
  #   Failed test at -e line 1.
  #          got: '2.1000000000000001'
@@ -257,7 +257,7 @@ of that to prevent unhappy users.
  - [Module::CPANTS::Analyse](https://metacpan.org/pod/Module::CPANTS::Analyse)
  - [cpants_lint.pl](https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl)
 
-```
+``` sh
  $ perl Makefile.PL
  $ make test
  $ make dist
@@ -278,7 +278,7 @@ keep passing.
 
 [MANIFEST](./MANIFEST) and [MANIFEST.skip](MANIFEST.skip) are complete
 
-```
+``` sh
  $ make dist
  $ make distclean
 ```

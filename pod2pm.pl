@@ -3,14 +3,15 @@
 use strict;
 use warnings;
 
-our $VERSION = "0.01 - 20180330";
+our $VERSION = "0.02 - 20180404";
 
 -d ".git" or exit 0;
 
 my @d = stat "Checklist.pod";
 my @m = stat "Checklist.pm";
+my @t = stat $0;
 
-$d[9] && $m[9] && $m[9] >= $d[9] and exit 0;
+$d[9] && $m[9] && $m[9] >= $d[9] && $m[9] >= $t[9] and exit 0;
 
 my $V;
 open my $mh, "<", "Makefile.PL"  or die "No Makefile.PL\n";

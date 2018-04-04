@@ -13,7 +13,7 @@
 
 <p>Only use default pragma&#8217;s</p>
 
-<pre><code> use 5.22.0;
+<pre><code class="perl"> use 5.22.0;
  use strict;
  use feature &quot;say&quot;;
  use warnings;
@@ -41,7 +41,7 @@ scripts and modules, but please do not add needless dependencies.</p>
 <p>Test, test and test. The more you test, the lower the chance you
 will break your code with small changes.</p>
 
-<pre><code> use strict;
+<pre><code class="perl"> use strict;
  use warnings;
  use Test::More;
  :
@@ -69,13 +69,13 @@ fails.</p>
 
 <p>Check to see if your tests support running in parallel</p>
 
-<pre><code> $ prove -vwb -j8
+<pre><code class="sh"> $ prove -vwb -j8
 </code></pre>
 
 <p>If you have <a href="https://metacpan.org/pod/Test2::Harness">Test2::Harness</a> installed,
 also test with yath</p>
 
-<pre><code> $ yath
+<pre><code class="sh"> $ yath
  $ yath -j8
 </code></pre>
 
@@ -180,16 +180,16 @@ the <a href="https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/pe
 tool:</li>
 </ul>
 
-<pre><code> $ perlver --blame test.pl
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+<pre><code class="sh"> $ perlver --blame test.pl
+ --------------------------------------------------
  File    : test.pl
  Line    : 3
  Char    : 14
  Rule    : _perl_5010_operators
  Version : 5.010
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+ --------------------------------------------------
  //
- ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+ --------------------------------------------------
 </code></pre>
 
 <h1 id="multipleperlversions">Multiple perl versions</h1>
@@ -200,7 +200,7 @@ test with a threaded perl and a non-threaded perl. If you can test with
 a mixture of -Duselongdouble and 32bit/64bit perls, that would be even
 better.</p>
 
-<pre><code> $ perl -wc lib/Foo/Bar.pm
+<pre><code class="sh"> $ perl -wc lib/Foo/Bar.pm
 </code></pre>
 
 <ul>
@@ -217,7 +217,7 @@ HP-UX, Solaris, Windows, OpenVMS, AIX, …)</p>
 <p>Testing against a -Duselongdouble compiled perl will surface bad tests,
 e.g. tests that match against NVs like 2.1:</p>
 
-<pre><code> use Test::More;
+<pre><code class="perl"> use Test::More;
  my $i = 21000000000000001;
  $i /= 10e15;
  is ($i, 2.1);
@@ -226,13 +226,13 @@ e.g. tests that match against NVs like 2.1:</p>
 
 <p>With <code>-Uuselongdouble</code>:</p>
 
-<pre><code> ok 1
+<pre><code class="tap"> ok 1
  1..1
 </code></pre>
 
 <p>with <code>-Duselongdouble</code>:</p>
 
-<pre><code> not ok 1
+<pre><code class="tap"> not ok 1
  #Failed test at -e line 1.
  #got: '2.1000000000000001'
  #expected: '2.1'
@@ -270,7 +270,7 @@ of that to prevent unhappy users.</p>
 <li> <a href="https://metacpan.org/pod/distribution/App-CPANTS-Lint/bin/cpants_lint.pl">cpants_lint.pl</a></li>
 </ul>
 
-<pre><code> $ perl Makefile.PL
+<pre><code class="sh"> $ perl Makefile.PL
  $ make test
  $ make dist
  $ cpants_lint.pl Foo-Bar-0.01.tar.gz
@@ -290,7 +290,7 @@ keep passing.</p>
 
 <p><a href="./MANIFEST">MANIFEST</a> and <a href="MANIFEST.skip">MANIFEST.skip</a> are complete</p>
 
-<pre><code> $ make dist
+<pre><code class="sh"> $ make dist
  $ make distclean
 </code></pre>
 

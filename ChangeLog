@@ -1,5 +1,5 @@
-0.09	03 Apr 2018 - H.Merijn Brand
-    * More md -> pod fixes
+0.09	04 Apr 2018 - H.Merijn Brand
+    * MD -> POD fixes/workarounds
 
 0.08	03 Apr 2018 - H.Merijn Brand
     * Add Travis CI
