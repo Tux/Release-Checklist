@@ -12,33 +12,6 @@ from the maintainer. Not all subjects may apply to your project.
 Each subject will mention or list modules that might help in improving
 or preserving high standards.
 
-# Dependencies
-
-Only use default pragma's
-
-``` perl
- use 5.22.0;
- use strict;
- use feature "say";
- use warnings;
-```
-
-Please do not add useless additional dependencies like
-[sanity](https://metacpan.org/pod/sanity),
-[Modern::Perl](https://metacpan.org/pod/Modern::Perl),
-common::sense, or [nonsense](https://metacpan.org/pod/nonsense).
-
-However useful they might be in your own working environment and
-force you into behaving well, adding them as a requirement to a
-CPAN module will increase the complexity of the requirements to
-probably no good use, as they are unlikely to be found on all your
-targeted systems and add a chance to break.
-
-There is no problem with you using those in your own (non-CPAN)
-scripts and modules, but please do not add needless dependencies.
-
- - [Test::Prereq](https://metacpan.org/pod/Test::Prereq)
-
 # Test
 
 Test, test and test. The more you test, the lower the chance you
@@ -93,6 +66,36 @@ also test with yath
 Add tests cases from issues or tickets to your own tests. Adding references
 to the tickets or issues creates a self-documenting structure, reasoning and
 history.
+
+# Dependencies
+
+Every module you use is a module your release will depend on. If a new
+release of such module fails, the likelyhood of your release being
+unable to install increases. So only use modules that you need. Each
+dependency should be well-considered.
+
+Then there are two types of modules you can depend on: functional
+modules, like [DBI](https://metacpan.org/pod/DBI) and
+[XML::LibXML](https://metacpan.org/pod/XML::LibXML), and developer
+convenience modules, like [Modern::Perl](https://metacpan.org/pod/Modern::Perl)
+
+You cannot get around needing the first type of modules, but the
+convenience modules should only be used in (local) perl scripts and
+not in CPAN modules, so please do not add additional dependencies
+on modules/pragma's like [sanity](https://metacpan.org/pod/sanity),
+[Modern::Perl](https://metacpan.org/pod/Modern::Perl), common::sense,
+or [nonsense](https://metacpan.org/pod/nonsense).
+
+However useful they might be in your own working environment and
+force you into behaving well, adding them as a requirement to a
+CPAN module will increase the complexity of the requirements to
+probably no good use, as they are unlikely to be found on all your
+targeted systems and add a chance to break.
+
+There is no problem with you using those in your own (non-CPAN)
+scripts and modules, but please do not add needless dependencies.
+
+ - [Test::Prereq](https://metacpan.org/pod/Test::Prereq)
 
 # Documentation
 

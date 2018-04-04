@@ -5,8 +5,8 @@
 
 Release::Checklist - A QA checklist for CPAN releases
 
-What follows is a list of categories or subjects that touch the quality
-- or what an end-user percieves as such - of a distribution end might
+What follows is a list of categories or subjects that touch the quality -
+or what an end-user percieves as such - of a distribution end might
 need some attention.
 
 Some of those can be (semi-)automated (in tests), others need action
@@ -14,35 +14,6 @@ from the maintainer. Not all subjects may apply to your project.
 
 Each subject will mention or list modules that might help in improving
 or preserving high standards.
-
-=head1 Dependencies
-
-Only use default pragma's
-
-  use 5.22.0;
-  use strict;
-  use feature "say";
-  use warnings;
-
-Please do not add useless additional dependencies like
-L<sanity|https://metacpan.org/pod/sanity>,
-L<Modern::Perl|https://metacpan.org/pod/Modern::Perl>,
-common::sense, or L<nonsense|https://metacpan.org/pod/nonsense>.
-
-However useful they might be in your own working environment and
-force you into behaving well, adding them as a requirement to a
-CPAN module will increase the complexity of the requirements to
-probably no good use, as they are unlikely to be found on all your
-targeted systems and add a chance to break.
-
-There is no problem with you using those in your own (non-CPAN)
-scripts and modules, but please do not add needless dependencies.
-
-=over
-
-=item - L<Test::Prereq|https://metacpan.org/pod/Test::Prereq>
-
-=back
 
 =head1 Test
 
@@ -68,7 +39,7 @@ if possible, do not use L<Test::*|https://metacpan.org/search?q=Test%3A%3A&searc
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
-If you are still using any additional Test:: module, do not mix your own
+If you are still using any additional C<Test::> module, do not mix your own
 code with the functionality from a/the module. Be consistent: use all or
 use nothing. That is: if the module you (now) use comes with features you
 had scripted yourself before using that module, replace them too.
@@ -90,6 +61,40 @@ also test with yath
 Add tests cases from issues or tickets to your own tests. Adding references
 to the tickets or issues creates a self-documenting structure, reasoning and
 history.
+
+=head1 Dependencies
+
+Every module you use is a module your release will depend on. If a new
+release of such module fails, the likelyhood of your release being
+unable to install increases. So only use modules that you need. Each
+dependency should be well-considered.
+
+Then there are two types of modules you can depend on: functional
+modules, like L<DBI|https://metacpan.org/pod/DBI> and
+L<XML::LibXML|https://metacpan.org/pod/XML::LibXML>, and developer
+convenience modules, like L<Modern::Perl|https://metacpan.org/pod/Modern::Perl>
+
+You cannot get around needing the first type of modules, but the
+convenience modules should only be used in (local) perl scripts and
+not in CPAN modules, so please do not add additional dependencies
+on modules/pragma's like L<sanity|https://metacpan.org/pod/sanity>,
+L<Modern::Perl|https://metacpan.org/pod/Modern::Perl>, common::sense,
+or L<nonsense|https://metacpan.org/pod/nonsense>.
+
+However useful they might be in your own working environment and
+force you into behaving well, adding them as a requirement to a
+CPAN module will increase the complexity of the requirements to
+probably no good use, as they are unlikely to be found on all your
+targeted systems and add a chance to break.
+
+There is no problem with you using those in your own (non-CPAN)
+scripts and modules, but please do not add needless dependencies.
+
+=over
+
+=item - L<Test::Prereq|https://metacpan.org/pod/Test::Prereq>
+
+=back
 
 =head1 Documentation
 
