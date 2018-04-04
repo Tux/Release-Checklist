@@ -2,6 +2,7 @@
     * MD -> POD fixes/workarounds
     * More proza
     * Mention Travis CI
+    * More README
 
 0.08	03 Apr 2018 - H.Merijn Brand
     * Add Travis CI
