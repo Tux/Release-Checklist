@@ -2,8 +2,8 @@
 
 Release::Checklist - A QA checklist for CPAN releases
 
-What follows is a list of categories or subjects that touch the quality
-- or what an end-user percieves as such - of a distribution end might
+What follows is a list of categories or subjects that touch the quality -
+or what an end-user percieves as such - of a distribution end might
 need some attention.
 
 Some of those can be (semi-)automated (in tests), others need action
@@ -67,7 +67,7 @@ if possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&searc
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
-If you are still using any additional Test:: module, do not mix your own
+If you are still using any additional `Test::` module, do not mix your own
 code with the functionality from a/the module. Be consistent: use all or
 use nothing. That is: if the module you (now) use comes with features you
 had scripted yourself before using that module, replace them too.
