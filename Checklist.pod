@@ -96,6 +96,29 @@ scripts and modules, but please do not add needless dependencies.
 
 =back
 
+Finally, make sure all your dependencies are declared in your META
+structure, so all CPAN clients know what to do before your module
+can be tested.
+
+   "prereqs"        : {
+     "build"        : {
+       "requires"   : {
+         "ExtUtils::MakeMaker"        : "0"
+         }
+       },
+     "configure"    : {
+       "requires"   : {
+         "ExtUtils::MakeMaker"        : "0"
+         }
+       },
+     "runtime"      : {
+       "requires"   : {
+         "perl"                       : "5.006",
+         "Test::More"                 : "0.88"
+         }
+       }
+     }
+
 =head1 Documentation
 
 Make sure that you have a clear, consice, and short SYNOPSIS section. This

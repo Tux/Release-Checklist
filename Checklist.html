@@ -102,6 +102,30 @@ scripts and modules, but please do not add needless dependencies.</p>
 <li> <a href="https://metacpan.org/pod/Test::Prereq">Test::Prereq</a></li>
 </ul>
 
+<p>Finally, make sure all your dependencies are declared in your META
+structure, so all CPAN clients know what to do before your module
+can be tested.</p>
+
+<pre><code>  &quot;prereqs&quot;        : {
+    &quot;build&quot;        : {
+      &quot;requires&quot;   : {
+        &quot;ExtUtils::MakeMaker&quot;        : &quot;0&quot;
+        }
+      },
+    &quot;configure&quot;    : {
+      &quot;requires&quot;   : {
+        &quot;ExtUtils::MakeMaker&quot;        : &quot;0&quot;
+        }
+      },
+    &quot;runtime&quot;      : {
+      &quot;requires&quot;   : {
+        &quot;perl&quot;                       : &quot;5.006&quot;,
+        &quot;Test::More&quot;                 : &quot;0.88&quot;
+        }
+      }
+    }
+</code></pre>
+
 <h1 id="documentation">Documentation</h1>
 
 <p>Make sure that you have a clear, consice, and short SYNOPSIS section. This
