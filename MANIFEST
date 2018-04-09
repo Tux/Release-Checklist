@@ -26,6 +26,6 @@ scripts/makewww.pl
 scripts/pod-spell-check
 scripts/tux.css
 scripts/used-by.pl
+t/00-md.t
 t/00-pod.t
 t/01-hello.t
-test-doc.pl

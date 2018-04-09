@@ -46,7 +46,6 @@ Checklist.pm:	doc
 	perl pod2pm.pl
 
 test::		doc
-	perl test-doc.pl
 	perl scripts/pod-spell-check --aspell --ispell
 
 tgzdist:
