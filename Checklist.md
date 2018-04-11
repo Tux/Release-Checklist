@@ -129,10 +129,6 @@ your own distribution. However useful a module might be, if it has a more
 restrictive license than your distribution, it may be off limits to some
 users. That would mean that your distribution cannot be used either.
 
-More rarely, the authorship of your dependencies may be an issue. For example,
-if, for whatever reason, a company declines to use software by a particular
-author, then if your release depends on their work, it will be unusable.
-
 The reverse is also true: if your release has a more restrictive license than
 most releases on CPAN, it may lead to others avoiding depending on your code.
 
