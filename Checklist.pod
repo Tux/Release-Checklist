@@ -123,16 +123,15 @@ can be tested.
 
 Be very careful in choosing dependencies that have a different license than
 your own distribution. However useful a module might be, if it has a more
-restrictive license than your own stuff, and is thus prohibited in some
-environments, it might be the cause that your distribution cannot be used.
+restrictive license than your distribution, it may be off limits to some
+users. That would mean that your distribution cannot be used either.
 
-Other, more rare, issues might be with authors. If e.g. some author is
-blocked by a company for whatever reason, if your release depends on their
-work will inherently be disallowed.
+More rarely, the authorship of your dependencies may be an issue. For example,
+if, for whatever reason, a company declines to use software by a particular
+author, then if your release depends on their work, it will be unusable.
 
-Vice versa also counts: if your release has a more restrictive license than
-most releases on CPAN, it might be a restrictive factor for others to use
-your release in the dependence chain.
+The reverse is also true: if your release has a more restrictive license than
+most releases on CPAN, it may lead to others avoiding depending on your code.
 
 =head1 Documentation
 
