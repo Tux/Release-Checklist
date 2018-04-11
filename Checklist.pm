@@ -129,6 +129,21 @@ can be tested.
        }
      }
 
+=head1 Legal issues
+
+Be very careful in choosing dependencies that have a different license than
+your own distribution. However useful a module might be, if it has a more
+restrictive license than your own stuff, and is thus prohibited in some
+environments, it might be the cause that your distribution cannot be used.
+
+Other, more rare, issues might be with authors. If e.g. some author is
+blocked by a company for whatever reason, if your release depends on their
+work will inherently be disallowed.
+
+Vice versa also counts: if your release has a more restrictive license than
+most releases on CPAN, it might be a restrictive factor for others to use
+your release in the dependence chain.
+
 =head1 Documentation
 
 Make sure that you have a clear, consice, and short SYNOPSIS section. This
