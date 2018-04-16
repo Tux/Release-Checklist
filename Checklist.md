@@ -12,6 +12,13 @@ from the maintainer. Not all subjects may apply to your project.
 Each subject will mention or list modules that might help in improving
 or preserving high standards.
 
+Various guidelines are also available in the
+[perl core documentation](https://perldoc.perl.org/perlmodstyle.html)
+
+``` shell
+ $ perldoc perlmodstyle
+```
+
 # Test
 
 Test, test and test. The more you test, the lower the chance you
