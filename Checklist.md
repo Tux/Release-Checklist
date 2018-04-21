@@ -43,7 +43,7 @@ t/
 xt/
 ```
 
-if possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&search_type=modules)
+If possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&search_type=modules)
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
