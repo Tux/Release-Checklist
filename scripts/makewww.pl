@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.28 - 2018-01-01";
+our $VERSION = "1.29 - 2018-04-21";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -215,6 +215,7 @@ EOH
 	$data->{version} //= "*";
 
 	my $mcpd = eval { $mcpan->distribution ($dist) };
+	my $mcpr = eval { $mcpan->release      ($dist) };
 
 	# Kwalitee
 	my $kwtc = "none";
@@ -267,12 +268,17 @@ EOH
 	$time{git} += t_used;
 
 	# CPANTESTER results
-	$opt_v > 1 and warn " Fetch cpantesters\n";
-	!defined $data->{cptst} and
-	    $data->{cptst} =
-	      ($r = CPAN::Testers::WWW::Reports::Query::AJAX->new (dist => $dist))
-		? [ $r->pass, $r->na, $r->fail, $r->unknown ]
-		: [ "", "", "", "" ];
+	if ($mcpr and my $t = $mcpr->tests) {
+	    $data->{cptst} = [ map { $t->{$_} // "" } qw( pass na fail unknown ) ];
+	    }
+	else {
+	    $opt_v > 1 and warn " Fetch cpantesters\n";
+	    !defined $data->{cptst} and
+		$data->{cptst} =
+		  ($r = CPAN::Testers::WWW::Reports::Query::AJAX->new (dist => $dist))
+		    ? [ $r->pass, $r->na, $r->fail, $r->unknown ]
+		    : [ "", "", "", "" ];
+	    }
 	$opt_v > 7 and warn "  (@{$data->{cptst}})\n";
 	$time{cpantesters} += t_used;
 
@@ -283,14 +289,14 @@ EOH
 	# https://rt.cpan.org/Dist/Display.html?Queue=DBD%3A%3ACSV
 	my $rt_tag = "*";
 	if ($rt =~ m{/rt.cpan.org/}) {
-	    $opt_v > 1 and warn " Fetching RT ticket list\n";
-	    $opt_v > 2 and warn "  $rt\n";
-	    if ($mcpd and $r = $mcpd->bugs and ($r->{type} // "") eq "rt") {
-		$rt_tag = sum0 map { $r->{$_} || 0 } qw( open new );
+	    if ($mcpd and $r = $mcpd->bugs and my $brt = $r->{rt}) {
+		$rt_tag = sum0 map { $brt->{$_} || 0 } qw( open new );
 		# Possibly use a popup to show active, closed, new, open,
 		# patched, rejected, resolved, stalled
 		}
 	    elsif ($r = $ua->get ($rt) and $r->is_success) {
+		$opt_v > 1 and warn " Fetching RT ticket list\n";
+		$opt_v > 2 and warn "  $rt\n";
 		my $tree = HTML::TreeBuilder->new;
 		$tree->parse_content (decode ("utf-8", $r->content));
 		#$opt_v > 8 and warn $tree->as_HTML (undef, "  ", {});
@@ -315,29 +321,35 @@ EOH
 	    "closed"	=> [ "-", undef ],
 	    );
 	if ($git =~ m/\b github.com \b/x) {
-	    $opt_v > 1 and warn " Fetch github issues\n";
-	    my $il = "$git/issues";
-	    $r = $ua->get ($il);
-	    my $tree = HTML::TreeBuilder->new;
-	    if ($r && $r->is_success) {
-		$issues     = $il;
-		$issues_tag = "0";
-		$tree->parse_content (decode ("utf-8", $r->content));
-		# Get most recent commit date
-		my $ib = $il =~ s{^https?://github.com}{}r;
-		$rt_tag eq "*" and $rt_tag = 0;
-		for ($tree->look_down (_tag => "a",
-				       href => qr{$ib\?q=is(?:%3A|:)open\+is(?:%3A|:)issue$})) {
-		    $_->as_text =~ m/^\s*([0-9]+)\s+Open/i or next;
-		    $issues_tag = $1;
-		    push @$issue_class, (
-			$1 == 0 ? "pass" :
-			$1 < 10 ? "na"   :
-			$1 < 25 ? "warn" : "fail");
+	    if ($mcpd and $r = $mcpd->bugs and my $bgh = $r->{github}) {
+		# source, closed, open, active
+		$issues_tag = $bgh->{open};
+		}
+	    else {
+		$opt_v > 1 and warn " Fetch github issues\n";
+		my $il = "$git/issues";
+		$r = $ua->get ($il);
+		my $tree = HTML::TreeBuilder->new;
+		if ($r && $r->is_success) {
+		    $issues     = $il;
+		    $issues_tag = "0";
+		    $tree->parse_content (decode ("utf-8", $r->content));
+		    # Get most recent commit date
+		    my $ib = $il =~ s{^https?://github.com}{}r;
+		    $rt_tag eq "*" and $rt_tag = 0;
+		    for ($tree->look_down (_tag => "a",
+					   href => qr{$ib\?q=is(?:%3A|:)open\+is(?:%3A|:)issue$})) {
+			$_->as_text =~ m/^\s*([0-9]+)\s+Open/i or next;
+			$issues_tag = $1;
+			}
 		    }
 		}
+	    $issues_tag =~ m/^[0-9]+$/ and push @$issue_class, (
+		$issues_tag == 0 ? "pass" :
+		$issues_tag < 10 ? "na"   :
+		$issues_tag < 25 ? "warn" : "fail");
 
-	    $tree = HTML::TreeBuilder->new;
+	    my $tree = HTML::TreeBuilder->new;
 	    $r = $ua->get ("$git/pulls");
 	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
 	    foreach my $a ($tree->look_down (_tag => "a", href => qr{/issues\?q=is%3A})) {
@@ -348,7 +360,7 @@ EOH
 	    }
 	$time{github} += t_used;
 	$rt_tag =~ m/^[-0-9]?$/ or
-	    $rt_tag = ($mcpd ? $mcpd->bugs->{active} : "") || "*";
+	    $rt_tag = ($mcpd ? $mcpd->bugs->{rt}{active} // "" : "") // "*";
 	$time{rt_tag} += t_used;
 
 	# Downriver deps
