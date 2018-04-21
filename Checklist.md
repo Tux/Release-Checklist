@@ -205,9 +205,9 @@ never think of.
 
 If every line of your code is tested, not only do you prevent unexpected
 breakage, but you also make sure that most corner cases are tested. Besides
-that, it will probably confront your with questions like "What can I possibly
-do to get into this part of my code?". Which may cause optimizations and other
-fun.
+that, it will probably confront you with questions like "What can I possibly
+do to get into this part of my code?", which may lead to optimizations and
+other fun.
 
  - [Devel::Cover](https://metacpan.org/pod/Devel::Cover)
  - [Test::TestCoverage](https://metacpan.org/pod/Test::TestCoverage)
