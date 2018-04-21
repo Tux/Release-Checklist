@@ -81,6 +81,18 @@ release of such module fails, the likelyhood of your release being
 unable to install increases. So only use modules that you need. Each
 dependency should be well-considered.
 
+Depending on modules that are included in the perl5 CORE distribution do
+not have this problem, as you are sure that this module is available already.
+However, be careful to ensure that that module is a core module in the
+lowest version of perl that you claim to support. Check it with
+[Module::CoreList](https://metacpan.org/pod/Module::CoreList)
+
+``` sh
+ $ corelist File::Temp
+ Data for 2018-04-20
+ File::Temp was first released with perl v5.6.1
+```
+
 Then there are two types of modules you can depend on: functional
 modules, like [DBI](https://metacpan.org/pod/DBI) and
 [XML::LibXML](https://metacpan.org/pod/XML::LibXML), and developer
