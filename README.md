@@ -8,10 +8,10 @@ in the process of releasing a (CPAN) distribution
 There is no functionality in the module itself, but just serves a pure
 documantation purpose.
 
- $ perl Makefile.PL
- $ make
- $ make test
- $ make install
+    $ perl Makefile.PL
+    $ make
+    $ make test
+    $ make install
 
 The distribution comes with the checklist in MarkDown (Checklist.md),
 HTML (Checklist.html), POD (Checklist.pod), and a module Release::Checklist
