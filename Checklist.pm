@@ -19,6 +19,13 @@ What follows is a list of categories or subjects that touch the quality -
 or what an end-user percieves as such - of a distribution end might
 need some attention.
 
+This document is aiming at up-river authors that want/need improving
+the release status of their distribution.
+
+Work is underway in merging this list with
+L<The Berlin Consensus|https://github.com/Perl-Toolchain-Gang/toolchain-site/blob/master/berlin-consensus.md>
+into a toolset and/or service.
+
 Some of those can be (semi-)automated (in tests), others need action
 from the maintainer. Not all subjects may apply to your project.
 
