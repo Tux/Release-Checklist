@@ -100,7 +100,8 @@ You cannot get around needing the first type of modules, but the
 convenience modules should only be used in (local) perl scripts and
 not in CPAN modules, so please do not add additional dependencies
 on modules/pragma's like L<sanity|https://metacpan.org/pod/sanity>,
-L<Modern::Perl|https://metacpan.org/pod/Modern::Perl>, common::sense,
+L<Modern::Perl|https://metacpan.org/pod/Modern::Perl>, 
+L<common::sense|https://metacpan.org/pod/common::sense>,
 or L<nonsense|https://metacpan.org/pod/nonsense>.
 
 However useful they might be in your own working environment and
