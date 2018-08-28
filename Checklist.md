@@ -502,6 +502,19 @@ configuration files or set up databases, that should be mentioned too.
 
  - [Text::Markdown](https://metacpan.org/pod/Text::Markdown)
 
+# Tickets
+
+If your module is on [github][https://github.com] or similar, regularly check
+on submitted issues and deal with them: either explain why it is not an issue
+or comment with alternatives or even better: this has been fixed now.
+Additionally, you should check on possible forks of your code and check the
+commits in that fork. There are people that make very interesting changes that
+you could use to improve your code. If the changes they made are already taken
+into your own code, or your code offers a (better) alternative to their change
+you could comment on their commits with additional information.
+
+Likewise if you use [RT][https://rt.perl.org] as bug tracker.
+
 # Downriver
 
 You have had reasons to make the changes leading up to a new distribution. If

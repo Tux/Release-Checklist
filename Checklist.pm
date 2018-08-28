@@ -57,7 +57,7 @@ in user-space.
  t/
  xt/
 
-if possible, do not use L<Test::*|https://metacpan.org/search?q=Test%3A%3A&search_type=modules>
+If possible, do not use L<Test::*|https://metacpan.org/search?q=Test%3A%3A&search_type=modules>
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
@@ -245,9 +245,9 @@ never think of.
 
 If every line of your code is tested, not only do you prevent unexpected
 breakage, but you also make sure that most corner cases are tested. Besides
-that, it will probably confront your with questions like "What can I possibly
-do to get into this part of my code?". Which may cause optimizations and other
-fun.
+that, it will probably confront you with questions like "What can I possibly
+do to get into this part of my code?", Which may lead to optimizations and
+other fun.
 
 =over
 

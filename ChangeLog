@@ -1,10 +1,11 @@
-0.09	16 Apr 2018 - H.Merijn Brand
+0.09	28 Aug 2018 - H.Merijn Brand
     * MD -> POD fixes/workarounds
     * More proza
     * Mention Travis CI
     * More README
     * Mention prereqs in META
     * Reference to perlmodstyle
+    * Add a tickets section
 
 0.08	03 Apr 2018 - H.Merijn Brand
     * Add Travis CI
