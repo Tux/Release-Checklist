@@ -11,7 +11,7 @@
   "provides"       : {
     "Release::Checklist" : {
       "file"                         : "Checklist.pm",
-      "version"                      : "0.09"
+      "version"                      : "0.10"
       }
     },
   "prereqs"        : {
@@ -31,35 +31,35 @@
         "Test::More"                 : "0.88"
         },
       "recommends" : {
-        "perl"                       : "5.026002",
+        "perl"                       : "5.028000",
         "CPAN::Meta::Converter"      : "2.150010",
         "CPAN::Meta::Validator"      : "2.150010",
-        "Devel::Cover"               : "1.29",
-        "Devel::PPPort"              : "3.36",
+        "Devel::Cover"               : "1.30",
+        "Devel::PPPort"              : "3.42",
         "JSON::PP"                   : "2.97001",
         "Module::CPANTS::Analyse"    : "0.96",
         "Module::Release"            : "2.125",
         "Parse::CPAN::Meta"          : "2.150010",
-        "Perl::Critic"               : "1.130",
+        "Perl::Critic"               : "1.132",
         "Perl::MinimumVersion"       : "1.38",
         "Perl::Tidy"                 : "20180220",
         "Pod::Escapes"               : "1.07",
         "Pod::Parser"                : "1.63",
         "Pod::Spell"                 : "1.20",
         "Pod::Spell::CommonMistakes" : "1.002",
-        "Test2::Harness"             : "0.001064",
+        "Test2::Harness"             : "0.001069",
         "Test::CPAN::Changes"        : "0.400002",
         "Test::CPAN::Meta::YAML"     : "0.25",
         "Test::Kwalitee"             : "1.27",
-        "Test::Manifest"             : "2.02",
+        "Test::Manifest"             : "2.021",
         "Test::MinimumVersion"       : "0.101082",
         "Test::MinimumVersion::Fast" : "0.04",
-        "Test::More"                 : "1.302135",
+        "Test::More"                 : "1.302140",
         "Test::Perl::Critic"         : "1.04",
-        "Test::Perl::Critic::Policy" : "1.130",
-        "Test::Pod"                  : "1.51",
+        "Test::Perl::Critic::Policy" : "1.132",
+        "Test::Pod"                  : "1.52",
         "Test::Pod::Coverage"        : "1.10",
-        "Test::Version"              : "2.07",
+        "Test::Version"              : "2.09",
         "Text::Aspell"               : "0.09",
         "Text::Ispell"               : "0.04",
         "Text::Markdown"             : "1.000031"
@@ -81,5 +81,5 @@
       "http://dev.perl.org/licenses/"
       ]
     },
-  "version"        : "0.09"
+  "version"        : "0.10"
   }
