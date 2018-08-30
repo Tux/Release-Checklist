@@ -5,9 +5,13 @@ use warnings;
 
 use Test::More;
 
-our $VERSION = "0.02 - 20180409";
+our $VERSION = "0.03 - 20180830";
 
--d ".git" or exit 0;
+unless (-d ".git") {
+    ok (1, "These tests run only in a development environment");
+    done_testing ();
+    exit 0;
+    }
 
 my $tmd = eval { require Text::Markdown;          1; };
 my $tmh = eval { require Text::Markdown::Hoedown;
