@@ -257,6 +257,14 @@ other fun.
 
 =back
 
+Remove dead code. It is in your (git) repository anyway.
+
+=over
+
+=item - L<Test::Perl::Critic::TooMuchCode|https://metacpan.org/pod/Test::Perl::Critic::TooMuchCode>
+
+=back
+
 =head1 Version coverage
 
 This is a hard one. If your release/dist requires specific versions of other
@@ -579,7 +587,7 @@ installed.
 Add a L<file|./README.md> that states the purpose of your distribution.
 
 The README should state the purpose, the minimal envirenment to test, build,
-and run and possible license issue. If you there is a need to amend or create
+and run and possible license issue. If there is a need to amend or create
 configuration files or set up databases, that should be mentioned too.
 
 =over

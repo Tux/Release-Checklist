@@ -247,6 +247,14 @@ other fun.
 
 =back
 
+Remove dead code. It is in your (git) repository anyway.
+
+=over
+
+=item - L<Test::Perl::Critic::TooMuchCode|https://metacpan.org/pod/Test::Perl::Critic::TooMuchCode>
+
+=back
+
 =head1 Version coverage
 
 This is a hard one. If your release/dist requires specific versions of other

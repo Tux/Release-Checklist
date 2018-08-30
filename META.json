@@ -41,6 +41,7 @@
         "Module::Release"            : "2.125",
         "Parse::CPAN::Meta"          : "2.150010",
         "Perl::Critic"               : "1.132",
+        "Perl::Critic::TooMuchCode"  : "0.06",
         "Perl::MinimumVersion"       : "1.38",
         "Perl::Tidy"                 : "20180220",
         "Pod::Escapes"               : "1.07",
