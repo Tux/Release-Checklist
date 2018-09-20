@@ -1,21 +1,26 @@
 #!/pro/bin/perl
 
-use strict;
+use 5.12.0;
 use warnings;
 
-our $VERSION = "0.02 - 20180404";
+our $VERSION = "0.03 - 20180920";
 
 -d ".git" or exit 0;
 
-my @m = stat "Checklist.md";
-my @p = stat "Checklist.pod";
+my $fmd  = "Checklist.md";
+my $fpod = $fmd =~ s/md$/pod/r;
+
+my @m = stat $fmd;
+my @p = stat $fpod;
 my @t = stat $0;
 
 $m[9] && $p[9] && $p[9] >= $m[9] && $p[9] >= $t[9] and exit 0;
 
 use Markdown::Pod;
 
-open my $fh, "<", "Checklist.md";
+say "Converting $fmd to $fpod";
+
+open my $fh, "<", $fmd;
 my $md = do { local $/; <$fh> };
 close $fh;
 
@@ -36,7 +41,7 @@ $pod =~ s{=item -\K\n\n}{ }g;
 $pod =~ s{[ \t]+\n}{\n}g;
 $pod =~ s{\n\n\K\n+}{}g;
 
-open my $ph, ">", "Checklist.pod";
+open my $ph, ">", $fpod;
 print $ph "=encoding utf-8\n\n";
 print $ph $pod;
 close $ph;
