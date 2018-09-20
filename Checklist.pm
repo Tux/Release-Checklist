@@ -189,6 +189,15 @@ version whatever to read the pod as intended).
 
 =back
 
+=head1 Neutrality
+
+Do not use offensive or political statements anywhere in your code,
+your documentation, or your changelog(s). No one gains from statements
+about certain operating system(s), editor(s), president(s) or whatever
+are not to your liking. Make neutral claims about not being able to
+test your module on system X instead of saying system X should die a
+horrible death.
+
 =head1 Spelling
 
 Not every developer is of native English tongue. And even if, they
