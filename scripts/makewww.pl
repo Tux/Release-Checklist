@@ -360,7 +360,7 @@ EOH
 	    }
 	$time{github} += t_used;
 	$rt_tag =~ m/^[-0-9]?$/ or
-	    $rt_tag = ($mcpd ? $mcpd->bugs->{rt}{active} // "" : "") // "*";
+	    $rt_tag = ($mcpd ? $mcpd->bugs->{rt}{active} // "" : "") || "*";
 	$time{rt_tag} += t_used;
 
 	# Downriver deps
