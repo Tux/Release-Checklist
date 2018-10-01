@@ -427,7 +427,7 @@ EOH
 	    }
 	$time{travis} += t_used;
 	if ($tci_tag =~ m{^(?:unknown|\*|)$} && $git =~ m{\b github\.com \b}x) {
-	    $tci       = "$git/settings/hooks/new?service=travis";
+	    $tci       = "https://travis-ci.org/profile";
 	    $tci_tag   = "add";
 	    $tci_class = [ "tci", "gray" ];
 	    }
