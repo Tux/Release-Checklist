@@ -45,13 +45,15 @@ Checklist.pod:	Checklist.md
 Checklist.pm:	doc
 	perl pod2pm.pl
 
+META.yml:	META.json
+	perl -pi -e'm/"version"/ and s{"[0-9]\.[.0-9]+"}{"$VERSION"}' META.json
+	jsn2yml < META.json > META.yml
+
 test::		doc
 	perl scripts/pod-spell-check --aspell --ispell
 
-tgzdist:
+tgzdist:	META.yml
 	perl check-versions.pl
-	perl -pi -e'm/"version"/ and s{"[0-9]\.[.0-9]+"}{"$VERSION"}' META.json
-	jsn2yml < META.json > META.yml
 	ln -s . Release-Checklist-$VERSION
 	sed "s,^,Release-Checklist-$VERSION/," MANIFEST >Mx
 	tar --format=ustar -czv -T Mx -f Release-Checklist-$VERSION.tgz
