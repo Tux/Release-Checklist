@@ -31,6 +31,7 @@ use JSON::XS;
 use YAML::Tiny;
 use Data::Peek;
 use LWP::UserAgent;
+use HTML::Entities;
 use HTML::TreeBuilder;
 use List::Util  qw( sum0 );
 use Encode      qw( encode decode );
@@ -97,9 +98,9 @@ close $html;
 sub href {
     my ($txt, $ref, $ttl, $dtl) = (@_, "", "", "");
     if (ref $txt eq "HASH") {
-	$ttl = $txt->{title};
-	$dtl = $txt->{dtitle};
-	$txt = $txt->{text};
+	$ttl = encode_entities ($txt->{title});
+	$dtl = encode_entities ($txt->{dtitle});
+	$txt = encode_entities ($txt->{text});
 	}
     $ttl //= "";
     $dtl //= "";
