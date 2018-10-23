@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.29 - 2018-04-21";
+our $VERSION = "1.30 - 2018-10-23";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -493,7 +493,7 @@ EOH
 
     print $html <<"EOH";
 
-          <tr><td colspan="19"><hr></td></tr>
+          <tr><td colspan="19"><hr /></td></tr>
           <tr>
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
             <td colspan="11"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
@@ -511,16 +511,17 @@ EOH
 
 sub header {
     print $html <<"EOH";
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="Generator"          content="makewww.pl">
-  <meta name="Author"             content="H.Merijn Brand">
-  <meta name="Description"        content="Perl">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Generator"          content="makewww.pl" />
+  <meta name="Author"             content="H.Merijn Brand" />
+  <meta name="Description"        content="Perl" />
   <title>$author Perl QA page</title>
 
-  <link rel="stylesheet" type="text/css"  href="tux.css">
+  <link rel="stylesheet" type="text/css"  href="tux.css" />
   </head>
 <body>
 

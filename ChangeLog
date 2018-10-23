@@ -1,7 +1,8 @@
-0.10	22 Oct 2018 - H.Merijn Brand
+0.10	23 Oct 2018 - H.Merijn Brand
     * Skip t/00-md.t in non-devel environments with a message
     * Mention dead code
     * Docs about neutrality
+    * Strict xhtml in makewww.pl
 
 0.09	28 Aug 2018 - H.Merijn Brand
     * MD -> POD fixes/workarounds
