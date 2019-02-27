@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.30 - 2018-10-23";
+our $VERSION = "1.31 - 2019-02-26";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -222,19 +222,30 @@ EOH
 	my $kwtc = "none";
 	unless (defined $data->{kwalitee}) {
 	    $opt_v > 1 and warn " Fetch kwalitee\n";
-	    ($r = $ua->get ("http://cpants.cpanauthors.org/dist/$dist")) &&
-	     $r->is_success && $r->content =~ m{
-		<dt> [\s\r\n]*  Kwalitee          [\s\r\n]* </dt> [\s\r\n]*
-		<dd> [\s\r\n]* ([0-9.]+)          [\s\r\n]* </dd> [\s\r\n]*
-		<dt> [\s\r\n]*  Core \s* Kwalitee [\s\r\n]* </dt> [\s\r\n]*
-		<dd> [\s\r\n]* ([0-9.]+)          [\s\r\n]* </dd>
-		}xi and ($data->{kwk}, $data->{kwc}) = ($1, $2);
-	     $data->{kwalitee} = join " / " =>
-		 $data->{kwc} // "-", $data->{kwk} // "&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;";
-	     $data->{kwc} and $kwtc = $data->{kwc} >= 100 ? "pass"
-				    : $data->{kwc} >=  80 ? "na"
-				    : $data->{kwc} >=  60 ? "warn" : "fail";
-	     }
+	    $r = $ua->get ("https://cpants.cpanauthors.org/dist/$dist");
+	    my $tree = HTML::TreeBuilder->new;
+	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
+	    if (my ($dl) = $tree->look_down (_tag => "dl", class => "small")) {
+		my ($dt, %dl) = ("");
+		foreach my $d ($dl->look_down (_tag => qr{^d[td]$})) {
+		    my $txt = $d->as_text;
+		    if ($d->tag eq "dt") {
+			$dt = lc $txt;
+			next;
+			}
+		    $dl{$dt} //= $txt;
+		    }
+		$data->{kwk} = $dl{"kwalitee"};
+		$data->{kwc} = $dl{"core kwalitee"};
+		$data->{kwr} = $dl{"release date"};
+
+		$data->{kwalitee} = join " / " =>
+		    $data->{kwc} || "-", $data->{kwk} || "&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;";
+		$data->{kwc} and $kwtc = $data->{kwc} >= 100 ? "pass"
+				       : $data->{kwc} >=  80 ? "na"
+				       : $data->{kwc} >=  60 ? "warn" : "fail";
+		}
+	    }
 	$time{kwalitee} += t_used;
 
 	# GIT repo and last commit
@@ -520,7 +531,7 @@ sub header {
   <meta name="Generator"          content="makewww.pl" />
   <meta name="Author"             content="H.Merijn Brand" />
   <meta name="Description"        content="Perl" />
-  <title>$author Perl QA page</title>
+  <title>$author - Perl QA page</title>
 
   <link rel="stylesheet" type="text/css"  href="tux.css" />
   </head>
