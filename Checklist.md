@@ -415,6 +415,25 @@ Check [MANIFEST](./MANIFEST) and [MANIFEST.skip](./MANIFEST.skip) are complete.
  - [Test::Manifest](https://metacpan.org/pod/Test::Manifest)
  - [Test::DistManifest](https://metacpan.org/pod/Test::DistManifest)
 
+# File naming
+
+Don not make it hard for people and modules to use the files in your
+distribution by using spaces and special characters in file names. Also try
+to not use overly long names and deep directory structures.
+
+If spaces or weird characters in file or folder names are required by your
+module and/or your test cases, consider creating these files from the test
+itself and cleaning them up when the test is done.
+
+ - [Test::Portability::Files](https://metacpan.org/pod/Test::Portability::Files)
+
+``` sh
+ $ perl -MTest::More -MTest::Portability::Files -w \
+   -e 'options (all_tests => 1);' \
+   -e 'options (test_dos_length => 0);' \
+   -e 'run_tests ();'
+```
+
 # Code style consistency
 
 Add a [CONTRIBUTING.md](./CONTRIBUTING.md) or similar file to guide others to
