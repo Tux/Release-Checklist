@@ -2,7 +2,7 @@
 
 package genMETA;
 
-our $VERSION = "1.08-20160520";
+our $VERSION = "1.10-20190617";
 
 use 5.14.1;
 use warnings;
@@ -141,6 +141,14 @@ sub check_required {
 	    @rec{keys %c} = values %c;
 	    }
 	}
+    if (my $of = $yml->{prereqs}) {
+	foreach my $f (values %{$of}) {
+	    my %q = map { %{$f->{$_}} } grep m/requires/   => keys %{$f};
+	    my %c = map { %{$f->{$_}} } grep m/recommends/ => keys %{$f};
+	    @req{keys %q} = values %q;
+	    @rec{keys %c} = values %c;
+	    }
+	}
     my %vsn = ( %req, %rec );
     delete @vsn{qw( perl version )};
     for (sort keys %vsn) {
@@ -203,7 +211,7 @@ sub check_yaml {
 
 sub check_minimum {
     my $self = shift;
-    my $reqv = $self->{h}{requires}{perl};
+    my $reqv = $self->{h}{requires}{perl} || $self->{h}{prereqs}{runtime}{requires}{perl};
     my $locs;
 
     for (@_) {
@@ -352,8 +360,13 @@ sub fix_meta {
 	$jsn->{resources}{license} = [ $jsn->{resources}{license} ];
     delete $jsn->{distribution_type};
     if (exists $jsn->{license}) {
-	$jsn->{license} =~ s/^perl$/perl_5/;
-	$jsn->{license} = [ $jsn->{license} ];
+	if (ref $jsn->{license} eq "ARRAY") {
+	    $jsn->{license}[0] =~ s/^perl$/perl_5/i;
+	    }
+	else {
+	    $jsn->{license}    =~ s/^perl$/perl_5/i;
+	    $jsn->{license}    = [ $jsn->{license} ];
+	    }
 	}
     if (exists $jsn->{resources}{repository}) {
 	my $url = $jsn->{resources}{repository};
@@ -396,7 +409,7 @@ sub fix_meta {
 	croak join "\n" => RED, "META Validator found fail:\n", $cmv->errors, RESET, "";
 
     unless ($yf) {
-	my @my = glob "*/META.yml" or croak "No META files";
+	my @my = grep { -s } glob ("*/META.yml"), "META.yml" or croak "No META files";
 	$yf = $my[0];
 	}
     my $jf = $yf =~ s/yml$/json/r;
@@ -452,5 +465,60 @@ sub fix_meta {
     chmod 0644, glob "*/META.*";
     unlink glob "MYMETA*";
     } # fix_meta
+
+sub _cpfd {
+    my ($jsn, $sct, $f) = @_;
+
+    open my $sh, ">", \my $b;
+    my $sep = "";
+    for (qw( requires recommends suggests )) {
+	my $s = $jsn->{"$sct$_"} or next;
+	print $sh $sep;
+	foreach my $m (sort keys %$s) {
+	    $m eq "perl" and next;
+	    my $v = $s->{$m};
+	    printf $sh qq{%-10s "%s"}, $_, $m;
+	    my $aw = (24 - length $m); $aw < 0 and $aw = 0;
+	    printf $sh qq{%s => "%s"}, " " x $aw, $v if $v;
+	    say $sh ";";
+	    }
+	$sep = "\n";
+	}
+    close $sh;
+    $sct || $f and $b and $b .= "};";
+    return $b;
+    } # _cpfd
+
+sub gen_cpanfile {
+    my $self = shift;
+
+    open my $fh, ">", "cpanfile";
+
+    my $jsn = $self->{h};
+    foreach my $sct_ ("", "configure_", "build_", "test_", "runtime_") {
+
+	my $sct = $sct_ =~ s/_$//r;
+
+	my $b = _cpfd ($jsn, $sct_, 0) or next;
+
+	if ($sct) {
+	    say $fh qq/\non "$sct" => sub {/;
+	    say $fh $b =~ s/^(?=\S)/    /gmr;
+	    }
+	else {
+	    print $fh $b;
+	    }
+	}
+
+    if (my $of = $jsn->{optional_features}) {
+	foreach my $f (sort keys %$of) {
+	    my $fs = $of->{$f};
+	    say $fh qq/\nfeature "$f", "$fs->{description}" => sub {/;
+	    say $fh _cpfd ($fs, "", 1) =~ s/^/    /gmr;
+	    }
+	}
+
+    close $fh;
+    } # gen_cpanfile
 
 1;

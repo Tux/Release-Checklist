@@ -45,19 +45,21 @@ Checklist.pod:	Checklist.md
 Checklist.pm:	doc
 	perl pod2pm.pl
 
-META.yml:	META.json
-	perl -pi -e'm/"version"/ and s{"[0-9]\.[.0-9]+"}{"$VERSION"}' META.json
-	jsn2yml < META.json > META.yml
-
 test::		doc
 	perl scripts/pod-spell-check --aspell --ispell
 
-tgzdist:	META.yml
-	perl check-versions.pl
-	ln -s . Release-Checklist-$VERSION
-	sed "s,^,Release-Checklist-$VERSION/," MANIFEST >Mx
-	tar --format=ustar -czv -T Mx -f Release-Checklist-$VERSION.tgz
-	rm -f Mx Release-Checklist-$VERSION
-	cpants_lint.pl Release-Checklist-$VERSION.tgz
+spellcheck:
+	pod-spell-check --aspell --ispell
+
+checkmeta:	spellcheck
+	perl sandbox/genMETA.pl -c
+
+fixmeta:	distmeta
+	perl sandbox/genMETA.pl
+
+tgzdist:	checkmeta fixmeta \$(DISTVNAME).tar.gz distcheck
+	-\@mv -f \$(DISTVNAME).tar.gz \$(DISTVNAME).tgz
+	-\@cpants_lint.pl \$(DISTVNAME).tgz
+	-\@rm -f Debian_CPANTS.txt
 EOPA
     } # postamble

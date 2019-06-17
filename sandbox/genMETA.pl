@@ -1,0 +1,102 @@
+#!/pro/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long qw(:config bundling nopermute);
+GetOptions (
+    "c|check"		=> \ my $check,
+    "v|verbose:1"	=> \(my $opt_v = 0),
+    ) or die "usage: $0 [--check]\n";
+
+use lib "sandbox";
+use genMETA;
+my $meta = genMETA->new (
+    from    => "Checklist.pm",
+    verbose => $opt_v,
+    );
+
+$meta->from_data (<DATA>);
+unlink "META.yml", "META.json";
+$meta->write_yaml ();
+$meta->gen_cpanfile ();
+
+if ($check) {
+    $meta->check_encoding ();
+    $meta->check_required ();
+    my @ef = glob "examples/*";
+    $meta->check_minimum ([ "t", @ef, "Checklist.pm", "Makefile.PL" ]);
+    $meta->done_testing ();
+    }
+elsif ($opt_v) {
+    $meta->print_yaml ();
+    }
+else {
+    $meta->fix_meta ();
+    }
+
+__END__
+--- #YAML:1.0
+name:                   Release-Checklist
+version:                VERSION
+abstract:               A QA checklist for CPAN releases
+license:                perl
+author:                 
+  - H.Merijn Brand <h.m.brand@xs4all.nl>
+generated_by:           Author
+distribution_type:      module
+release_status:         stable
+provides:
+  Release::Checklist:
+    file:               Checklist.pm
+    version:            VERSION
+requires:                       
+  perl:                 5.006
+  Test::More:           0.88
+configure_requires:
+  ExtUtils::MakeMaker:  0
+test_requires:
+  Test::Harness:        0
+  Test::More:           0.88
+recommends:
+  perl:                        5.030000
+  CPAN::Meta::Converter:       2.150010
+  CPAN::Meta::Validator:       2.150010
+  Devel::Cover:                1.33
+  Devel::PPPort:               3.52
+  JSON::PP:                    4.02
+  Module::CPANTS::Analyse:     1.00
+  Module::Release:             2.125
+  Parse::CPAN::Meta:           2.150010
+  Perl::Critic:                1.134
+  Perl::Critic::TooMuchCode:   0.12
+  Perl::MinimumVersion:        1.38
+  Perl::Tidy:                  20190601
+  Pod::Escapes:                1.07
+  Pod::Parser:                 1.63
+  Pod::Spell:                  1.20
+  Pod::Spell::CommonMistakes:  1.002
+  Test2::Harness:              0.001077
+  Test::CPAN::Changes:         0.400002
+  Test::CPAN::Meta::YAML:      0.25
+  Test::Kwalitee:              1.28
+  Test::Manifest:              2.021
+  Test::MinimumVersion:        0.101082
+  Test::MinimumVersion::Fast:  0.04
+  Test::More:                  1.302164
+  Test::Perl::Critic:          1.04
+  Test::Perl::Critic::Policy:  1.134
+  Test::Pod:                   1.52
+  Test::Pod::Coverage:         1.10
+  Test::Version:               2.09
+  Text::Aspell:                0.09
+  Text::Ispell:                0.04
+  Text::Markdown:              1.000031
+resources:
+  license:              http://dev.perl.org/licenses/
+  repository:           https://github.com/Tux/Release-Checklist
+  bugtracker:           https://github.com/Tux/Release-Checklist/issues
+  xIRC:                 irc://irc.perl.org/#toolchain
+meta-spec:
+  version:              1.4
+  url:                  http://module-build.sourceforge.net/META-spec-v1.4.html

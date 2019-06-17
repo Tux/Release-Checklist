@@ -17,6 +17,7 @@ md2html.pl
 md2pod.pl
 META.json
 META.yml
+cpanfile
 .perlcriticrc
 .perltidyrc
 pod2pm.pl

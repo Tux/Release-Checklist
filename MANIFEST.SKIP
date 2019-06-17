@@ -1,11 +1,15 @@
 \.git
 \.gitignore
+\.travis\.yml
+\.whitesource
 Makefile$
 MANIFEST.SKIP
 sandbox
 sandbox/genMETA.pm
 scripts/myperl.html
 test.pl
+^blib/
+^pm_to_blib
 \.tar\.gz
 \.tgz
 ^MYMETA

@@ -1,10 +1,11 @@
-0.10	17 Apr 2019 - H.Merijn Brand
+0.10	17 Jun 2019 - H.Merijn Brand
     * Skip t/00-md.t in non-devel environments with a message
     * Mention dead code
     * Docs about neutrality
     * Strict xhtml in makewww.pl
     * It's 2019
     * File name convention Test::Portability::Files
+    * Move to use genMETA stuff for distribution (creates cpanfile)
 
 0.09	28 Aug 2018 - H.Merijn Brand
     * MD -> POD fixes/workarounds
