@@ -3,7 +3,7 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.31 - 2019-02-26";
+our $VERSION = "1.32 - 2019-07-25";
 
 sub usage {
     my $err = shift and select STDERR;
@@ -543,7 +543,7 @@ EOH
 
 sub footer {
     my @d = localtime;
-    my $stamp = sprintf "%02d-%02d-%04d", $d[3], $d[4] + 1, $d[5] + 1900;
+    my $stamp = sprintf "%04d-%02d-%02d", $d[5] + 1900, $d[4] + 1, $d[3];
     print $html <<"EOH";
 
   <tr class="boxed">
