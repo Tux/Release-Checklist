@@ -64,8 +64,8 @@ recommends:
   CPAN::Meta::Validator:       2.150010
   Devel::Cover:                1.33
   Devel::PPPort:               3.52
-  JSON::PP:                    4.02
-  Module::CPANTS::Analyse:     1.00
+  JSON::PP:                    4.04
+  Module::CPANTS::Analyse:     1.01
   Module::Release:             2.125
   Parse::CPAN::Meta:           2.150010
   Perl::Critic:                1.134
@@ -76,14 +76,14 @@ recommends:
   Pod::Parser:                 1.63
   Pod::Spell:                  1.20
   Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              0.001077
+  Test2::Harness:              0.001084
   Test::CPAN::Changes:         0.400002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28
   Test::Manifest:              2.021
   Test::MinimumVersion:        0.101082
   Test::MinimumVersion::Fast:  0.04
-  Test::More:                  1.302164
+  Test::More:                  1.302166
   Test::Perl::Critic:          1.04
   Test::Perl::Critic::Policy:  1.134
   Test::Pod:                   1.52
