@@ -5,7 +5,7 @@
 require 5.006;
 use strict;
 
-our $VERSION = "0.10";
+our $VERSION = "0.11";
 
 use ExtUtils::MakeMaker;
 
@@ -27,6 +27,12 @@ my $rv = WriteMakefile (%wm);
 package MY;
 
 sub postamble {
+    my $min_vsn = ($] >= 5.010 && -d "xt" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
+	? join "\n" =>
+	    'test ::',
+	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
+	    ''
+	: "";
     <<"EOPA";
 VERSION = $VERSION
 
@@ -61,5 +67,7 @@ tgzdist:	checkmeta fixmeta \$(DISTVNAME).tar.gz distcheck
 	-\@mv -f \$(DISTVNAME).tar.gz \$(DISTVNAME).tgz
 	-\@cpants_lint.pl \$(DISTVNAME).tgz
 	-\@rm -f Debian_CPANTS.txt
+
+$min_vsn
 EOPA
     } # postamble

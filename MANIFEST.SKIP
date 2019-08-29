@@ -13,3 +13,4 @@ test.pl
 \.tar\.gz
 \.tgz
 ^MYMETA
+^xt/

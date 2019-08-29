@@ -171,11 +171,17 @@ Make sure your pod is correct and can also be parsed by the pod-modules in
 the lowest version of perl you support (or mention that you need at least
 version whatever to read the pod as intended).
 
+The web is dynamic and some (external) references might seize to exist not
+telling you, so checking links used in your documentation once in a while
+might hint you to updated sites.
+
 =over
 
 =item - L<Test::Pod|https://metacpan.org/pod/Test::Pod>
 
 =item - L<Test::Pod::Coverage|https://metacpan.org/pod/Test::Pod::Coverage>
+
+=item - L<Test::Pod::Links|https://metacpan.org/pod/Test::Pod::Links>
 
 =back
 
@@ -208,7 +214,7 @@ documentation as weird, unclear, or even plain wrong.
 
 =item - L<pod-spell-check|scripts/pod-spell-check>
 
-=item - L<Pod::Aspell|https://metacpan.org/pod/Pod::Aspell>
+=item - L<Pod::Spelling::Aspell|https://metacpan.org/pod/Pod::Spelling::Aspell>
 
 =item - L<Pod::Escapes|https://metacpan.org/pod/Pod::Escapes>
 
@@ -263,7 +269,7 @@ Remove dead code. It is in your (git) repository anyway.
 
 =over
 
-=item - L<Test::Perl::Critic::TooMuchCode|https://metacpan.org/pod/Test::Perl::Critic::TooMuchCode>
+=item - L<Perl::Critic::TooMuchCode|https://metacpan.org/pod/Perl::Critic::TooMuchCode>
 
 =back
 
