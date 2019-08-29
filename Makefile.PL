@@ -29,7 +29,7 @@ package MY;
 sub postamble {
     my $min_vsn = ($] >= 5.010 && -d "xt" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
 	? join "\n" =>
-	    'test ::',
+	    'test::	doc',
 	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
 	    ''
 	: "";
@@ -48,11 +48,8 @@ Checklist.html:	Checklist.md
 Checklist.pod:	Checklist.md
 	perl md2pod.pl
 
-Checklist.pm:	doc
+Checklist.pm:	Checklist.pod
 	perl pod2pm.pl
-
-test::		doc
-	perl scripts/pod-spell-check --aspell --ispell
 
 spellcheck:
 	pod-spell-check --aspell --ispell
@@ -69,5 +66,8 @@ tgzdist:	checkmeta fixmeta \$(DISTVNAME).tar.gz distcheck
 	-\@rm -f Debian_CPANTS.txt
 
 $min_vsn
+
+test::		doc
+	perl scripts/pod-spell-check --aspell --ispell
 EOPA
     } # postamble

@@ -3,12 +3,16 @@
 use 5.12.0;
 use warnings;
 
-our $VERSION = "0.03 - 20180920";
+our $VERSION = "0.04 - 20190829";
 
 -d ".git" or exit 0;
 
 my $fmd  = "Checklist.md";
 my $fpod = $fmd =~ s/md$/pod/r;
+
+my %c = map  { $_ => (stat $_)[9] } $fmd, $fpod;
+$c{$fmd} && $c{$fpod} && $c{$fpod} - $c{$fmd} > 2 and
+    die "Did you edit $fpod instead of $fmd\n";
 
 my @m = stat $fmd;
 my @p = stat $fpod;
@@ -45,3 +49,6 @@ open my $ph, ">", $fpod;
 print $ph "=encoding utf-8\n\n";
 print $ph $pod;
 close $ph;
+
+my $t = (stat $fmd)[9] + 1;
+utime $t, $t, $fpod;
