@@ -15,6 +15,14 @@ Perl::Tidy will help getting the code in shape, but as all software, it
 is not perfect. You can find my preferences for these in
 [.perltidy](./.perltidyrc) and [.perlcritic](./.perlcriticrc).
 
+# Mail
+
+Please, please, please, do *NOT* use HTML mail.
+[Plain text](https://useplaintext.email)
+[without](http://www.goldmark.org/jeff/stupid-disclaimers/)
+[disclaimers](https://www.economist.com/business/2011/04/07/spare-us-the-e-mail-yada-yada)
+will do fine!
+
 # Requirements
 
 As this is a document-only release, there are no requirements.
