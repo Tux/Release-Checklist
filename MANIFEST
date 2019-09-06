@@ -1,5 +1,5 @@
 .aspell.local.pws
-ChangeLog
+Changes
 Checklist.html
 Checklist.md
 Checklist.pm
@@ -9,6 +9,7 @@ CONTRIBUTING.md
 examples/xt/00_perlversion.t
 examples/xt/00_pod.t
 examples/xt/01_pod.t
+examples/xt/02_pod.t
 examples/xt/10_perm.t
 LICENSE
 Makefile.PL
