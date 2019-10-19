@@ -579,6 +579,11 @@ you could comment on their commits with additional information.
 
 Likewise if you use [RT][https://rt.perl.org] as bug tracker.
 
+If any ticket is entered as a vulnerability issue, be sure to make clear in
+the feedback to that issue that it is indeed a security issue and how you
+dealt with it or that you do/did not acknowledge this as a vulnerability, but
+as a (plain/simple) bug and deal with at with the appropriate actions.
+
 # Downriver
 
 You have had reasons to make the changes leading up to a new distribution. If
