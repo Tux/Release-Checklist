@@ -463,7 +463,7 @@ itself and cleaning them up when the test is done.
 # Code style consistency
 
 Add a [CONTRIBUTING.md](./CONTRIBUTING.md) or similar file to guide others to
-consistency that will match [*your* style](http://tux.nl/style.html) (or, in
+consistency that will match [*your* style](https://tux.nl/style.html) (or, in
 case of joint effort, the style as agreed upon by the developers).
 
 There are helper modules to enforce a style (given a configuration) or try
