@@ -509,7 +509,7 @@ itself and cleaning them up when the test is done.
 =head1 Code style consistency
 
 Add a L<CONTRIBUTING.md|./CONTRIBUTING.md> or similar file to guide others to
-consistency that will match L<I<your> style|http://tux.nl/style.html> (or, in
+consistency that will match L<I<your> style|https://tux.nl/style.html> (or, in
 case of joint effort, the style as agreed upon by the developers).
 
 There are helper modules to enforce a style (given a configuration) or try
@@ -666,6 +666,11 @@ into your own code, or your code offers a (better) alternative to their change
 you could comment on their commits with additional information.
 
 Likewise if you use [RT][https://rt.perl.org] as bug tracker.
+
+If any ticket is entered as a vulnerability issue, be sure to make clear in
+the feedback to that issue that it is indeed a security issue and how you
+dealt with it or that you do/did not acknowledge this as a vulnerability, but
+as a (plain/simple) bug and deal with at with the appropriate actions.
 
 =head1 Downriver
 
