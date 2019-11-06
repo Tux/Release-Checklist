@@ -112,7 +112,8 @@ convenience modules should only be used in (local) perl scripts and
 not in CPAN modules, so please do not add additional dependencies
 on modules/pragma's like [sanity](https://metacpan.org/pod/sanity),
 [Modern::Perl](https://metacpan.org/pod/Modern::Perl), common::sense,
-or [nonsense](https://metacpan.org/pod/nonsense).
+[exact](https://metacpan.org/pod/exact), or
+[nonsense](https://metacpan.org/pod/nonsense).
 
 However useful they might be in your own working environment and
 force you into behaving well, adding them as a requirement to a

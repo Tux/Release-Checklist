@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-our $VERSION = "0.03 - 20191019";
+our $VERSION = "0.04 - 20191106";
 
 my $fmd  = "Checklist.md";
 my $fhtm = "Checklist.html";
@@ -37,8 +37,13 @@ system "multimarkdown", "-o", $fhx, $fmd;
 open my $xh, "<", $fhx or die "multimarkdown failed!\n";
 print $fh do { local $/; <$xh>; }
     =~ s{<p><code>(\w+)}{<pre class="$1">}gr
+    =~ s{<pre><code class="(\w+)">}{<pre class="$1">\n}gr
     =~ s{<p><code>}{<pre>}gr
-    =~ s{</code></p>}{</pre>}gr,
+    =~ s{<pre><code>}{<pre>}gr
+    =~ s{</code></p>}{</pre>}gr
+    =~ s{</code></pre>}{</pre>}gr
+    =~ s{<pre>\K(?=.)}{\n}gr
+    =~ s{<(?:li|p)>\K }{}gr,
     "</body></html>";
 close $xh;
 close $fh;

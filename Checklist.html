@@ -119,7 +119,8 @@ convenience modules should only be used in (local) perl scripts and
 not in CPAN modules, so please do not add additional dependencies
 on modules/pragma&#8217;s like <a href="https://metacpan.org/pod/sanity">sanity</a>,
 <a href="https://metacpan.org/pod/Modern::Perl">Modern::Perl</a>, common::sense,
-or <a href="https://metacpan.org/pod/nonsense">nonsense</a>.</p>
+<a href="https://metacpan.org/pod/exact">exact</a>, or
+<a href="https://metacpan.org/pod/nonsense">nonsense</a>.</p>
 
 <p>However useful they might be in your own working environment and
 force you into behaving well, adding them as a requirement to a
@@ -281,9 +282,9 @@ other fun.</p>
 modules, try to create an environment where you test your distribution against
 the required version <em>and</em> a version that does not meet the minimum version.</p>
 
-<p>If your module requires Foo::Bar&#8211;0.123 because it supports correct UTF&#8211;8
+<p>If your module requires Foo::Bar-0.123 because it supports correct UTF-8
 encoding/decoding, and you wrote a test for that, your release is apt to fail
-in an environment where Foo::Bar&#8211;0.023 is installed.</p>
+in an environment where Foo::Bar-0.023 is installed.</p>
 
 <p>This gets really hard to set up if your release has different code for versions
 of perl and for versions of required modules, but it pays off eventually. Note
@@ -306,8 +307,8 @@ will have to state a minimal supported perl version that ends up in
 <li><a href="https://metacpan.org/pod/Test::MinimumVersion">Test::MinimumVersion</a></li>
 <li><a href="https://metacpan.org/pod/Test::MinimumVersion::Fast">Test::MinimumVersion::Fast</a>.</li>
 <li><a href="https://metacpan.org/release/Perl-MinimumVersion">Perl::MinimumVersion</a> comes with
- the <a href="https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver">perlver</a>
- tool:</li>
+the <a href="https://metacpan.org/pod/distribution/Perl-MinimumVersion/script/perlver">perlver</a>
+tool:</li>
 </ul>
 
 <pre class="sh">
