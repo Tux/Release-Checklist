@@ -24,4 +24,4 @@ HTML [`Checklist.html`](Checklist.html), POD [`Checklist.pod`](Checklist.pod), a
 
 The Artistic License 2.0
 
-Copyright (c) 2015-2019 H.Merijn Brand
+Copyright (c) 2015-2020 H.Merijn Brand

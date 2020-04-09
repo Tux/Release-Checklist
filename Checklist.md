@@ -601,7 +601,7 @@ Of course it is imposible to cover every possible situation here. The DarkPAN
 
 # LICENSE
 
-Copyright (C) 2015-2019 H.Merijn Brand.  All rights reserved.
+Copyright (C) 2015-2020 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.
