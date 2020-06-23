@@ -442,6 +442,15 @@ Check [MANIFEST](./MANIFEST) and [MANIFEST.skip](./MANIFEST.skip) are complete.
  - [Test::Manifest](https://metacpan.org/pod/Test::Manifest)
  - [Test::DistManifest](https://metacpan.org/pod/Test::DistManifest)
 
+``` sh
+ $ perl -MTest::DistManifest -we'manifest_ok'
+ 1..4
+ ok 1 - Parse MANIFEST or equivalent
+ ok 2 - All files are listed in MANIFEST or skipped
+ ok 3 - All files listed in MANIFEST exist on disk
+ ok 4 - No files are in both MANIFEST and MANIFEST.SKIP
+```
+
 # File naming
 
 Don not make it hard for people and modules to use the files in your

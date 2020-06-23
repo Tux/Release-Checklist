@@ -1,3 +1,6 @@
+0.12	23 Jun 2020 - H.Merijn Brand
+    * MANIFEST check file in xt
+
 0.11	09 Apr 2020 - H.Merijn Brand
     * Docs about neutrality
     * Strict xhtml in makewww.pl
