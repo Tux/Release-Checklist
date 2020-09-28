@@ -80,7 +80,7 @@
          "type" : "git",
          "url" : "https://github.com/Tux/Release-Checklist"
          },
-      "bugtracker" : [
+      "bugtracker" : {
 	 "web" : "https://github.com/Tux/Release-Checklist/issues"
 	 },
       "x_IRC" : "irc://irc.perl.org/#toolchain"

@@ -617,7 +617,7 @@ configuration files or set up databases, that should be mentioned too.</p>
 
 <h1 id="tickets">Tickets</h1>
 
-<p>If your module is on [github][https://github.com] or similar, regularly check
+<p>If your module is on <a href="https://github.com">github</a> or similar, regularly check
 on submitted issues and deal with them: either explain why it is not an issue
 or comment with alternatives or even better: this has been fixed now.
 Additionally, you should check on possible forks of your code and check the
@@ -626,12 +626,28 @@ you could use to improve your code. If the changes they made are already taken
 into your own code, or your code offers a (better) alternative to their change
 you could comment on their commits with additional information.</p>
 
-<p>Likewise if you use [RT][https://rt.perl.org] as bug tracker.</p>
+<p>Likewise if you use <a href="https://rt.perl.org">RT</a> as bug tracker.</p>
 
 <p>If any ticket is entered as a vulnerability issue, be sure to make clear in
 the feedback to that issue that it is indeed a security issue and how you
 dealt with it or that you do/did not acknowledge this as a vulnerability, but
 as a (plain/simple) bug and deal with at with the appropriate actions.</p>
+
+<p>Whatever you choose, make it clear in your META information, so the link to
+issues on <a href="https://metacpan.org/">metacpan</a> points to the correct location.</p>
+
+<h2 id="meta.yml">META.yml</h2>
+
+<p>resources:
+bugtracker: https://github.com/Tux/Release-Checklist/issues</p>
+
+<h2 id="meta.json">META.json</h2>
+
+<p>&#8220;resources&#8221; : {
+&#8220;bugtracker&#8221; : {
+ &#8220;web&#8221; : &#8220;https://github.com/Tux/Release-Checklist/issues&#8221;
+ }
+}</p>
 
 <h1 id="downriver">Downriver</h1>
 
