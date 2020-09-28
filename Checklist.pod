@@ -654,7 +654,7 @@ configuration files or set up databases, that should be mentioned too.
 
 =head1 Tickets
 
-If your module is on [github][https://github.com] or similar, regularly check
+If your module is on L<github|https://github.com> or similar, regularly check
 on submitted issues and deal with them: either explain why it is not an issue
 or comment with alternatives or even better: this has been fixed now.
 Additionally, you should check on possible forks of your code and check the
@@ -663,12 +663,30 @@ you could use to improve your code. If the changes they made are already taken
 into your own code, or your code offers a (better) alternative to their change
 you could comment on their commits with additional information.
 
-Likewise if you use [RT][https://rt.perl.org] as bug tracker.
+Likewise if you use L<RT|https://rt.perl.org> as bug tracker.
 
 If any ticket is entered as a vulnerability issue, be sure to make clear in
 the feedback to that issue that it is indeed a security issue and how you
 dealt with it or that you do/did not acknowledge this as a vulnerability, but
 as a (plain/simple) bug and deal with at with the appropriate actions.
+
+Whatever you choose, make it clear in your META information, so the link to
+issues on L<metacpan|https://metacpan.org/> points to the correct location.
+
+ META.yml
+
+================================================================================
+ resources:
+  bugtracker: https://github.com/Tux/Release-Checklist/issues
+
+ META.json
+
+================================================================================
+ "resources" : {
+   "bugtracker" : {
+     "web" : "https://github.com/Tux/Release-Checklist/issues"
+     }
+   }
 
 =head1 Downriver
 
