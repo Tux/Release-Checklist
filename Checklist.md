@@ -86,7 +86,7 @@ history.
 # Dependencies
 
 Every module you use is a module your release will depend on. If a new
-release of such module fails, the likelyhood of your release being
+release of such module fails, the likelihood of your release being
 unable to install increases. So only use modules that you need. Each
 dependency should be well-considered.
 
@@ -171,7 +171,7 @@ license.
 
 # Documentation
 
-Make sure that you have a clear, consice, and short SYNOPSIS section. This
+Make sure that you have a clear, concise, and short SYNOPSIS section. This
 section should show the most important code as simple and clear as possible.
 If you have 3500 methods in your class, do not list all of the there. Just
 show how to create the object and show the 4 methods that a beginner would
@@ -213,7 +213,7 @@ might be an insult to others. Keep neutral.
 
 Not every developer is of native English tongue. And even if, they
 also make (spelling) mistakes. There are enough tools available to
-prevent public display of misspellings and typoes. Use them.
+prevent public display of misspellings and typos. Use them.
 
 It is a good plan to have someone else proofread your documentation.
 If you can, ask three readers: one who knows about what the module is
@@ -621,7 +621,7 @@ if the new release would cause the other module(s) to break.
 [used_by.pl](./scripts/used-by.pl) will check the depending modules with the
 upcoming version.
 
-Of course it is imposible to cover every possible situation here. The DarkPAN
+Of course it is impossible to cover every possible situation here. The DarkPAN
 (uses of your module beyond what is registered on CPAN) is huge.
 
 # LICENSE
