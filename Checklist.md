@@ -453,7 +453,7 @@ Check [MANIFEST](./MANIFEST) and [MANIFEST.skip](./MANIFEST.skip) are complete.
 
 # File naming
 
-Don not make it hard for people and modules to use the files in your
+Do not make it hard for people and modules to use the files in your
 distribution by using spaces and special characters in file names. Also try
 to not use overly long names and deep directory structures.
 
