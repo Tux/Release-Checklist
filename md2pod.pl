@@ -3,7 +3,7 @@
 use 5.12.0;
 use warnings;
 
-our $VERSION = "0.04 - 20190829";
+our $VERSION = "0.05 - 20201001";
 
 -d ".git" or exit 0;
 
@@ -20,7 +20,11 @@ my @t = stat $0;
 
 $m[9] && $p[9] && $p[9] >= $m[9] && $p[9] >= $t[9] and exit 0;
 
-use Markdown::Pod;
+my $mdp = eval { require Markdown::Pod; 1; };
+unless ($mdp) {
+    warn "Markdown::Pod cannot be loaded\n$fpod cannot be generated\n";
+    exit (0);
+    }
 
 say "Converting $fmd to $fpod";
 
