@@ -156,12 +156,12 @@ sub modules {
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="4"><a href="https://github.com/$git_id">repo</a></th>
-            <th class="rhdr"><a href="http://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
+            <th class="rhdr"><a href="https://rt.cpan.orgPublic/Dist/ByMaintainer.html?Name=$author">RT</a></th>
             <th class="center">doc</th>
             <th class="tci"><a href="https://travis-ci.org/profile/$travis_id">TravisCI</a></th>
-            <th class="cpants"><a href="http://cpants.perl.org/author/$author">kwalitee</a></th>
+            <th class="cpants"><a href="https://cpants.perl.org/author/$author">kwalitee</a></th>
             <th class="rhdr"><a href="http://cpancover.com">cover</a></th>
-            <th class="rhdr" colspan="3"><a href="http://www.cpantesters.org/author/$auid1/$author.html">cpantesters</a></th>
+            <th class="rhdr" colspan="3"><a href="https://www.cpantesters.org/author/$auid1/$author.html">cpantesters</a></th>
             <th class="rhdr"><span style="color: green">&#x2714;</span><span style="color: red">&#x2718;</span></th>
             <th class="rhdr"><a href="http://deps.cpantesters.org">&#x219d;</a></th>
             <th class="rhdr" style="color: red">&#x2665;</th>
@@ -204,7 +204,7 @@ EOH
 	    $opt_v > 1 and warn " Fetch rating\n";
 	    my $n = $rs->total;
 	    if ($r = $rs->next) {
-		$rating = "http://cpanratings.perl.org/d/$dist";
+		$rating = "https://cpanratings.perl.org/d/$dist";
 		$data->{rating} = {
 		    text   => $r->{_source}{rating},
 		    dtitle => "$n votes",
@@ -295,8 +295,8 @@ EOH
 	$time{cpantesters} += t_used;
 
 	# RT tickets
-	my $rt = $m->{rt} // "http://rt.cpan.org/Public/Dist/Display.html?Name=$dist";
-	# http://rt.cpan.org/NoAuth/Bugs.html?Dist=$dist"; - does not work anymore
+	my $rt = $m->{rt} // "https://rt.cpan.orgPublic/Dist/Display.html?Name=$dist";
+	# https://rt.cpan.orgNoAuth/Bugs.html?Dist=$dist"; - does not work anymore
 	# https://rt.cpan.org/Dist/Display.html?Name=$dist";
 	# https://rt.cpan.org/Dist/Display.html?Queue=DBD%3A%3ACSV
 	my $rt_tag = "*";
@@ -488,9 +488,9 @@ EOH
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "https://v1.metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
-	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.cpanauthors.org/dist/$dist");
+	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "https://cpants.cpanauthors.org/dist/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
-	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
+	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "https://www.cpantesters.org/show/$dist.html");
 	dta (["cpt","na"  ], $data->{cptst}[1] // "");
 	dta (["cpt","fail"], $data->{cptst}[2] // "", $m->{ctm}    // "http://matrix.cpantesters.org/?dist=$dist");
 	dta ($cos_class,     $cos,                                    "http://deps.cpantesters.org/?module=$mod&amp;perl=5.22.0&amp;os=Any+OS");
@@ -564,7 +564,7 @@ sub footer {
 	  <td><a href="http://use.perl.org">use perl;</a></td>
 	  </tr>
         <tr>
-	  <td><a href="http://www.cpantesters.org">cpantesters</a></td>
+	  <td><a href="https://www.cpantesters.org">cpantesters</a></td>
 	  <td><a href="http://matrix.cpantesters.org">matrix</a></td>
 	  </tr>
         <tr>
