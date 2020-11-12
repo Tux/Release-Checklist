@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 
+use utf8;
 use 5.20.0;
 use warnings;
 
@@ -455,7 +456,7 @@ EOH
 	    branch	=> "-",
 	    condition	=> "-",
 	    pod		=> "-",
-	    statement	=> "&#x237d;", # SHOULDERED OPEN BOX (uncovered)
+	    statement	=> "⍽", # SHOULDERED OPEN BOX (uncovered)
 	    subroutine	=> "-",
 	    total	=> "-",
 	    };
@@ -464,12 +465,10 @@ EOH
 	    $data->{cover}{$_} = $c->{$_} for keys %$c;
 	    $cvrr = "http://cpancover.com/latest/$dist-$data->{version}/index.html";
 	    }
-	my $cvrl = join " \n" => map {
-	    (sprintf "%-10s: %6s", $_, $data->{cover}{$_}) =~ s/ /\&nbsp;/gr;
-	    } sort keys %{$data->{cover}};
+	my $cvrl = join " \n" => map { sprintf( "%-10s: %6s ", $_, $data->{cover}{$_}) } sort keys %{$data->{cover}};
 	my $cvrt = { text => $data->{cover}{statement}, dtitle => $cvrl };
 	my $cvrc = $data->{cover}{total} eq "-"        ? "none"
-	         : $data->{cover}{total} eq "&#x237d;" ? "none"
+	         : $data->{cover}{total} eq "⍽" ? "none"
 	         : $data->{cover}{total} eq "n/a"      ? "none"
 		 : $data->{cover}{total} >= 90         ? "pass"
 		 : $data->{cover}{total} >= 70         ? "na"
