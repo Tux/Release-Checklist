@@ -221,30 +221,7 @@ EOH
 	# Kwalitee
 	my $kwtc = "none";
 	unless (defined $data->{kwalitee}) {
-	    $opt_v > 1 and warn " Fetch kwalitee\n";
-	    $r = $ua->get ("https://cpants.cpanauthors.org/dist/$dist");
-	    my $tree = HTML::TreeBuilder->new;
-	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
-	    if (my ($dl) = $tree->look_down (_tag => "dl", class => "small")) {
-		my ($dt, %dl) = ("");
-		foreach my $d ($dl->look_down (_tag => qr{^d[td]$})) {
-		    my $txt = $d->as_text;
-		    if ($d->tag eq "dt") {
-			$dt = lc $txt;
-			next;
-			}
-		    $dl{$dt} //= $txt;
-		    }
-		$data->{kwk} = $dl{"kwalitee"};
-		$data->{kwc} = $dl{"core kwalitee"};
-		$data->{kwr} = $dl{"release date"};
-
-		$data->{kwalitee} = join " / " =>
-		    $data->{kwc} || "-", $data->{kwk} || "&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;";
-		$data->{kwc} and $kwtc = $data->{kwc} >= 100 ? "pass"
-				       : $data->{kwc} >=  80 ? "na"
-				       : $data->{kwc} >=  60 ? "warn" : "fail";
-		}
+        $data->{kwalitee} = qq{<img src="https://cpants.cpanauthors.org/dist/$dist.svg">};
 	    }
 	$time{kwalitee} += t_used;
 
