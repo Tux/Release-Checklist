@@ -455,7 +455,7 @@ EOH
 	    branch	=> "-",
 	    condition	=> "-",
 	    pod		=> "-",
-	    statement	=> "&#x237d;", # SHOULDERED OPEN BOX (uncovered)
+	    statement	=> "\x{237d}", # SHOULDERED OPEN BOX (uncovered)
 	    subroutine	=> "-",
 	    total	=> "-",
 	    };
@@ -465,11 +465,11 @@ EOH
 	    $cvrr = "http://cpancover.com/latest/$dist-$data->{version}/index.html";
 	    }
 	my $cvrl = join " \n" => map {
-	    (sprintf "%-10s: %6s", $_, $data->{cover}{$_}) =~ s/ /\&nbsp;/gr;
+	    (sprintf "%-10s: %6s", $_, $data->{cover}{$_}) =~ s/ /\x{00a0}/gr; # NBSP
 	    } sort keys %{$data->{cover}};
 	my $cvrt = { text => $data->{cover}{statement}, dtitle => $cvrl };
 	my $cvrc = $data->{cover}{total} eq "-"        ? "none"
-	         : $data->{cover}{total} eq "&#x237d;" ? "none"
+	         : $data->{cover}{total} eq "\x{237d}" ? "none"
 	         : $data->{cover}{total} eq "n/a"      ? "none"
 		 : $data->{cover}{total} >= 90         ? "pass"
 		 : $data->{cover}{total} >= 70         ? "na"
