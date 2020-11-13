@@ -20,6 +20,7 @@ GetOptions (
       "time!"		=> \my $opt_t,
     "g|git=s"		=> \my $git_id,
     "t|travis=s"	=> \my $travis_id,
+    "s|svg!"		=> \my $opt_svg,
     ) or usage (1);
 
 my $author = shift or usage (1);
@@ -221,6 +222,11 @@ EOH
 
 	# Kwalitee
 	my $kwtc = "none";
+	if ($opt_svg) {
+	    my $svg_url = "https://cpants.cpanauthors.org/dist/$dist.svg";
+	    $r = $ua->get ($svg_url);
+	    $r && $r->is_success and $data->{kwalitee} = qq{<img src="$svg_url" />};
+	    }
 	unless (defined $data->{kwalitee}) {
 	    $opt_v > 1 and warn " Fetch kwalitee\n";
 	    $r = $ua->get ("https://cpants.cpanauthors.org/dist/$dist");
