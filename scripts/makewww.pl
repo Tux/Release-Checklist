@@ -3,11 +3,12 @@
 use 5.20.0;
 use warnings;
 
-our $VERSION = "1.32 - 2019-07-25";
+our $VERSION = "1.33 - 2020-11-13";
+our $CMD = $0 =~ s{.*/}{}r;
 
 sub usage {
     my $err = shift and select STDERR;
-    say "usage: $0 [-v] [--git=author] [--travis=id] AUTHOR\n";
+    say "usage: $CMD [-v] [--git=author] [--travis=id] AUTHOR\n";
     exit $err;
     } # usage
 
@@ -156,10 +157,10 @@ sub modules {
             <th>vsn</th>
             <th class="rhdr">released</th>
             <th class="tci" colspan="4"><a href="https://github.com/$git_id">repo</a></th>
-            <th class="rhdr"><a href="http://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
+            <th class="rhdr"><a href="https://rt.cpan.org/Public/Dist/ByMaintainer.html?Name=$author">RT</a></th>
             <th class="center">doc</th>
             <th class="tci"><a href="https://travis-ci.org/profile/$travis_id">TravisCI</a></th>
-            <th class="cpants"><a href="http://cpants.perl.org/author/$author">kwalitee</a></th>
+            <th class="cpants"><a href="https://cpants.perl.org/author/$author">kwalitee</a></th>
             <th class="rhdr"><a href="http://cpancover.com">cover</a></th>
             <th class="rhdr" colspan="3"><a href="http://www.cpantesters.org/author/$auid1/$author.html">cpantesters</a></th>
             <th class="rhdr"><span style="color: green">&#x2714;</span><span style="color: red">&#x2718;</span></th>
@@ -204,7 +205,7 @@ EOH
 	    $opt_v > 1 and warn " Fetch rating\n";
 	    my $n = $rs->total;
 	    if ($r = $rs->next) {
-		$rating = "http://cpanratings.perl.org/d/$dist";
+		$rating = "https://cpanratings.perl.org/d/$dist";
 		$data->{rating} = {
 		    text   => $r->{_source}{rating},
 		    dtitle => "$n votes",
@@ -295,8 +296,7 @@ EOH
 	$time{cpantesters} += t_used;
 
 	# RT tickets
-	my $rt = $m->{rt} // "http://rt.cpan.org/Public/Dist/Display.html?Name=$dist";
-	# http://rt.cpan.org/NoAuth/Bugs.html?Dist=$dist"; - does not work anymore
+	my $rt = $m->{rt} // "https://rt.cpan.org/Public/Dist/Display.html?Name=$dist";
 	# https://rt.cpan.org/Dist/Display.html?Name=$dist";
 	# https://rt.cpan.org/Dist/Display.html?Queue=DBD%3A%3ACSV
 	my $rt_tag = "*";
@@ -488,7 +488,7 @@ EOH
 	dta (["rt"        ], $rt_tag,                 $rt);
 	dta (["center"    ], "doc",                   $m->{doc}    // "https://v1.metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
-	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "http://cpants.cpanauthors.org/dist/$dist");
+	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "https://cpants.cpanauthors.org/dist/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
 	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
 	dta (["cpt","na"  ], $data->{cptst}[1] // "");
