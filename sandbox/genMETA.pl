@@ -69,14 +69,14 @@ recommends:
   Module::Release:             2.125
   Parse::CPAN::Meta:           2.150010
   Perl::Critic:                1.138
-  Perl::Critic::TooMuchCode:   0.13
+  Perl::Critic::TooMuchCode:   0.14
   Perl::MinimumVersion:        1.38
-  Perl::Tidy:                  20201001
+  Perl::Tidy:                  20201207
   Pod::Escapes:                1.07
   Pod::Parser:                 1.63
   Pod::Spell:                  1.20
   Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              1.000032
+  Test2::Harness:              1.000042
   Test::CPAN::Changes:         0.400002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28
