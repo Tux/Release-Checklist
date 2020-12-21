@@ -31,7 +31,10 @@ elsif ($opt_v) {
     $meta->print_yaml ();
     }
 else {
+    my $rd = join "-" => $meta->{h}{name}, $meta->{h}{version};
+    $ENV{REGEN_META} = 1;
     system $^X, "xt/50_manifest.t";
+    system "cp", "-p", $_, "$rd/$_" for map { "META.$_" } qw( json yml );
     }
 
 __END__

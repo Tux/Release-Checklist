@@ -8,9 +8,6 @@ use JSON;
 use YAML;
 use CPAN::Meta::Converter;
 
-eval "use Test::DistManifest";
-plan skip_all => "Test::DistManifest required for testing MANIFEST" if $@;
-
 my ($mj, $my) = map { "META.$_" } qw( json yml );
 if (!-f $my || -M $mj <= -M $my) {
 
@@ -30,5 +27,14 @@ if (!-f $my || -M $mj <= -M $my) {
     close $fj;
     }
 
-manifest_ok ();
+if ($ENV{REGEN_META}) {
+    ok (1, "META.yml is now up to date");
+    }
+else {
+    eval "use Test::DistManifest";
+    plan skip_all => "Test::DistManifest required for testing MANIFEST" if $@;
+
+    manifest_ok ();
+    }
+
 done_testing;
