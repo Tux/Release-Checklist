@@ -17,8 +17,8 @@ my $meta = genMETA->new (
     );
 
 $meta->from_data (<DATA>);
-unlink "META.yml", "META.json";
-$meta->write_yaml ();
+# This project maintains META.json manually
+# META.yml is generated in xt/50_manifest.t and not kept in git
 $meta->gen_cpanfile ();
 
 if ($check) {
