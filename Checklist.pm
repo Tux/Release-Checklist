@@ -673,8 +673,6 @@ you could use to improve your code. If the changes they made are already taken
 into your own code, or your code offers a (better) alternative to their change
 you could comment on their commits with additional information.
 
-Likewise if you use L<RT|https://rt.perl.org> as bug tracker.
-
 If any ticket is entered as a vulnerability issue, be sure to make clear in
 the feedback to that issue that it is indeed a security issue and how you
 dealt with it or that you do/did not acknowledge this as a vulnerability, but
@@ -714,7 +712,7 @@ Of course it is impossible to cover every possible situation here. The DarkPAN
 
 =head1 LICENSE
 
-Copyright (C) 2015-2020 H.Merijn Brand.  All rights reserved.
+Copyright (C) 2015-2021 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.
