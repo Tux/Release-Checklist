@@ -68,17 +68,17 @@ recommends:
   Devel::PPPort:               3.62
   JSON::PP:                    4.06
   Module::CPANTS::Analyse:     1.01
-  Module::Release:             2.127
+  Module::Release:             2.128
   Parse::CPAN::Meta:           2.150010
-  Perl::Critic:                1.138
-  Perl::Critic::TooMuchCode:   0.14
+  Perl::Critic:                1.140
+  Perl::Critic::TooMuchCode:   0.15
   Perl::MinimumVersion:        1.38
   Perl::Tidy:                  20210111
   Pod::Escapes:                1.07
   Pod::Parser:                 1.63
   Pod::Spell:                  1.20
   Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              1.000042
+  Test2::Harness:              1.000044
   Test::CPAN::Changes:         0.400002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28
@@ -87,7 +87,7 @@ recommends:
   Test::MinimumVersion::Fast:  0.04
   Test::More:                  1.302183
   Test::Perl::Critic:          1.04
-  Test::Perl::Critic::Policy:  1.138
+  Test::Perl::Critic::Policy:  1.140
   Test::Pod:                   1.52
   Test::Pod::Coverage:         1.10
   Test::Version:               2.09
