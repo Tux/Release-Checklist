@@ -663,6 +663,8 @@ you could use to improve your code. If the changes they made are already taken
 into your own code, or your code offers a (better) alternative to their change
 you could comment on their commits with additional information.
 
+Likewise if you use L<RT|https://rt.cpan.org> as bug tracker.
+
 If any ticket is entered as a vulnerability issue, be sure to make clear in
 the feedback to that issue that it is indeed a security issue and how you
 dealt with it or that you do/did not acknowledge this as a vulnerability, but
