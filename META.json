@@ -1,5 +1,5 @@
 {  "name" : "Release-Checklist",
-   "version" : "0.12",
+   "version" : "0.13",
    "abstract" : "A QA checklist for CPAN releases",
    "release_status" : "stable",
    "dynamic_config" : 1,
@@ -10,7 +10,7 @@
    "provides" : {
       "Release::Checklist" : {
          "file" : "Checklist.pm",
-         "version" : "0.12"
+         "version" : "0.13"
          }
       },
    "prereqs" : {
