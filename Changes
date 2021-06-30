@@ -1,10 +1,11 @@
-0.12	30 Mar 2021 - H.Merijn Brand
+0.12	30 Jun 2021 - H.Merijn Brand
     * MANIFEST check file in xt
     * makewww.pl: Change http:// -> https:// where possible
     * makewww.pl: Prevent double encode_entities
     * makewww.pl: Option to show kwalitee as svg
     * Update recent versions
     * It's 2021
+    * Small doc update (thanks kcott on PM)
 
 0.11	09 Apr 2020 - H.Merijn Brand
     * Docs about neutrality

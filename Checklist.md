@@ -189,7 +189,7 @@ Make sure your pod is correct and can also be parsed by the pod-modules in
 the lowest version of perl you support (or mention that you need at least
 version whatever to read the pod as intended).
 
-The web is dynamic and some (external) references might seize to exist not
+The web is dynamic and some (external) references might cease to exist not
 telling you, so checking links used in your documentation once in a while
 might hint you to updated sites.
 
