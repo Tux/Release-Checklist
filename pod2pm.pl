@@ -8,18 +8,25 @@ our $VERSION = "0.03 - 20190829";
 my $fmd  = "Checklist.md";
 my $fpod = "Checklist.pod";
 my $fpm  = "Checklist.pm";
+my $mpl  = "Makefile.PL";
 
 -d ".git" or exit 0;
 
-my %c = map  { $_ => (stat $_)[9] } $fpod, $fpm;
-$c{$fpod} && $c{$fpm} && $c{$fpm} - $c{$fpod} > 2 and
-    die "Did you edit $fpm instead of $fmd\n";
-
 my @d = stat $fpod;
 my @m = stat $fpm;
+my @M = stat $mpl;
 my @t = stat $0;
 
-$d[9] && $m[9] && $m[9] >= $d[9] && $m[9] >= $t[9] and exit 0;
+$d[9] && $m[9] && $m[9] - $d[9] > 2 and
+    die "Did you edit $fpm instead of $fmd\n";
+
+my $T = $d[9] || 0;
+$M[9] > $T and $T = $M[9];
+$t[9] > $T and $T = $t[9];
+if ($m[9] && $m[9] >= $T) {
+    print "$fpm seems up to date\n";
+    exit 0;
+    }
 
 my $V;
 open my $mh, "<", "Makefile.PL"  or die "No Makefile.PL\n";
@@ -54,5 +61,5 @@ close $ph;
 
 close $fh;
 
-my $t = (stat $fpod)[9] + 1;
-utime $t, $t, $fpm;
+utime $T,     $T,     $fpod;
+utime $T + 1, $T + 1, $fpm;

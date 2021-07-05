@@ -1,3 +1,6 @@
+0.14	05 Jul 2021 - H.Merijn Brand
+    * Move spell-check test to xt
+
 0.13	30 Jun 2021 - H.Merijn Brand
     * It's 2021
     * Small doc update (thanks kcott on PM)

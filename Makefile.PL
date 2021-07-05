@@ -5,18 +5,19 @@
 require 5.006;
 use strict;
 
-our $VERSION = "0.13";
+our $VERSION = "0.14";
 
 use ExtUtils::MakeMaker;
 
 my %wm = (
-    NAME      => "Release::Checklist",
-    DISTNAME  => "Release-Checklist",
-    ABSTRACT  => "A QA checklist for CPAN releases",
-    AUTHOR    => "H.Merijn Brand <h.merijn\@xs4all.nl>",
-    VERSION   => $VERSION,
-    PREREQ_PM => { "Test::More" => 0.88                      },
-    macro     => { TARFLAGS     => "--format=ustar -c -v -f" },
+    NAME		=> "Release::Checklist",
+    DISTNAME		=> "Release-Checklist",
+    ABSTRACT		=> "A QA checklist for CPAN releases",
+    AUTHOR		=> "H.Merijn Brand <h.merijn\@xs4all.nl>",
+    VERSION		=> $VERSION,
+    MIN_PERL_VERSION	=> "5.006",
+    PREREQ_PM		=> { "Test::More" => 0.88			},
+    macro		=> { TARFLAGS     => "--format=ustar -c -v -f"	},
     );
 $ExtUtils::MakeMaker::VERSION > 6.30 and $wm{LICENSE} = "perl";
 
@@ -29,10 +30,11 @@ package MY;
 sub postamble {
     my $min_vsn = ($] >= 5.010 && -d "xt" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
 	? join "\n" =>
-	    'test::	doc',
+	    'test::		doc',
 	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
-	    ''
+	    "	-$^X scripts/pod-spell-check --aspell --ispell"
 	: "";
+
     <<"EOPA";
 VERSION = $VERSION
 
@@ -66,8 +68,5 @@ tgzdist:	checkmeta fixmeta \$(DISTVNAME).tar.gz distcheck
 	-\@rm -f Debian_CPANTS.txt
 
 $min_vsn
-
-test::		doc
-	perl scripts/pod-spell-check --aspell --ispell
 EOPA
     } # postamble
