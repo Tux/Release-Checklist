@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright (c) 2015-2021 H.Merijn Brand
+# Copyright (c) 2015-2022 H.Merijn Brand
 
 require 5.006;
 use strict;
@@ -13,7 +13,7 @@ my %wm = (
     NAME		=> "Release::Checklist",
     DISTNAME		=> "Release-Checklist",
     ABSTRACT		=> "A QA checklist for CPAN releases",
-    AUTHOR		=> "H.Merijn Brand <h.merijn\@xs4all.nl>",
+    AUTHOR		=> "H.Merijn Brand <hmbrand\@cpan.org>",
     VERSION		=> $VERSION,
     MIN_PERL_VERSION	=> "5.006",
     PREREQ_PM		=> { "Test::More" => 0.88			},
