@@ -4,7 +4,7 @@ package genMETA;
 
 our $VERSION = "1.12-20220913";
 
-use 5.14.1;
+use 5.014001;
 use warnings;
 use Carp;
 
@@ -319,7 +319,7 @@ sub check_changelog {
 	    my $D = Delta_Days ($y, $m , $d, $t[5] + 1900, $t[4] + 1, $t[3]);
 	    $D < 0 and croak  RED,    "Last entry in $td[0] is in the future!",               RESET, "\n";
 	    $D > 2 and croak  RED,    "Last entry in $td[0] is not up to date ($D days ago)", RESET, "\n";
-	    $D > 0 and warn YELLOW, "Last entry in $td[0] is not today",                    RESET, "\n";
+	    $D > 0 and warn   YELLOW, "Last entry in $td[0] is not today",                    RESET, "\n";
 	    }
 	last;
 	}
