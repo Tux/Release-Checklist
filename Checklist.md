@@ -3,7 +3,7 @@
 Release::Checklist - A QA checklist for CPAN releases
 
 What follows is a list of categories or subjects that touch the quality -
-or what an end-user percieves as such - of a distribution end might
+or what an end-user perceives as such - of a distribution end might
 need some attention.
 
 This document is aiming at up-river authors that want/need improving
@@ -52,7 +52,7 @@ t/
 xt/
 ```
 
-If possible, do not use [Test::*](https://metacpan.org/search?q=Test%3A%3A&search_type=modules)
+If possible, do not use [Test::\*](https://metacpan.org/search?q=Test%3A%3A&search_type=modules)
 modules that you do not actually require, however fancy they may be.
 See the point about dependencies.
 
@@ -105,12 +105,12 @@ lowest version of perl that you claim to support. Check it with
 Then there are two types of modules you can depend on: functional
 modules, like [DBI](https://metacpan.org/pod/DBI) and
 [XML::LibXML](https://metacpan.org/pod/XML::LibXML), and developer
-convenience modules, like [Modern::Perl](https://metacpan.org/pod/Modern::Perl)
+convenience modules, like [Modern::Perl](https://metacpan.org/pod/Modern::Perl).
 
 You cannot get around needing the first type of modules, but the
 convenience modules should only be used in (local) perl scripts and
 not in CPAN modules, so please do not add additional dependencies
-on modules/pragma's like [sanity](https://metacpan.org/pod/sanity),
+on modules/pragmas like [sanity](https://metacpan.org/pod/sanity),
 [Modern::Perl](https://metacpan.org/pod/Modern::Perl), common::sense,
 [exact](https://metacpan.org/pod/exact), or
 [nonsense](https://metacpan.org/pod/nonsense).
@@ -173,7 +173,7 @@ license.
 
 Make sure that you have a clear, concise, and short SYNOPSIS section. This
 section should show the most important code as simple and clear as possible.
-If you have 3500 methods in your class, do not list all of the there. Just
+If you have 3500 methods in your class, do not list all of them there. Just
 show how to create the object and show the 4 methods that a beginner would
 use. Note that the user that reads the manual will appreciate complete,
 correct, and up-to-date documentation per method more than a complete list
@@ -207,13 +207,13 @@ test your module on system X instead of saying system X should die a
 horrible death.
 
 Do not use profane language. Do not promote any deity. A religion to one
-might be an insult to others. Keep neutral.
+might be an insult to others. Stay neutral.
 
 # Spelling
 
 Not every developer is of native English tongue. And even if, they
 also make (spelling) mistakes. There are enough tools available to
-prevent public display of misspellings and typos. Use them.
+prevent public display of mispellings and typos. Use them.
 
 It is a good plan to have someone else proofread your documentation.
 If you can, ask three readers: one who knows about what the module is
@@ -269,15 +269,15 @@ This is a hard one. If your release/dist requires specific versions of other
 modules, try to create an environment where you test your distribution against
 the required version *and* a version that does not meet the minimum version.
 
-If your module requires Foo::Bar-0.123 because it supports correct UTF-8
+If your module requires Foo::Bar 0.123 because it added support for correct UTF-8
 encoding/decoding, and you wrote a test for that, your release is apt to fail
-in an environment where Foo::Bar-0.023 is installed.
+in an environment where Foo::Bar 0.023 is installed.
 
 This gets really hard to set up if your release has different code for versions
 of perl and for versions of required modules, but it pays off eventually. Note
 that monitoring [CPANTESTERS](http://www.cpantesters.org) can be a huge help.
 
-If your code resides on [GitHub](https://github.com/), you can setup hooks to
+If your code resides on [GitHub](https://github.com/), you can set up hooks to
 [Travis CI](https://travis-ci.org/). Just compose a [.travis.yml](./.travis.yml)
 and enable the hook. This supports a variety of perl versions and an environment
 where you can install modules for just the tests you need.
@@ -381,7 +381,7 @@ show deficiencies early.
 # Leak tests
 
 Your code allocates memory. Not only for the code itself, but also for all
-data-structures, a stack and other resources (modules you use or require).
+data structures, a stack and other resources (modules you use or require).
 
 Creating circular references or (in XS) variables that do not get freed will
 cause leaks. You might not notice in your tests, but if a long running process
