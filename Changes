@@ -1,3 +1,6 @@
+0.18	01 May 2023 - H.Merijn Brand
+    * Versions update, including recommendations based on CVE's
+
 0.17	29 Apr 2023 - H.Merijn Brand
     * Updates from PTS-2023 Lyon
       - markdown & typo fixes from ether

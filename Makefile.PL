@@ -5,7 +5,7 @@
 require 5.006;
 use strict;
 
-our $VERSION = "0.17";
+our $VERSION = "0.10";
 
 use ExtUtils::MakeMaker;
 

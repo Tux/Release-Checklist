@@ -57,6 +57,10 @@ requires:
   Test::More:           0.88
 configure_requires:
   ExtUtils::MakeMaker:  0
+configure_recommends:
+  ExtUtils::MakeMaker:  7.22
+configure_suggests:
+  ExtUtils::MakeMaker:  7.70
 test_requires:
   Test::Harness:        0
   Test::More:           0.88
@@ -78,7 +82,7 @@ recommends:
   Pod::Parser:                 1.66
   Pod::Spell:                  1.26
   Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              1.000151
+  Test2::Harness:              1.000152
   Test::CPAN::Changes:         0.400002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28

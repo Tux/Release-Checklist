@@ -16,7 +16,7 @@ recommends "Pod::Escapes"		=> "1.07";
 recommends "Pod::Parser"		=> "1.66";
 recommends "Pod::Spell"			=> "1.26";
 recommends "Pod::Spell::CommonMistakes"	=> "1.002";
-recommends "Test2::Harness"		=> "1.000151";
+recommends "Test2::Harness"		=> "1.000152";
 recommends "Test::CPAN::Changes"	=> "0.400002";
 recommends "Test::CPAN::Meta::YAML"	=> "0.25";
 recommends "Test::Kwalitee"		=> "1.28";
@@ -35,4 +35,6 @@ recommends "Text::Markdown"		=> "1.000031";
 
 on "configure" => sub {
     requires   "ExtUtils::MakeMaker";
+    recommends "ExtUtils::MakeMaker" => "7.22";
+    suggests   "ExtUtils::MakeMaker" => "7.70";
     };
