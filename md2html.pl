@@ -33,7 +33,14 @@ print $fh <<"EOH";
 EOH
 
 my $fhx = $fhtm . "_x";
-system "multimarkdown", "-o", $fhx, $fmd;
+if (grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
+    open my $fh, ">", $fhx or die "$fhx: $!\n";
+    print $fh `cmark -t html $fmd`;
+    close $fh;
+    }
+else {
+    system "multimarkdown", "-o", $fhx, $fmd;
+    }
 open my $xh, "<", $fhx or die "multimarkdown failed!\n";
 print $fh do { local $/; <$xh>; }
     =~ s{<p><code>(\w+)}{<pre class="$1">}gr
