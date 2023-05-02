@@ -33,7 +33,10 @@ print $fh <<"EOH";
 EOH
 
 my $fhx = $fhtm . "_x";
-if (grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
+if (grep { -x } map { "$_/pandoc" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
+    system "pandoc", "-t", "html", "-o", $fhx, $fmd;
+    }
+elsif (grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
     open my $fh, ">", $fhx or die "$fhx: $!\n";
     print $fh `cmark -t html $fmd`;
     close $fh;
