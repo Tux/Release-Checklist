@@ -1,6 +1,6 @@
 #!/pro/bin/perl
 
-use strict;
+use 5.012001;
 use warnings;
 
 our $VERSION = "0.04 - 20191106";
@@ -18,10 +18,10 @@ my @m = stat $fmd;
 my @h = stat $fhtm;
 
 $m[9] && $h[9] && $h[9] >= $m[9] and exit 0;
-open my $fh, ">", $fhtm or die "Cannot make $fhtm: $!\n";
 
 print "Converting $fmd to $fhtm\n";
 
+open my $fh, ">", $fhtm or die "Cannot make $fhtm: $!\n";
 print $fh <<"EOH";
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
@@ -34,30 +34,38 @@ EOH
 
 my $fhx = $fhtm . "_x";
 if (grep { -x } map { "$_/pandoc" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
+    say "Converting with pandoc";
     system "pandoc", "-t", "html", "-o", $fhx, $fmd;
+    open my $xh, "<", $fhx or die "pandoc failed to create HTML\n";
+    print $fh (<$xh>);
+    print $fh "</body></html>\n";
+    close $fh;
     }
 elsif (grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
-    open my $fh, ">", $fhx or die "$fhx: $!\n";
+    say "Converting with cmark";
     print $fh `cmark -t html $fmd`;
+    print $fh "</body></html>\n";
     close $fh;
     }
 else {
+    say "Converting with multimarkdown";
     system "multimarkdown", "-o", $fhx, $fmd;
+
+    open my $xh, "<", $fhx or die "multimarkdown failed!\n";
+    print $fh do { local $/; <$xh>; }
+	=~ s{<p><code>(\w+)}{<pre class="$1">}gr
+	=~ s{<pre><code class="(\w+)">}{<pre class="$1">\n}gr
+	=~ s{<p><code>}{<pre>}gr
+	=~ s{<pre><code>}{<pre>}gr
+	=~ s{</code></p>}{</pre>}gr
+	=~ s{</code></pre>}{</pre>}gr
+	=~ s{<pre>\K(?=.)}{\n}gr
+	=~ s{<(?:li|p)>\K }{}gr,
+	"</body></html>";
+    close $xh;
+    close $fh;
+    unlink $fhx;
     }
-open my $xh, "<", $fhx or die "multimarkdown failed!\n";
-print $fh do { local $/; <$xh>; }
-    =~ s{<p><code>(\w+)}{<pre class="$1">}gr
-    =~ s{<pre><code class="(\w+)">}{<pre class="$1">\n}gr
-    =~ s{<p><code>}{<pre>}gr
-    =~ s{<pre><code>}{<pre>}gr
-    =~ s{</code></p>}{</pre>}gr
-    =~ s{</code></pre>}{</pre>}gr
-    =~ s{<pre>\K(?=.)}{\n}gr
-    =~ s{<(?:li|p)>\K }{}gr,
-    "</body></html>";
-close $xh;
-close $fh;
-unlink $fhx;
 
 my $t = (stat $fmd)[9] + 1;
 utime $t, $t, $fhtm;

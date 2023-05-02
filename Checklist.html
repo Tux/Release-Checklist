@@ -24,7 +24,7 @@ href="https://perldoc.perl.org/perlmodstyle.html">perl core
 documentation</a> and the basics for preparing a (new) module for
 distribution can be found in <a
 href="https://perldoc.perl.org/perlnewmod.html">perlnewmod</a>.</p>
-<pre class="shell"><code> $ perldoc perlmodstyle</pre>
+<pre class="shell"><code> $ perldoc perlmodstyle</code></pre>
 <h1 id="test">Test</h1>
 <p>Test, test and test. The more you test, the lower the chance you will
 break your code with small changes.</p>
@@ -33,16 +33,15 @@ class="sourceCode perl"><code class="sourceCode perl"><span id="cb2-1"><a href="
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">use</span> <span class="kw">warnings</span>;</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">use</span> <span class="fu">Test::More</span>;</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> :</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> done_testing ();</span></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> done_testing ();</span></code></pre></div>
 <p>Separate your module tests and your author tests. This will lower the
 number of dependencies. Check your Pod syntax, documentation coverage,
 spelling, and minimum perl version requirements in <code>xt/</code>.
 Prevent declaring dependencies that are only used in<code>xt/</code>.
 There is no need to check prerequisites when the distribution runs its
 tests in user-space.</p>
-<pre>
-t/
-xt/</pre>
+<pre><code>t/
+xt/</code></pre>
 <p>If possible, do not use <a
 href="https://metacpan.org/search?q=Test%3A%3A&amp;search_type=modules">Test::*</a>
 modules that you do not actually require, however fancy they may be. See
@@ -56,12 +55,12 @@ replace them too.</p>
 tests that the required (fixed) behavior now passes and that the invalid
 behavior fails.</p>
 <p>Check to see if your tests support running in parallel</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> prove <span class="at">-vwb</span> <span class="at">-j8</span></span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> prove <span class="at">-vwb</span> <span class="at">-j8</span></span></code></pre></div>
 <p>If you have <a
 href="https://metacpan.org/pod/Test2::Harness">Test2::Harness</a>
 installed, also test with yath</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> yath</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> yath <span class="at">-j8</span></span></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> yath <span class="at">-j8</span></span></code></pre></div>
 <p>Add tests cases from issues or tickets to your own tests. Adding
 references to the tickets or issues creates a self-documenting
 structure, reasoning and history.</p>
@@ -78,7 +77,7 @@ in the lowest version of perl that you claim to support. Check it with
 href="https://metacpan.org/pod/Module::CoreList">Module::CoreList</a></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> corelist File::Temp</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">Data</span> for 2018-04-20</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">File::Temp</span> was first released with perl v5.6.1</span></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">File::Temp</span> was first released with perl v5.6.1</span></code></pre></div>
 <p>Then there are two types of modules you can depend on: functional
 modules, like <a href="https://metacpan.org/pod/DBI">DBI</a> and <a
 href="https://metacpan.org/pod/XML::LibXML">XML::LibXML</a>, and
@@ -110,8 +109,7 @@ href="https://metacpan.org/pod/ExtUtils::MakeMaker">ExtUtils::MakeMaker</a>,
 <a href="https://metacpan.org/pod/Dist::Zilla">Dist::Zilla</a>, or <a
 href="https://metacpan.org/pod/App::ModuleBuildTiny">App::ModuleBuildTiny</a>
 etc.</p>
-<pre>
-  &quot;prereqs&quot;        : {
+<pre><code>  &quot;prereqs&quot;        : {
     &quot;build&quot;        : {
       &quot;requires&quot;   : {
         &quot;ExtUtils::MakeMaker&quot;        : &quot;0&quot;
@@ -128,7 +126,7 @@ etc.</p>
         &quot;Test::More&quot;                 : &quot;0.88&quot;
         }
       }
-    }</pre>
+    }</code></pre>
 <h1 id="legal-issues">Legal issues</h1>
 <p>Be very careful in choosing dependencies that have a different
 license than your own distribution. However useful a module might be, if
@@ -281,7 +279,7 @@ tool:</li>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">Version</span> : 5.010</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">--------------------------------------------------</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">//</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">--------------------------------------------------</span></span></pre></div>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">--------------------------------------------------</span></span></code></pre></div>
 <h1 id="multiple-perl-versions">Multiple perl versions</h1>
 <p>If you host your perl code on github, you can integrate the services
 of <a href="https://travis-ci.org">Travis</a>. Read <a
@@ -294,7 +292,7 @@ doing the release. Best would be to test with a threaded perl and a
 non-threaded perl. If you can test with a mixture of
 <code>-Duselongdouble</code> and 32bit/64bit perls, that would be even
 better.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> perl <span class="at">-wc</span> lib/Foo/Bar.pm</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> perl <span class="at">-wc</span> lib/Foo/Bar.pm</span></code></pre></div>
 <ul>
 <li><p><a
 href="https://metacpan.org/pod/Module::Release">Module::Release</a></p></li>
@@ -311,17 +309,17 @@ class="sourceCode perl"><code class="sourceCode perl"><span id="cb10-1"><a href=
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">my</span> <span class="dt">$i</span> = <span class="dv">21000000000000001</span>;</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a> <span class="dt">$i</span> /= <span class="dv">1</span>0e15;</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a> is (<span class="dt">$i</span>, <span class="fl">2.1</span>);</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a> done_testing;</span></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a> done_testing;</span></code></pre></div>
 <p>with <code>-Uuselongdouble</code>:</p>
 <pre class="tap"><code> ok 1
- 1..1</pre>
+ 1..1</code></pre>
 <p>with <code>-Duselongdouble</code>:</p>
 <pre class="tap"><code> not ok 1
  #   Failed test at -e line 1.
  #          got: &#39;2.1000000000000001&#39;
  #     expected: &#39;2.1&#39;
  1..1
- # Looks like you failed 1 test of 1.</pre>
+ # Looks like you failed 1 test of 1.</code></pre>
 <p>will show that 2.25 is probably a better choice that 2.1.</p>
 <h1 id="xs">XS</h1>
 <p>If you use XS, make sure you (try to) support the widest range of
@@ -374,7 +372,7 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">Checked</span> dist: Foo-Bar-0.01.tar.gz</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">Score:</span> 144.44% <span class="er">(</span><span class="ex">26/18</span><span class="kw">)</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">Congratulations</span> for building a <span class="st">&#39;perfect&#39;</span> distribution!</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span></span></pre></div>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span></span></code></pre></div>
 <p>Other than doing all these tests <em>before</em> you upload to CPAN,
 there are some awesome metrics available on <a
 href="https://cpants.cpanauthors.org/">cpants</a> that trigger
@@ -393,7 +391,7 @@ whereas your tests locally still keep passing.</p>
 href="./MANIFEST.skip">MANIFEST.skip</a> are complete.</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> make dist</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> make distclean</span></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> make distclean</span></code></pre></div>
 <ul>
 <li><a
 href="https://metacpan.org/pod/Test::Manifest">Test::Manifest</a></li>
@@ -406,7 +404,7 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">ok</span> 1 <span class="at">-</span> Parse MANIFEST or equivalent</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">ok</span> 2 <span class="at">-</span> All files are listed in MANIFEST or skipped</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">ok</span> 3 <span class="at">-</span> All files listed in MANIFEST exist on disk</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">ok</span> 4 <span class="at">-</span> No files are in both MANIFEST and MANIFEST.SKIP</span></pre></div>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">ok</span> 4 <span class="at">-</span> No files are in both MANIFEST and MANIFEST.SKIP</span></code></pre></div>
 <h1 id="file-naming">File naming</h1>
 <p>Do not make it hard for people and modules to use the files in your
 distribution by using spaces and special characters in file names. Also
@@ -422,7 +420,7 @@ href="https://metacpan.org/pod/Test::Portability::Files">Test::Portability::File
 class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> perl <span class="at">-MTest::More</span> <span class="at">-MTest::Portability::Files</span> <span class="at">-w</span> <span class="dt">\</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">-e</span> <span class="st">&#39;options (all_tests =&gt; 1);&#39;</span> <span class="dt">\</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">-e</span> <span class="st">&#39;options (test_dos_length =&gt; 0);&#39;</span> <span class="dt">\</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">-e</span> <span class="st">&#39;run_tests ();&#39;</span></span></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">-e</span> <span class="st">&#39;run_tests ();&#39;</span></span></code></pre></div>
 <h1 id="code-style-consistency">Code style consistency</h1>
 <p>Add a <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a> or similar file
 to guide others to consistency that will match <a
@@ -478,8 +476,7 @@ href="https://metacpan.org/pod/Test::CPAN::Meta::YAML::Version">Test::CPAN::Meta
 href="https://metacpan.org/pod/CPAN::Meta::Spec#resources">resources</a>,
 like your public repository URL and the preferred way to communicate in
 your <a href="./META.json">META.json</a>:</p>
-<pre>
- &quot;resources&quot;      : {
+<pre><code> &quot;resources&quot;      : {
    &quot;x_IRC&quot;        : &quot;irc://irc.perl.org/#toolchain&quot;,
    &quot;repository&quot;   : {
      &quot;type&quot;       : &quot;git&quot;,
@@ -489,7 +486,7 @@ your <a href="./META.json">META.json</a>:</p>
    &quot;bugtracker&quot;   : {
      &quot;web&quot;        : &quot;https://github.com/Tux/Release-Checklist/issues&quot;
      }
-   }</pre>
+   }</code></pre>
 <p>Those are recognized and shown in the top-left section on <a
 href="https://metacpan.org/pod/Release::Checklist">meta::cpan</a>.</p>
 <h1 id="versions">Versions</h1>
@@ -561,19 +558,17 @@ appropriate actions.</p>
 <p>Whatever you choose, make it clear in your META information, so the
 link to issues on <a href="https://metacpan.org/">metacpan</a> points to
 the correct location.</p>
-<pre>
- META.yml
+<pre><code> META.yml
  ---
  resources:
-  bugtracker: https://github.com/Tux/Release-Checklist/issues</pre>
-<pre>
- META.json
+  bugtracker: https://github.com/Tux/Release-Checklist/issues</code></pre>
+<pre><code> META.json
  ---
  &quot;resources&quot; : {
    &quot;bugtracker&quot; : {
      &quot;web&quot; : &quot;https://github.com/Tux/Release-Checklist/issues&quot;
      }
-   }</pre>
+   }</code></pre>
 <h1 id="downriver">Downriver</h1>
 <p>You have had reasons to make the changes leading up to a new
 distribution. If you really care about the users of your module, you
