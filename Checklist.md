@@ -277,6 +277,8 @@ This gets really hard to set up if your release has different code for versions
 of perl and for versions of required modules, but it pays off eventually. Note
 that monitoring [CPANTESTERS](http://www.cpantesters.org) can be a huge help.
 
+TODO: CI integration. Travis is dead. Please add something about alternatives.
+Deprecated documentation:
 If your code resides on [GitHub](https://github.com/), you can set up hooks to
 [Travis CI](https://travis-ci.org/). Just compose a [.travis.yml](./.travis.yml)
 and enable the hook. This supports a variety of perl versions and an environment
@@ -418,7 +420,7 @@ of that to prevent unhappy users.
  $
 ```
 
-Other that doing all these tests *before* you upload to CPAN, there are some
+Other than doing all these tests *before* you upload to CPAN, there are some
 awesome metrics available on [cpants](https://cpants.cpanauthors.org/) that
 trigger *after* you have uploaded to CPAN.
 [This](https://cpants.cpanauthors.org/) also shows more metrics and has lots
@@ -511,17 +513,17 @@ It is highly appreciated if you declare [resources](https://metacpan.org/pod/CPA
 like your public repository URL and the preferred way to communicate in your [META.json](./META.json):
 
 ```
-  "resources"      : {
-    "x_IRC"        : "irc://irc.perl.org/#toolchain",
-    "repository"   : {
-      "type"       : "git",
-      "url"        : "https://github.com/Tux/Release-Checklist",
-      "web"        : "https://github.com/Tux/Release-Checklist"
-      },
-    "bugtracker"   : {
-      "web"        : "https://github.com/Tux/Release-Checklist/issues"
-      }
-    }
+ "resources"      : {
+   "x_IRC"        : "irc://irc.perl.org/#toolchain",
+   "repository"   : {
+     "type"       : "git",
+     "url"        : "https://github.com/Tux/Release-Checklist",
+     "web"        : "https://github.com/Tux/Release-Checklist"
+     },
+   "bugtracker"   : {
+     "web"        : "https://github.com/Tux/Release-Checklist/issues"
+     }
+   }
 ```
 
 Those are recognized and shown in the top-left section on
@@ -597,11 +599,13 @@ as a (plain/simple) bug and deal with at with the appropriate actions.
 Whatever you choose, make it clear in your META information, so the link to
 issues on [metacpan](https://metacpan.org/) points to the correct location.
 
+```
  META.yml
  ---
  resources:
   bugtracker: https://github.com/Tux/Release-Checklist/issues
-
+```
+```
  META.json
  ---
  "resources" : {
@@ -609,6 +613,7 @@ issues on [metacpan](https://metacpan.org/) points to the correct location.
      "web" : "https://github.com/Tux/Release-Checklist/issues"
      }
    }
+```
 
 # Downriver
 
@@ -626,7 +631,7 @@ Of course it is impossible to cover every possible situation here. The DarkPAN
 
 # LICENSE
 
-Copyright (C) 2015-2021 H.Merijn Brand.  All rights reserved.
+Copyright (C) 2015-2023 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.

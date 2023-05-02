@@ -290,7 +290,9 @@ in an environment where Foo::Bar 0.023 is installed.</p>
 of perl and for versions of required modules, but it pays off eventually. Note
 that monitoring <a href="http://www.cpantesters.org">CPANTESTERS</a> can be a huge help.</p>
 
-<p>If your code resides on <a href="https://github.com/">GitHub</a>, you can set up hooks to
+<p>TODO: CI integration. Travis is dead. Please add something about alternatives.
+Deprecated documentation:
+If your code resides on <a href="https://github.com/">GitHub</a>, you can set up hooks to
 <a href="https://travis-ci.org/">Travis CI</a>. Just compose a <a href="./.travis.yml">.travis.yml</a>
 and enable the hook. This supports a variety of perl versions and an environment
 where you can install modules for just the tests you need.</p>
@@ -440,7 +442,7 @@ of that to prevent unhappy users.</p>
  $
 </pre>
 
-<p>Other that doing all these tests <em>before</em> you upload to CPAN, there are some
+<p>Other than doing all these tests <em>before</em> you upload to CPAN, there are some
 awesome metrics available on <a href="https://cpants.cpanauthors.org/">cpants</a> that
 trigger <em>after</em> you have uploaded to CPAN.
 <a href="https://cpants.cpanauthors.org/">This</a> also shows more metrics and has lots
@@ -540,17 +542,17 @@ using tools to check handcrafted META-files against the
 like your public repository URL and the preferred way to communicate in your <a href="./META.json">META.json</a>:</p>
 
 <pre>
-  &quot;resources&quot;      : {
-    &quot;x_IRC&quot;        : &quot;irc://irc.perl.org/#toolchain&quot;,
-    &quot;repository&quot;   : {
-      &quot;type&quot;       : &quot;git&quot;,
-      &quot;url&quot;        : &quot;https://github.com/Tux/Release-Checklist&quot;,
-      &quot;web&quot;        : &quot;https://github.com/Tux/Release-Checklist&quot;
-      },
-    &quot;bugtracker&quot;   : {
-      &quot;web&quot;        : &quot;https://github.com/Tux/Release-Checklist/issues&quot;
-      }
-    }
+ &quot;resources&quot;      : {
+   &quot;x_IRC&quot;        : &quot;irc://irc.perl.org/#toolchain&quot;,
+   &quot;repository&quot;   : {
+     &quot;type&quot;       : &quot;git&quot;,
+     &quot;url&quot;        : &quot;https://github.com/Tux/Release-Checklist&quot;,
+     &quot;web&quot;        : &quot;https://github.com/Tux/Release-Checklist&quot;
+     },
+   &quot;bugtracker&quot;   : {
+     &quot;web&quot;        : &quot;https://github.com/Tux/Release-Checklist/issues&quot;
+     }
+   }
 </pre>
 
 <p>Those are recognized and shown in the top-left section on
@@ -636,18 +638,22 @@ as a (plain/simple) bug and deal with at with the appropriate actions.</p>
 <p>Whatever you choose, make it clear in your META information, so the link to
 issues on <a href="https://metacpan.org/">metacpan</a> points to the correct location.</p>
 
-<h2 id="meta.yml">META.yml</h2>
+<pre>
+ META.yml
+ ---
+ resources:
+  bugtracker: https://github.com/Tux/Release-Checklist/issues
+</pre>
 
-<p>resources:
-bugtracker: https://github.com/Tux/Release-Checklist/issues</p>
-
-<h2 id="meta.json">META.json</h2>
-
-<p>&#8220;resources&#8221; : {
-&#8220;bugtracker&#8221; : {
- &#8220;web&#8221; : &#8220;https://github.com/Tux/Release-Checklist/issues&#8221;
- }
-}</p>
+<pre>
+ META.json
+ ---
+ &quot;resources&quot; : {
+   &quot;bugtracker&quot; : {
+     &quot;web&quot; : &quot;https://github.com/Tux/Release-Checklist/issues&quot;
+     }
+   }
+</pre>
 
 <h1 id="downriver">Downriver</h1>
 
@@ -665,7 +671,7 @@ upcoming version.</p>
 
 <h1 id="license">LICENSE</h1>
 
-<p>Copyright (C) 2015&#8211;2021 H.Merijn Brand. All rights reserved.</p>
+<p>Copyright (C) 2015&#8211;2023 H.Merijn Brand. All rights reserved.</p>
 
 <p>This library is free software; you can redistribute and/or modify it under
 the same terms as Perl itself.</p>

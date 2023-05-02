@@ -303,6 +303,8 @@ This gets really hard to set up if your release has different code for versions
 of perl and for versions of required modules, but it pays off eventually. Note
 that monitoring L<CPANTESTERS|http://www.cpantesters.org> can be a huge help.
 
+TODO: CI integration. Travis is dead. Please add something about alternatives.
+Deprecated documentation:
 If your code resides on L<GitHub|https://github.com/>, you can set up hooks to
 L<Travis CI|https://travis-ci.org/>. Just compose a L<.travis.yml|./.travis.yml>
 and enable the hook. This supports a variety of perl versions and an environment
@@ -459,7 +461,7 @@ of that to prevent unhappy users.
   Congratulations for building a 'perfect' distribution!
   $
 
-Other that doing all these tests I<before> you upload to CPAN, there are some
+Other than doing all these tests I<before> you upload to CPAN, there are some
 awesome metrics available on L<cpants|https://cpants.cpanauthors.org/> that
 trigger I<after> you have uploaded to CPAN.
 L<This|https://cpants.cpanauthors.org/> also shows more metrics and has lots
@@ -683,20 +685,21 @@ as a (plain/simple) bug and deal with at with the appropriate actions.
 Whatever you choose, make it clear in your META information, so the link to
 issues on L<metacpan|https://metacpan.org/> points to the correct location.
 
- META.yml
+```
 
-================================================================================
- resources:
-  bugtracker: https://github.com/Tux/Release-Checklist/issues
+=head2 META.yml
 
- META.json
+resources:
+ bugtracker: https://github.com/Tux/Release-Checklist/issues
 
-================================================================================
- "resources" : {
-   "bugtracker" : {
-     "web" : "https://github.com/Tux/Release-Checklist/issues"
-     }
-   }
+=head2 META.json
+
+"resources" : {
+  "bugtracker" : {
+    "web" : "https://github.com/Tux/Release-Checklist/issues"
+    }
+  }
+```
 
 =head1 Downriver
 
@@ -714,7 +717,7 @@ Of course it is impossible to cover every possible situation here. The DarkPAN
 
 =head1 LICENSE
 
-Copyright (C) 2015-2021 H.Merijn Brand.  All rights reserved.
+Copyright (C) 2015-2023 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.
