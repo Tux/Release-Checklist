@@ -175,7 +175,7 @@ your module is allowed to do so).
 
 Remember laws in the US are different than in the EU of Asian countries.
 Your module may be legal in Japan, but illegal in the EU, where
-[NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive)
+[NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive) and
 [CSA](https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act)
 might be restrictive.
 
