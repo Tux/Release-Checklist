@@ -16,6 +16,7 @@ nytprof.out
 /pm_to_blib
 *.o
 *.bs
+*.html_x
 *.tar.gz
 *.tgz
 /_eumm/

@@ -169,6 +169,16 @@ most releases on CPAN, it may lead to others avoiding depending on your code.
 The perl/perl_5 licence is a reasonable default if you do not have a preferred
 license.
 
+Do not release illegal code, not even in examples: do not release a webscraper
+for a site that strictly forbids that. (unless you have a written stement that
+your module is allowed to do so).
+
+Remember laws in the US are different than in the EU of Asian countries.
+Your module may be legal in Japan, but illegal in the EU, where
+[NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive)
+[CSA](https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act)
+might be restrictive.
+
 # Documentation
 
 Make sure that you have a clear, concise, and short SYNOPSIS section. This
@@ -614,6 +624,32 @@ issues on [metacpan](https://metacpan.org/) points to the correct location.
      }
    }
 ```
+
+# CVE's
+
+The [Common Vulnerabilities and Exposures (CVE)](https://www.cve.org)
+Program's primary purpose is to uniquely identify vulnerabilities and to
+associate specific versions of code bases (e.g., software and shared
+libraries) to those vulnerabilities. The use of CVEs ensures that two or
+more parties can confidently refer to a CVE identifier (ID) when discussing
+or sharing information about a unique vulnerability. For detailed information
+regarding CVE please refer to [CNA](https://cve.mitre.org/)
+[CNA CVE Counting rules](https://cve.mitre.org/cve/cna/CNA_Rules_v1.1.pdf).
+
+In order to find a specific CVE that is known for your environment, you can
+visit the [NVD database](https://nvd.nist.gov/vuln) and
+[search for keywords](https://nvd.nist.gov/vuln/search).
+
+Modules might help you in finding (releated) CVE's and vulnerabilities:
+
+ - [CPAN::Audit](https://metacpan.org/pod/CPAN::Audit)
+ - [Test::CVE](https://metacpan.org/pod/Test::CVE)
+ - [App::CveClient](https://metacpan.org/pod/App::CveClient)
+
+[MetaCPAN](http://metacpan.org/) also provides CVE information per release
+in JSON but it is still work in progress, e.g.:
+
+ https://fastapi.metacpan.org/cve/Release-Checklist-0.18
 
 # Downriver
 

@@ -171,12 +171,11 @@ Do not release illegal code, not even in examples: do not release a webscraper
 for a site that strictly forbids that. (unless you have a written stement that
 your module is allowed to do so).
 
-Remember laws in the US are different than in the EU of Asian countries. Your
-module may be legal in Japan, but illegal in the EU, where NIS2 1) and SCA 2)
+Remember laws in the US are different than in the EU of Asian countries.
+Your module may be legal in Japan, but illegal in the EU, where
+L<NIS2|https://digital-strategy.ec.europa.eu/en/policies/nis2-directive>
+L<CSA|https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act>
 might be restrictive.
-
- 1) https://digital-strategy.ec.europa.eu/en/policies/nis2-directive
- 2) https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act
 
 =head1 Documentation
 
@@ -588,17 +587,17 @@ L<META spec 2.0 (2011)|http://module-build.sourceforge.net/META-spec-v2.0.html>:
 It is highly appreciated if you declare L<resources|https://metacpan.org/pod/CPAN::Meta::Spec#resources>,
 like your public repository URL and the preferred way to communicate in your L<META.json|./META.json>:
 
-   "resources"      : {
-     "x_IRC"        : "irc://irc.perl.org/#toolchain",
-     "repository"   : {
-       "type"       : "git",
-       "url"        : "https://github.com/Tux/Release-Checklist",
-       "web"        : "https://github.com/Tux/Release-Checklist"
-       },
-     "bugtracker"   : {
-       "web"        : "https://github.com/Tux/Release-Checklist/issues"
-       }
-     }
+  "resources"      : {
+    "x_IRC"        : "irc://irc.perl.org/#toolchain",
+    "repository"   : {
+      "type"       : "git",
+      "url"        : "https://github.com/Tux/Release-Checklist",
+      "web"        : "https://github.com/Tux/Release-Checklist"
+      },
+    "bugtracker"   : {
+      "web"        : "https://github.com/Tux/Release-Checklist/issues"
+      }
+    }
 
 Those are recognized and shown in the top-left section on
 L<meta::cpan|https://metacpan.org/pod/Release::Checklist>.
@@ -697,39 +696,36 @@ Whatever you choose, make it clear in your META information, so the link to
 issues on L<metacpan|https://metacpan.org/> points to the correct location.
 
 ```
+ META.yml
 
-=head2 META.yml
+================================================================================
+ resources:
+  bugtracker: https://github.com/Tux/Release-Checklist/issues
 
-resources:
- bugtracker: https://github.com/Tux/Release-Checklist/issues
+ META.json
 
-=head2 META.json
-
-"resources" : {
-  "bugtracker" : {
-    "web" : "https://github.com/Tux/Release-Checklist/issues"
-    }
-  }
+================================================================================
+ "resources" : {
+   "bugtracker" : {
+     "web" : "https://github.com/Tux/Release-Checklist/issues"
+     }
+   }
 ```
 
 =head1 CVE's
 
-The Common Vulnerabilities and Exposures (CVE) 1) Program's primary purpose is
-to uniquely identify vulnerabilities and to associate specific versions of code
-bases (e.g., software and shared libraries) to those vulnerabilities. The use
-of CVEs ensures that two or more parties can confidently refer to a CVE
-identifier (ID) when discussing or sharing information about a unique
-vulnerability. For detailed information regarding CVE please refer to
-Mitre 2) CNA or the CNA CVE Counting rules 3).
+The L<Common Vulnerabilities and Exposures (CVE)|https://www.cve.org>
+Program's primary purpose is to uniquely identify vulnerabilities and to
+associate specific versions of code bases (e.g., software and shared
+libraries) to those vulnerabilities. The use of CVEs ensures that two or
+more parties can confidently refer to a CVE identifier (ID) when discussing
+or sharing information about a unique vulnerability. For detailed information
+regarding CVE please refer to L<CNA|https://cve.mitre.org/>
+L<CNA CVE Counting rules|https://cve.mitre.org/cve/cna/CNA_Rules_v1.1.pdf>.
 
 In order to find a specific CVE that is known for your environment, you can
-visit the NVD database 4) and search 5) for keywords.
-
- 1) https://www.cve.org/ (still beta)
- 2) https://cve.mitre.org/ (deprecated when cve.org transition is complete)
- 3) https://cve.mitre.org/cve/cna/CNA_Rules_v1.1.pdf
- 4) https://nvd.nist.gov/vuln
- 5) https://nvd.nist.gov/vuln/search
+visit the L<NVD database|https://nvd.nist.gov/vuln> and
+L<search for keywords|https://nvd.nist.gov/vuln/search>.
 
 Modules might help you in finding (releated) CVE's and vulnerabilities:
 
