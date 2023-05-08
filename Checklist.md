@@ -156,7 +156,13 @@ like [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker),
     }
 ```
 
-# Legal issues
+# License
+
+Make a clear statement about your license. (or choose a default, but at least
+state it).
+
+Some target areas require a license in order to allow a CPAN module to be
+installed.
 
 Be very careful in choosing dependencies that have a different license than
 your own distribution. However useful a module might be, if it has a more
@@ -166,8 +172,10 @@ users. That would mean that your distribution cannot be used either.
 The reverse is also true: if your release has a more restrictive license than
 most releases on CPAN, it may lead to others avoiding depending on your code.
 
-The perl/perl_5 licence is a reasonable default if you do not have a preferred
+The perl/perl_5 license is a reasonable default if you do not have a preferred
 license.
+
+# Legal issues
 
 Do not release illegal code, not even in examples: do not release a webscraper
 for a site that strictly forbids that. (unless you have a written stement that
@@ -177,7 +185,9 @@ Remember laws in the US are different than in the EU of Asian countries.
 Your module may be legal in Japan, but illegal in the EU, where
 [NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive) and
 [CSA](https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act)
-might be restrictive.
+might cause you to ensure that the code is easy to update/upgrade and that
+there is a full picture of the dependencies and any known issues in those
+dependencies.
 
 # Documentation
 
@@ -551,6 +561,16 @@ Make sure it is a versioning system that increments
 
  - [Test::GreaterVersion](https://metacpan.org/pod/Test::GreaterVersion)
 
+# README / README.md
+
+Add a [file](./README.md) that states the purpose of your distribution.
+
+The README should state the purpose, the minimal envirenment to test, build,
+and run and possible license issue. If there is a need to amend or create
+configuration files or set up databases, that should be mentioned too.
+
+ - [Text::Markdown](https://metacpan.org/pod/Text::Markdown)
+
 # Changes
 
 Make sure your [Changes](./Changes) or ChangeLog file is up-to-date. Your
@@ -569,24 +589,6 @@ Check if your release matches previous performance (if appropriate)
  - between different versions of perl
  - between different versions of the module
  - between different versions of dependencies
-
-# License
-
-Make a clear statement about your license. (or choose a default, but at least
-state it).
-
-Some target areas require a license in order to allow a CPAN module to be
-installed.
-
-# README / README.md
-
-Add a [file](./README.md) that states the purpose of your distribution.
-
-The README should state the purpose, the minimal envirenment to test, build,
-and run and possible license issue. If there is a need to amend or create
-configuration files or set up databases, that should be mentioned too.
-
- - [Text::Markdown](https://metacpan.org/pod/Text::Markdown)
 
 # Tickets
 
@@ -660,7 +662,9 @@ You have had reasons to make the changes leading up to a new distribution. If
 you really care about the users of your module, you should check if your new
 release would break any of the CPAN modules that (indirectly) depend on your
 module by testing with your previous release and your upcoming release and see
-if the new release would cause the other module(s) to break.
+if the new release would cause the other module(s) to break. Have good tests
+for your API (the stable parts) to prevent yourself from pushing unsuspected
+changes.
 
 [used_by.pl](./scripts/used-by.pl) will check the depending modules with the
 upcoming version.
