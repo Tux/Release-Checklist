@@ -712,6 +712,42 @@ resources:
   }
 ```
 
+=head1 CVE's
+
+The Common Vulnerabilities and Exposures (CVE) 1) Program's primary purpose is
+to uniquely identify vulnerabilities and to associate specific versions of code
+bases (e.g., software and shared libraries) to those vulnerabilities. The use
+of CVEs ensures that two or more parties can confidently refer to a CVE
+identifier (ID) when discussing or sharing information about a unique
+vulnerability. For detailed information regarding CVE please refer to
+Mitre 2) CNA or the CNA CVE Counting rules 3).
+
+In order to find a specific CVE that is known for your environment, you can
+visit the NVD database 4) and search 5) for keywords.
+
+ 1) https://www.cve.org/ (still beta)
+ 2) https://cve.mitre.org/ (deprecated when cve.org transition is complete)
+ 3) https://cve.mitre.org/cve/cna/CNA_Rules_v1.1.pdf
+ 4) https://nvd.nist.gov/vuln
+ 5) https://nvd.nist.gov/vuln/search
+
+Modules might help you in finding (releated) CVE's and vulnerabilities:
+
+=over
+
+=item - L<CPAN::Audit|https://metacpan.org/pod/CPAN::Audit>
+
+=item - L<Test::CVE|https://metacpan.org/pod/Test::CVE>
+
+=item - L<App::CveClient|https://metacpan.org/pod/App::CveClient>
+
+=back
+
+L<MetaCPAN|http://metacpan.org/> also provides CVE information per release
+in JSON but it is still work in progress, e.g.:
+
+ https://fastapi.metacpan.org/cve/Release-Checklist-0.18
+
 =head1 Downriver
 
 You have had reasons to make the changes leading up to a new distribution. If

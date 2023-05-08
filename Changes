@@ -2,6 +2,7 @@
     * Versions update, including recommendations based on CVE's
     * Doc fixes (mauke: issues on GH)
     * Notes on NIS2 and CSA
+    * Notes on CVE's
 
 0.17	29 Apr 2023 - H.Merijn Brand
     * Updates from PTS-2023 Lyon
