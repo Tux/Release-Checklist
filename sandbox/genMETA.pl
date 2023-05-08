@@ -66,16 +66,17 @@ test_requires:
   Test::More:           0.88
 recommends:
   perl:                        5.030000
+  CPAN::Audit:                 20230309.004
   CPAN::Meta::Converter:       2.150010
   CPAN::Meta::Validator:       2.150010
-  Devel::Cover:                1.39
+  Devel::Cover:                1.40
   Devel::PPPort:               3.68
   JSON::PP:                    4.16
   Module::CPANTS::Analyse:     1.01
   Module::Release:             2.128
   Parse::CPAN::Meta:           2.150010
   Perl::Critic:                1.150
-  Perl::Critic::TooMuchCode:   0.18
+  Perl::Critic::TooMuchCode:   0.19
   Perl::MinimumVersion:        1.40
   Perl::Tidy:                  20230309
   Pod::Escapes:                1.07

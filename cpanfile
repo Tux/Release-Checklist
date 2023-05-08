@@ -1,8 +1,9 @@
 requires   "Test::More";
 
+recommends "CPAN::Audit"		=> "20230309.004";
 recommends "CPAN::Meta::Converter"	=> "2.150010";
 recommends "CPAN::Meta::Validator"	=> "2.150010";
-recommends "Devel::Cover"		=> "1.39";
+recommends "Devel::Cover"		=> "1.40";
 recommends "Devel::PPPort"		=> "3.68";
 recommends "JSON::PP"			=> "4.16";
 recommends "Module::CPANTS::Analyse"	=> "1.01";

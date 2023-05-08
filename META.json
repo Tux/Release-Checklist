@@ -17,10 +17,10 @@
       "configure" : {
          "requires" : {
             "ExtUtils::MakeMaker" : "0"
-            }
+            },
          "recommends" : {
             "ExtUtils::MakeMaker" : "7.22"
-            }
+            },
          "suggests" : {
             "ExtUtils::MakeMaker" : "7.70"
             }
