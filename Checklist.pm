@@ -167,6 +167,17 @@ most releases on CPAN, it may lead to others avoiding depending on your code.
 The perl/perl_5 licence is a reasonable default if you do not have a preferred
 license.
 
+Do not release illegal code, not even in examples: do not release a webscraper
+for a site that strictly forbids that. (unless you have a written stement that
+your module is allowed to do so).
+
+Remember laws in the US are different than in the EU of Asian countries. Your
+module may be legal in Japan, but illegal in the EU, where NIS2 1) and SCA 2)
+might be restrictive.
+
+ 1) https://digital-strategy.ec.europa.eu/en/policies/nis2-directive
+ 2) https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act
+
 =head1 Documentation
 
 Make sure that you have a clear, concise, and short SYNOPSIS section. This

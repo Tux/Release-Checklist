@@ -1,6 +1,7 @@
-0.18	02 May 2023 - H.Merijn Brand
+0.18	08 May 2023 - H.Merijn Brand
     * Versions update, including recommendations based on CVE's
     * Doc fixes (mauke: issues on GH)
+    * Notes on NIS2 and CSA
 
 0.17	29 Apr 2023 - H.Merijn Brand
     * Updates from PTS-2023 Lyon
