@@ -736,6 +736,9 @@ in JSON but it is still work in progress, e.g.:
 
 =head1 Downriver
 
+Please read L<The River of CPAN|https://neilb.org/2015/04/20/river-of-cpan.html>
+to understand the concept of upstream and downstream vs upriver and downriver.
+
 You have had reasons to make the changes leading up to a new distribution. If
 you really care about the users of your module, you should check if your new
 release would break any of the CPAN modules that (indirectly) depend on your

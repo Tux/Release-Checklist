@@ -42,7 +42,7 @@ VERSION = $VERSION
 
 all::		Checklist.pm
 
-doc:		Checklist.html Checklist.pod
+doc:		Checklist.html Checklist.pod Checklist.pm
 
 Checklist.html:	Checklist.md
 	perl md2html.pl
