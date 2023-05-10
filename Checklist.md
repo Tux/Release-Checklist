@@ -183,8 +183,9 @@ your module is allowed to do so).
 
 Remember laws in the US are different than in the EU of Asian countries.
 Your module may be legal in Japan, but illegal in the EU, where
-[NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive) and
-[CSA](https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act)
+[NIS2](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive),
+[CSA](https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act), and
+[CRA](https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act)
 might cause you to ensure that the code is easy to update/upgrade and that
 there is a full picture of the dependencies and any known issues in those
 dependencies.
