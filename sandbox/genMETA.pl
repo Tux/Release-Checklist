@@ -66,24 +66,24 @@ test_requires:
   Test::More:           0.88
 recommends:
   perl:                        5.030000
-  CPAN::Audit:                 20230309.004
+  CPAN::Audit:                 20230826.001
   CPAN::Meta::Converter:       2.150010
   CPAN::Meta::Validator:       2.150010
   Devel::Cover:                1.40
-  Devel::PPPort:               3.68
+  Devel::PPPort:               3.71
   JSON::PP:                    4.16
-  Module::CPANTS::Analyse:     1.01
-  Module::Release:             2.128
+  Module::CPANTS::Analyse:     1.02
+  Module::Release:             2.133
   Parse::CPAN::Meta:           2.150010
   Perl::Critic:                1.150
   Perl::Critic::TooMuchCode:   0.19
   Perl::MinimumVersion:        1.40
-  Perl::Tidy:                  20230309
+  Perl::Tidy:                  20230912
   Pod::Escapes:                1.07
   Pod::Parser:                 1.66
   Pod::Spell:                  1.26
   Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              1.000152
+  Test2::Harness:              1.000155
   Test::CPAN::Changes:         0.400002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28
