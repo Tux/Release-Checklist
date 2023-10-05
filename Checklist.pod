@@ -171,8 +171,9 @@ your module is allowed to do so).
 
 Remember laws in the US are different than in the EU of Asian countries.
 Your module may be legal in Japan, but illegal in the EU, where
-L<NIS2|https://digital-strategy.ec.europa.eu/en/policies/nis2-directive> and
-L<CSA|https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act>
+L<NIS2|https://digital-strategy.ec.europa.eu/en/policies/nis2-directive>,
+L<CSA|https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act>, and
+L<CRA|https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act>
 might cause you to ensure that the code is easy to update/upgrade and that
 there is a full picture of the dependencies and any known issues in those
 dependencies.
@@ -649,6 +650,8 @@ recent change(s).
 =item - L<Date::Calc|https://metacpan.org/pod/Date::Calc>
 
 =item - L<Test::CPAN::Changes|https://metacpan.org/pod/Test::CPAN::Changes>
+
+=item - L<CPAN::Changes::Spec|https://metacpan.org/pod/CPAN::Changes::Spec>
 
 =back
 

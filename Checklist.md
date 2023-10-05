@@ -582,6 +582,8 @@ recent change(s).
 
  - [Date::Calc](https://metacpan.org/pod/Date::Calc)
  - [Test::CPAN::Changes](https://metacpan.org/pod/Test::CPAN::Changes)
+ - [CPAN::Changes::Spec](https://metacpan.org/pod/CPAN::Changes::Spec)
+
 
 # Performance
 
