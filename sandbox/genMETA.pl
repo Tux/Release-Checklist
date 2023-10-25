@@ -75,7 +75,7 @@ recommends:
   Module::CPANTS::Analyse:     1.02
   Module::Release:             2.133
   Parse::CPAN::Meta:           2.150010
-  Perl::Critic:                1.150
+  Perl::Critic:                1.152
   Perl::Critic::TooMuchCode:   0.19
   Perl::MinimumVersion:        1.40
   Perl::Tidy:                  20230912
@@ -92,7 +92,7 @@ recommends:
   Test::MinimumVersion::Fast:  0.04
   Test::More:                  1.302195
   Test::Perl::Critic:          1.04
-  Test::Perl::Critic::Policy:  1.150
+  Test::Perl::Critic::Policy:  1.152
   Test::Pod:                   1.52
   Test::Pod::Coverage:         1.10
   Test::Version:               2.09

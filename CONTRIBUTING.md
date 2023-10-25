@@ -7,7 +7,7 @@ I am always open to improvements and suggestions. Use
 
 I will never accept pull request that do not strictly conform to my
 style, however you might hate it. You can read the reasoning behind
-my [preferences](http://tux.nl/style.html).
+my [preferences](https://tux.nl/style.html).
 
 I really do not care about mixed spaces and tabs in (leading) whitespace
 

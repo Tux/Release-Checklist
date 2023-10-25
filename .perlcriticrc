@@ -30,7 +30,7 @@ hard_max = 133
 pct_allowed = 4
 
 [Variables::RequireLocalizedPunctuationVars]
-allow = @ARGV %ENV %SIG $|
+allow = @ARGV %ENV %SIG $| $@
 
 [ValuesAndExpressions::RequireNumberSeparators]
 min_value = 100000
@@ -39,6 +39,7 @@ min_value = 100000
 
 [-Bangs::ProhibitBitwiseOperators]
 [-Bangs::ProhibitCommentedOutCode]
+[-Bangs::ProhibitDebuggingModules]
 [-Bangs::ProhibitFlagComments]
 [-Bangs::ProhibitNumberedNames]
 [-Bangs::ProhibitRefProtoOrProto]
@@ -60,7 +61,7 @@ min_value = 100000
 [-ControlStructures::ProhibitUnlessBlocks]
 [-Documentation::PodSpelling]
 [-Documentation::RequirePodAtEnd]
-[-Documentation::RequirePodLinksIncludeText]
+#-Documentation::RequirePodLinksIncludeText]
 [-Documentation::RequirePODUseEncodingUTF8]
 #-Dynamic::ValidateAgainstSymbolTable]
 [-Editor::RequireEmacsFileVariables]
@@ -93,6 +94,7 @@ min_value = 100000
 [-RegularExpressions::ProhibitComplexRegexes]
 [-RegularExpressions::ProhibitEnumeratedClasses]
 [-RegularExpressions::ProhibitEscapedMetacharacters]
+[-RegularExpressions::ProhibitFixedStringMatches]
 [-RegularExpressions::RequireDotMatchAnything]
 [-RegularExpressions::RequireExtendedFormatting]
 [-RegularExpressions::RequireLineBoundaryMatching]
@@ -102,10 +104,12 @@ min_value = 100000
 [-Subroutines::RequireArgUnpacking]
 [-Subroutines::RequireFinalReturn]
 [-TestingAndDebugging::ProhibitNoWarnings]
+[-TooMuchCode::ProhibitDuplicateLiteral]
 [-ValuesAndExpressions::ProhibitAccessOfPrivateData]
 [-ValuesAndExpressions::ProhibitEmptyQuotes]
 [-ValuesAndExpressions::ProhibitEscapedCharacters]
 [-ValuesAndExpressions::ProhibitFiletest_f]
+[-ValuesAndExpressions::ProhibitImplicitNewlines]
 [-ValuesAndExpressions::ProhibitInterpolationOfLiterals]
 [-ValuesAndExpressions::ProhibitLeadingZeros]
 [-ValuesAndExpressions::ProhibitMagicNumbers]

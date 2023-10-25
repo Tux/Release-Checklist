@@ -1,4 +1,5 @@
 # See how far we get in getting perltidy to do the *only* right thing: my way
+# https://perltidy.sourceforge.net/perltidy.html
 
 --noblanks-before-comments
 --block-brace-tightness=0
@@ -6,7 +7,9 @@
 --brace-vertical-tightness=2
 --closing-token-indentation=3
 --continuation-indentation=4
+--cuddled-paren-brace
 --entab-leading-whitespace=8
+#--extended-block-tightness-list=k
 #--noindent-block-comments
 --indent-closing-brace
 --indent-columns=4
@@ -26,6 +29,7 @@
 --nospace-for-semicolon
 --space-function-paren
 --space-keyword-paren
+--space-prototype-paren=2
 --square-bracket-tightness=2
 --square-bracket-vertical-tightness=2
 --stack-closing-hash-brace
@@ -36,6 +40,7 @@
 --stack-opening-square-bracket
 --static-block-comment-prefix="^#"
 --static-side-comments
+--valign-if-unless
 # try with and without some or all of these
 #--want-break-after=". : || && and or"
 
