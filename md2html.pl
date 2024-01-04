@@ -3,7 +3,7 @@
 use 5.012001;
 use warnings;
 
-our $VERSION = "0.04 - 20191106";
+our $VERSION = "0.05 - 20230104";
 
 my $fmd  = "Checklist.md";
 my $fhtm = "Checklist.html";
@@ -32,22 +32,31 @@ print $fh <<"EOH";
 <body>
 EOH
 
-my $fhx = $fhtm . "_x";
+my $fhx  = $fhtm . "_x";
+my $done = 0;
 if (grep { -x } map { "$_/pandoc" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
     say "Converting with pandoc";
     system "pandoc", "-t", "html", "-o", $fhx, $fmd;
-    open my $xh, "<", $fhx or die "pandoc failed to create HTML\n";
-    print $fh (<$xh>);
-    print $fh "</body></html>\n";
-    close $fh;
+    if (open my $xh, "<", $fhx) {
+	print $fh (<$xh>);
+	print $fh "</body></html>\n";
+	close $fh;
+	$done = 1;
+	}
+    else {
+	warn "pandoc failed to create HTML\n";
+	}
     }
-elsif (grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
+if (!$done and grep { -x } map { "$_/cmark" } grep { $_ && -d } split m/:+/ => $ENV{PATH}) {
     say "Converting with cmark";
-    print $fh `cmark -t html $fmd`;
-    print $fh "</body></html>\n";
-    close $fh;
+    if (my @h = `cmark -t html $fmd`) {
+	print $fh @h;
+	print $fh "</body></html>\n";
+	close $fh;
+	$done = 1;
+	}
     }
-else {
+unless ($done) {
     say "Converting with multimarkdown";
     system "multimarkdown", "-o", $fhx, $fmd;
 
