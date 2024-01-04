@@ -1,6 +1,6 @@
 requires   "Test::More";
 
-recommends "CPAN::Audit"		=> "20230826.001";
+recommends "CPAN::Audit"		=> "20240103.002";
 recommends "CPAN::Meta::Converter"	=> "2.150010";
 recommends "CPAN::Meta::Validator"	=> "2.150010";
 recommends "Devel::Cover"		=> "1.40";
@@ -14,17 +14,17 @@ recommends "Perl::Critic::TooMuchCode"	=> "0.18";
 recommends "Perl::MinimumVersion"	=> "1.40";
 recommends "Perl::Tidy"			=> "20230912";
 recommends "Pod::Escapes"		=> "1.07";
-recommends "Pod::Parser"		=> "1.66";
+recommends "Pod::Parser"		=> "1.67";
 recommends "Pod::Spell"			=> "1.26";
 recommends "Pod::Spell::CommonMistakes"	=> "1.002";
 recommends "Test2::Harness"		=> "1.000155";
-recommends "Test::CPAN::Changes"	=> "0.400002";
+recommends "Test::CPAN::Changes"	=> "0.500002";
 recommends "Test::CPAN::Meta::YAML"	=> "0.25";
 recommends "Test::Kwalitee"		=> "1.28";
 recommends "Test::Manifest"		=> "2.023";
 recommends "Test::MinimumVersion"	=> "0.101083";
 recommends "Test::MinimumVersion::Fast"	=> "0.04";
-recommends "Test::More"			=> "1.302195";
+recommends "Test::More"			=> "1.302198";
 recommends "Test::Perl::Critic"		=> "1.04";
 recommends "Test::Perl::Critic::Policy"	=> "1.152";
 recommends "Test::Pod"			=> "1.52";

@@ -66,7 +66,7 @@ test_requires:
   Test::More:           0.88
 recommends:
   perl:                        5.030000
-  CPAN::Audit:                 20230826.001
+  CPAN::Audit:                 20240103.002
   CPAN::Meta::Converter:       2.150010
   CPAN::Meta::Validator:       2.150010
   Devel::Cover:                1.40
@@ -80,17 +80,17 @@ recommends:
   Perl::MinimumVersion:        1.40
   Perl::Tidy:                  20230912
   Pod::Escapes:                1.07
-  Pod::Parser:                 1.66
+  Pod::Parser:                 1.67
   Pod::Spell:                  1.26
   Pod::Spell::CommonMistakes:  1.002
   Test2::Harness:              1.000155
-  Test::CPAN::Changes:         0.400002
+  Test::CPAN::Changes:         0.500002
   Test::CPAN::Meta::YAML:      0.25
   Test::Kwalitee:              1.28
   Test::Manifest:              2.023
   Test::MinimumVersion:        0.101083
   Test::MinimumVersion::Fast:  0.04
-  Test::More:                  1.302195
+  Test::More:                  1.302198
   Test::Perl::Critic:          1.04
   Test::Perl::Critic::Policy:  1.152
   Test::Pod:                   1.52
