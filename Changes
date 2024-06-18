@@ -1,10 +1,11 @@
-0.18	26 Feb 2024 - H.Merijn Brand
+0.18	18 Jun 2024 - H.Merijn Brand
     * Versions update, including recommendations based on CVE's
     * Doc fixes (mauke: issues on GH)
     * Notes on NIS2 and CSA
     * Notes on CVE's
     * Doc changes: more references, some reorganisations
     * It's 2024
+    * Updated to release of perl-5.40.0
 
 0.17	29 Apr 2023 - H.Merijn Brand
     * Updates from PTS-2023 Lyon
