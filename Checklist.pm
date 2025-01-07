@@ -770,7 +770,7 @@ Of course it is impossible to cover every possible situation here. The DarkPAN
 
 =head1 LICENSE
 
-Copyright (C) 2015-2024 H.Merijn Brand.  All rights reserved.
+Copyright (C) 2015-2025 H.Merijn Brand.  All rights reserved.
 
 This library is free software;  you can redistribute and/or modify it under
 the same terms as Perl itself.
