@@ -65,41 +65,42 @@ test_requires:
   Test::Harness:        0
   Test::More:           0.88
 recommends:
-  perl:                        5.030000
-  CPAN::Audit:                 20241208.001
-  CPAN::Meta::Converter:       2.150010
-  CPAN::Meta::Validator:       2.150010
-  Devel::Cover:                1.44
-  Devel::PPPort:               3.72
-  JSON::PP:                    4.16
-  Module::CPANTS::Analyse:     1.02
-  Module::Release:             2.135
-  Parse::CPAN::Meta:           2.150010
-  Perl::Critic:                1.156
-  Perl::Critic::TooMuchCode:   0.19
-  Perl::MinimumVersion:        1.40
-  Perl::Tidy:                  20240903
-  Pod::Escapes:                1.07
-  Pod::Parser:                 1.67
-  Pod::Spell:                  1.27
-  Pod::Spell::CommonMistakes:  1.002
-  Test2::Harness:              1.000155
-  Test::CPAN::Changes:         0.500004
-  Test::CPAN::Meta::YAML:      0.25
-  Test::CVE:                   0.08
-  Test::Kwalitee:              1.28
-  Test::Manifest:              2.024
-  Test::MinimumVersion:        0.101083
-  Test::MinimumVersion::Fast:  0.04
-  Test::More:                  1.302207
-  Test::Perl::Critic:          1.04
-  Test::Perl::Critic::Policy:  1.156
-  Test::Pod:                   1.52
-  Test::Pod::Coverage:         1.10
-  Test::Version:               2.09
-  Text::Aspell:                0.09
-  Text::Ispell:                0.04
-  Text::Markdown:              1.000031
+  perl:                                   5.030000
+  CPAN::Audit:                            20241208.001
+  CPAN::Meta::Converter:                  2.150010
+  CPAN::Meta::Validator:                  2.150010
+  Devel::Cover:                           1.44
+  Devel::PPPort:                          3.72
+  JSON::PP:                               4.16
+  Module::CPANTS::Analyse:                1.02
+  Module::Release:                        2.136
+  Parse::CPAN::Meta:                      2.150010
+  Perl::Critic:                           1.156
+  Perl::Critic::TooMuchCode:              0.19
+  Perl::MinimumVersion:                   1.40
+  Perl::Tidy:                             20250105
+  Pod::Escapes:                           1.07
+  Pod::Parser:                            1.67
+  Pod::Spell:                             1.27
+  Pod::Spell::CommonMistakes:             1.002
+  Software::Security::Policy::Individual: 0.04
+  Test2::Harness:                         1.000155
+  Test::CPAN::Changes:                    0.500004
+  Test::CPAN::Meta::YAML:                 0.25
+  Test::CVE:                              0.09
+  Test::Kwalitee:                         1.28
+  Test::Manifest:                         2.025
+  Test::MinimumVersion:                   0.101083
+  Test::MinimumVersion::Fast:             0.04
+  Test::More:                             1.302207
+  Test::Perl::Critic:                     1.04
+  Test::Perl::Critic::Policy:             1.156
+  Test::Pod:                              1.52
+  Test::Pod::Coverage:                    1.10
+  Test::Version:                          2.09
+  Text::Aspell:                           0.09
+  Text::Ispell:                           0.04
+  Text::Markdown:                         1.000031
 resources:
   license:              http://dev.perl.org/licenses/
   repository:           https://github.com/Tux/Release-Checklist
