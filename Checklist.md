@@ -656,6 +656,11 @@ in JSON but it is still work in progress, e.g.:
 
  https://fastapi.metacpan.org/cve/Release-Checklist-0.18
 
+While you are at it, also consider adding F<SECURITY.md> where you declare
+how vulnerabilities in your own release are to be reported.
+
+ - [Software::Security::Policy::Individual](https://metacpan.org/pod/Software::Security::Policy::Individual)
+
 # Downriver
 
 Please read [The River of CPAN](https://neilb.org/2015/04/20/river-of-cpan.html)
