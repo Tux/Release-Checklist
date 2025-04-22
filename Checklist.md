@@ -513,6 +513,9 @@ style and layout. Again: consistency helps. A lot.
  - [.perltidy](./.perltidyrc)
  - [.perlcritic](./.perlcriticrc)
 
+This document should also describe what type of source is acceptable, e.g. if AI
+generated code can be used.
+
 # META
 
 Make sure your meta-data matches the expected requirements. That can be achieved
