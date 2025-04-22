@@ -1,9 +1,9 @@
 #!/usr/bin/env perl
 
-use 5.20.0;
+use 5.020000;
 use warnings;
 
-our $VERSION = "1.33 - 2020-11-13";
+our $VERSION = "1.34 - 2024-05-15";
 our $CMD = $0 =~ s{.*/}{}r;
 
 sub usage {
@@ -13,14 +13,13 @@ sub usage {
     } # usage
 
 use Getopt::Long qw(:config bundling);
-my $opt_v = 0;
 GetOptions (
     "help|?"		=> sub { usage (0); },
-    "v|verbose:1"	=> \$opt_v,
-      "time!"		=> \my $opt_t,
-    "g|git=s"		=> \my $git_id,
-    "t|travis=s"	=> \my $travis_id,
-    "s|svg!"		=> \my $opt_svg,
+      "time!"		=> \ my $opt_t,
+    "g|git=s"		=> \ my $git_id,
+    "t|travis=s"	=> \ my $travis_id,
+    "s|svg!"		=> \ my $opt_svg,
+    "v|verbose:1"	=> \(my $opt_v = 0),
     ) or usage (1);
 
 my $author = shift or usage (1);
@@ -145,6 +144,12 @@ sub show_times {
     printf STDERR "%-11s : %7.3f\n", $_, $time{$_} for sort keys %time;
     } # show_times
 
+sub s_date {
+    my $t = shift || time;
+    my @d = localtime (shift || time);
+    sprintf "%4d-%02d-%02d", $d[5] + 1900, $d[4] + 1, $d[3];
+    } # s_date
+
 sub modules {
     print $html <<"EOH";
 
@@ -167,7 +172,6 @@ sub modules {
             <th class="rhdr"><span style="color: green">&#x2714;</span><span style="color: red">&#x2718;</span></th>
             <th class="rhdr"><a href="http://deps.cpantesters.org">&#x219d;</a></th>
             <th class="rhdr" style="color: red">&#x2665;</th>
-            <th class="rhdr" style="color: black">&#x2605;</th>
             </tr>
           </thead>
         <tbody>
@@ -200,21 +204,6 @@ EOH
 	$data->{fav} = $mcpan->favorite ({ distribution => $dist })->{total} || "-";
 	$time{favorite} += t_used;
 
-	my $rating = "";
-	$data->{rating} = { text => "-" };
-	if (my $rs = $mcpan->rating ({ distribution => $dist })->scroller) {
-	    $opt_v > 1 and warn " Fetch rating\n";
-	    my $n = $rs->total;
-	    if ($r = $rs->next) {
-		$rating = "https://cpanratings.perl.org/d/$dist";
-		$data->{rating} = {
-		    text   => $r->{_source}{rating},
-		    dtitle => "$n votes",
-		    };
-		}
-	    }
-	$time{rating} += t_used;
-
 	$data->{version} //= "*";
 
 	my $mcpd = eval { $mcpan->distribution ($dist) };
@@ -229,22 +218,14 @@ EOH
 	    }
 	unless (defined $data->{kwalitee}) {
 	    $opt_v > 1 and warn " Fetch kwalitee\n";
-	    $r = $ua->get ("https://cpants.cpanauthors.org/dist/$dist");
-	    my $tree = HTML::TreeBuilder->new;
-	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
-	    if (my ($dl) = $tree->look_down (_tag => "dl", class => "small")) {
-		my ($dt, %dl) = ("");
-		foreach my $d ($dl->look_down (_tag => qr{^d[td]$})) {
-		    my $txt = $d->as_text;
-		    if ($d->tag eq "dt") {
-			$dt = lc $txt;
-			next;
-			}
-		    $dl{$dt} //= $txt;
-		    }
-		$data->{kwk} = $dl{"kwalitee"};
-		$data->{kwc} = $dl{"core kwalitee"};
-		$data->{kwr} = $dl{"release date"};
+	    my ($r, $md);
+	    if ($r = $ua->get ("https://api.cpanauthors.org/v5/dist/$dist/metadata") and $r->is_success) {
+		$md = (eval { decode_json ($r->content) } // {})->{data}{metadata};
+		!ref $md && $md =~ m/^\{/ and $md = eval { decode_json ($md) } // {};
+		my $kw = $md->{kwalitee};
+		$data->{kwk} = $kw->{kwalitee};
+		$data->{kwc} = $kw->{core_kwalitee};
+		$data->{kwr} = s_date ($md->{released_epoch});
 
 		$data->{kwalitee} = join " / " =>
 		    $data->{kwc} || "-", $data->{kwk} || "&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;";
@@ -257,18 +238,23 @@ EOH
 
 	# GIT repo and last commit
 	my $git = $m->{git}; # // "https://github.com/$git_id/$dist",
+	my $git_age = {
+	    text   => " ",
+	    dtitle => "last commit in days ago",
+	    };
 	my $git_tag = {
 	    text   => "git",
 	    dtitle => "",
 	    };
-	my $git_clss = [ "git" ];
+	my $git_clss = [ "git"  ];
+	my $age_clss = [ "date" ];
 	if ($git =~ m/\b github.com \b/x) {
 	    $opt_v > 1 and warn " Fetch github master commits\n";
 	    $r = $ua->get ("$git/commits/master");
 	    my $tree = HTML::TreeBuilder->new;
 	    $tree->parse_content ($r && $r->is_success ? decode ("utf-8", $r->content) : "");
 	    # Get most recent commit date
-	    for ($tree->look_down (_tag => "div", class => "commit-group-title")) {
+	    for ($tree->look_down (_tag => "div", class => "TimelineItem-body")) {
 		# Commits on Apr 24, 2015
 		my ($y, $m, $d) = Parse_Date ($_->as_text =~ s/^\s*Commits\s+on\s*//r) or next;
 		$git_tag->{dtitle} = sprintf "%4d-%02d-%02d", $y, $m, $d;
@@ -279,6 +265,8 @@ EOH
 		    $span <=  30 ? "na"   : # yellow, <= 30 days
 		    $span <= 182 ? "warn" : # orange, <=  6 months
 				   "fail" ; # red
+		$git_age->{text} = $span;
+		push @$age_clss => $git_clss->[-1];
 		#warn sprintf "%4d-%02d-%02d %3d %s\n", $y, $m, $d, $span, $dist;
 		last;
 		}
@@ -400,7 +388,7 @@ EOH
 
 	my $cos       = "-";
 	my $cos_class = [ "rd" ];
-	{   $r = $ua->get ("http://deps.cpantesters.org/?module=$mod&perl=5.22.0&os=any+OS");
+	{   $r = $ua->get ("http://deps.cpantesters.org/?module=$mod&perl=5.32.0&os=any+OS");
 	    my $tree = HTML::TreeBuilder->new;
 	    $tree->parse_content ($r && $r->is_success ? $r->content : "");
 	    foreach my $tr ($tree->look_down (_tag => "tr", class => "results_chances")) {
@@ -431,9 +419,10 @@ EOH
 	$time{release} += t_used;
 
 	# Travis CI
-	my $tci       = $m->{tci} // ($git ? "https://travis-ci.org/$travis_id/$dist/builds" : "");
+	my $tci       = "";#$m->{tci} // ($git ? "https://travis-ci.org/$travis_id/$dist/builds" : "");
 	my $tci_tag   = $tci ?  "*" : "";
 	my $tci_class = [ "tci" ];
+if (0) {
 	if ($tci =~ m/travis-ci/ and $r = $ua->get ($tci =~ s{/builds$}{.svg}r) and $r->is_success) {
 	    my %bs = map { $_ => 1 } ($r->content =~ m{<text[^>]+>([^<]+)</text>}g);
 	    delete $bs{build};
@@ -449,10 +438,11 @@ EOH
 	    $tci_tag   = "add";
 	    $tci_class = [ "tci", "gray" ];
 	    }
+    }
 
 	# ChangeLog
-	$m->{cpan} //= "https://v1.metacpan.org/release/$dist";
-	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://v1.metacpan.org/changes/distribution/$dist" : "";
+	$m->{cpan} //= "https://metacpan.org/release/$dist";
+	my $cll = $m->{cpan} =~ m/metacpan/ ? "https://metacpan.org/changes/distribution/$dist" : "";
 	$time{changelog} += t_used;
 
 	# Coverage
@@ -487,23 +477,23 @@ EOH
 	dta (                { text => $dist, title => $data->{abstract} // $mod }, $m->{cpan});
 	dta (["version"   ], $data->{version},        $cll);
 	dta ($rel_clss,      $rel_date);
+	dta ($age_clss,      $git_age,                "$git/commits/master");
 	dta ($git_clss,      $git_tag || "-",         $git);
 	dta ($issue_class,   $issues_tag,             $issues);
 	dta ($issue_class,   $pr{"open"}[0],          $pr{"open"}[1]);
 	dta ($issue_class,   $pr{"closed"}[0],        $pr{"closed"}[1]);
 	dta (["rt"        ], $rt_tag,                 $rt);
-	dta (["center"    ], "doc",                   $m->{doc}    // "https://v1.metacpan.org/module/$mod");
+	dta (["center"    ], "doc",                   $m->{doc}    // "https://metacpan.org/module/$mod");
 	dta ($tci_class,     $tci_tag || "-",         $tci);
 	dta (["kwt",$kwtc ], $data->{kwalitee},       $m->{cpants} // "https://cpants.cpanauthors.org/dist/$dist");
 	dta (["cvr",$cvrc ], $cvrt,                   $cvrr);
 	dta (["cpt","pass"], $data->{cptst}[0] // "", $m->{ct}     // "http://www.cpantesters.org/show/$dist.html");
 	dta (["cpt","na"  ], $data->{cptst}[1] // "");
 	dta (["cpt","fail"], $data->{cptst}[2] // "", $m->{ctm}    // "http://matrix.cpantesters.org/?dist=$dist");
-	dta ($cos_class,     $cos,                                    "http://deps.cpantesters.org/?module=$mod&amp;perl=5.22.0&amp;os=Any+OS");
+	dta ($cos_class,     $cos,                                    "http://deps.cpantesters.org/?module=$mod&amp;perl=5.32.0&amp;os=Any+OS");
 	dta (["rd"        ], $rd,                     $m->{rd}     // "http://deps.cpantesters.org/depended-on-by.pl?module=$mod");
 	dta (["kwt"       ], $data->{fav},
-					$data->{fav} eq "-" ? undef : "https://v1.metacpan.org/release/$dist/plussers");
-	dta (["kwt"       ], $data->{rating},         $rating);
+					$data->{fav} eq "-" ? undef : "https://metacpan.org/release/$dist/plussers");
 	say $html qq{            </tr>};
 
 	$opt_t && $opt_v and show_times;
@@ -511,12 +501,12 @@ EOH
 
     print $html <<"EOH";
 
-          <tr><td colspan="19"><hr /></td></tr>
+          <tr><td colspan="20"><hr /></td></tr>
           <tr>
             <td><a href="http://backpan.perl.org/authors/id/$auid3/$author/">BackPAN</a></td>
-            <td colspan="11"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
+            <td colspan="12"><a href="http://analysis.cpantesters.org/?author=$author&amp;age=91.3&amp;SUBMIT_xxx=Submit">CPANTESTERS analysis</a></td>
             <td colspan="3" class="center"><a href="http://matrix.cpantesters.org/?author=$author">matrix</a></td>
-            <td colspan="4"></td>
+            <td colspan="3"></td>
             </tr>
           </tbody>
         </table>
