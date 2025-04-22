@@ -60,13 +60,13 @@ configure_requires:
 configure_recommends:
   ExtUtils::MakeMaker:  7.22
 configure_suggests:
-  ExtUtils::MakeMaker:  7.70
+  ExtUtils::MakeMaker:  7.74
 test_requires:
   Test::Harness:        0
   Test::More:           0.88
 recommends:
   perl:                                   5.030000
-  CPAN::Audit:                            20241208.001
+  CPAN::Audit:                            20250115.001
   CPAN::Meta::Converter:                  2.150010
   CPAN::Meta::Validator:                  2.150010
   Devel::Cover:                           1.44
@@ -78,21 +78,21 @@ recommends:
   Perl::Critic:                           1.156
   Perl::Critic::TooMuchCode:              0.19
   Perl::MinimumVersion:                   1.40
-  Perl::Tidy:                             20250105
+  Perl::Tidy:                             20250311
   Pod::Escapes:                           1.07
   Pod::Parser:                            1.67
   Pod::Spell:                             1.27
   Pod::Spell::CommonMistakes:             1.002
-  Software::Security::Policy::Individual: 0.04
-  Test2::Harness:                         1.000155
+  Software::Security::Policy::Individual: 0.09
+  Test2::Harness:                         1.000156
   Test::CPAN::Changes:                    0.500004
   Test::CPAN::Meta::YAML:                 0.25
   Test::CVE:                              0.09
   Test::Kwalitee:                         1.28
-  Test::Manifest:                         2.025
+  Test::Manifest:                         2.026
   Test::MinimumVersion:                   0.101083
   Test::MinimumVersion::Fast:             0.04
-  Test::More:                             1.302207
+  Test::More:                             1.302210
   Test::Perl::Critic:                     1.04
   Test::Perl::Critic::Policy:             1.156
   Test::Pod:                              1.52
